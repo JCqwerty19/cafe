@@ -18,15 +18,20 @@ cafe
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <p class="card-text">{{ $product->content }}</p>
+						<h5 class="card-text">${{ $product->price }}</h5><br>
                         <button class="btn btn-success" onclick="addToCart('{{ $product->name }}', '{{ $product->price }}', '{{ $product->id }}')">Add</button>
                     </div>
                 </div>
             </div>
             @endforeach
         </div>
-		<form action="{{ route('order.name') }}" method="POST">
+		
+		<form action="{{ route('order.make') }}" method="POST">
 			@csrf
-			<h2>Total price: <span name="total_price" id="total-price"></span></h2><br>
+			<h2>Total price: <span id="total-price"></span></h2>
+			<input type="text" name="total_price" class="invisible" id="total_price_input" value="">
+			<br>
+			
 
 			<button type="button" class="btn btn-danger btn-sm" onclick="clearCart()">Clear cart</button><br><br>
 

@@ -13,12 +13,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-use App\Models\Product;
+// Client routes' group
+Route::group(['namespace' => 'Client'], function () {
 
-Route::get('/', 'MainController@index')->name('main.index');
+    // Main controller route to show site
+    Route::get('/', 'MainController@index')->name('main.index');
 
-Route::get('/order', 'OrderController@createOrder')->name('order.create');
-Route::post('/order', 'OrderController@makeOrder')->name('order.name');
+    // Order controller routes
+    Route::get('/order', 'OrderController@create')->name('order.create');
+    Route::post('/order', 'OrderController@make')->name('order.make');
+});
+
+// ===============================================
+
+Route::get('/kitchen', 'KitchenController@index')->name('kitchen.index');
 
 // Заказать
 

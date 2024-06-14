@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Post;
 
-class MainController extends Controller
+class MainController extends BaseController
 {
     public function index() {
         $variables = [
