@@ -13,6 +13,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Models\Product;
+
+Route::get('/', 'MainController@index')->name('main.index');
+
+Route::get('/order', 'OrderController@createOrder')->name('order.create');
+Route::post('/order', 'OrderController@makeOrder')->name('order.name');
+
+// Заказать
+
+// Создаем ордер
+// - Товары (многое ко многим);
+// - Имя 
+// - Адрес
+
+
+
+// Бизнес
+// Вход для администраторов
+// Принятие заказов (клиент)
+// CRUD товаров/услуг (админ)
+// Статистика по товарам (админ)
+// Статьи (админка)
+
+// Клинет
+// Купить (Внесение информации и отправка в базу) + рекомендации + Корзина
+// Читать статьи + Теги
+// Связаться с нами
+
+// Админ
