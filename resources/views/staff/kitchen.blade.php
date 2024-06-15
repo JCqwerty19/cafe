@@ -7,75 +7,41 @@ Cafe orders
 @section('content')
 <div class="container mt-5">
     <h1 class="mb-4">Список заказов</h1>
-    <div class="card mb-3">
-        <div class="card-header">
-            <strong>Имя клиента:</strong> Иван Иванов
+    
+        @foreach($orders as $order)
+        <div class="card mb-3">
+
+            <div class="card-header">
+                <strong>Customer name:</strong> {{ $order->customer_name }}
+            </div>
+
+            <div class="card-body">
+                <p><strong>Customer phone:</strong>{{ $order->customer_phone }}</p>
+                <table class="table table-striped">
+                <p><strong>Delivery:</strong>{{ $order->obtaining }}</p>
+                    <thead>
+                        <tr>
+                            <th>Product ID</th>
+                            <th>Name</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($order->items as $item)
+                        <tr>
+                            <td>{{ $item->product_id }}</td>
+                            <td>{{ $item->product_name }}</td>
+                            <td>{{ $item->quantity }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                    <button class="btn btn-success">Issued</button>
+                    <br><br>
+                </table>
+            </div>
+            
         </div>
-        <div class="card-body">
-            <p><strong>Номер клиента:</strong> +7 123 456 78 90</p>
-            <table class="table table-striped">
-            <p><strong>Доставка:</strong> Нет</p>
-                <thead>
-                    <tr>
-                        <th>ID товара</th>
-                        <th>Название</th>
-                        <th>Количество</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Пицца</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Салат</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Сок</td>
-                        <td>3</td>
-                    </tr>
-                </tbody>
-                <button class="btn btn-success">Выдан</button>
-            </table>
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-header">
-            <strong>Имя клиента:</strong> Мария Петрова
-        </div>
-        <div class="card-body">
-            <p><strong>Номер клиента:</strong> +7 987 654 32 10</p>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>ID товара</th>
-                        <th>Название</th>
-                        <th>Количество</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>4</td>
-                        <td>Бургер</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Картофель фри</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Кола</td>
-                        <td>2</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+        @endforeach
+        <br><br><br><br>
 </div>
 @endsection

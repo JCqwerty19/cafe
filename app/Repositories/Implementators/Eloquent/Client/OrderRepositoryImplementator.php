@@ -2,10 +2,15 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
+// Import parent
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 
+// Import models
+use App\Models\Product;
 use App\Models\Client\Order;
 use App\Models\Client\OrderItems;
+
+// Import DTO
 use App\DTO\Client\OrderMakeDTO;
 use App\DTO\Client\OrderItemsDTO;
 
@@ -15,16 +20,10 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
     public function make(OrderMakeDTO $orderDTO): Order {
 
         // Collect data for order
-        $order = [
-            'customer_name' => $orderDTO->getCustomerName(),
-            'customer_phone' => $orderDTO->getCustomerPhone(),
-            'obtaining' => $orderDTO->getObtaining(),
-            'address' => $orderDTO->getAddress(),
-            'total_price' => $orderDTO->getTotalPrice(),
-        ];
+        $order = static::collectOrderParams($orderDTO);
 
         // Create and return order
-        return Order::create($order);
+        return static::createOrder($order);
     }
 
     // ===============================================
@@ -38,15 +37,66 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
         // Create items by cascading it
         foreach($items as $item) {
 
-            // Collect data for item
-            $orderItem = [
-                'order_id' => $orderItemsDTO->getOrderId(),
-                'product_id' => $item['product_id'],
-                'quantity' => $item['quantity'],
-            ];
+            // Collecting item params
+            $orderItem = static::collectItemParams($orderItemsDTO, $item);
 
             // Create item
-            OrderItems::create($orderItem);
+            static::createItem($orderItem);
         }
+
     }
+
+    // ===============================================
+
+    // Collect order params
+    public static function collectOrderParams(OrderMakeDTO $orderDTO): array {
+        
+        // Collect order params
+        $order = [
+            'customer_name' => $orderDTO->getCustomerName(),
+            'customer_phone' => $orderDTO->getCustomerPhone(),
+            'obtaining' => $orderDTO->getObtaining(),
+            'address' => $orderDTO->getAddress(),
+            'total_price' => $orderDTO->getTotalPrice(),
+            'status' => 'new_order',
+        ];
+
+        // Return order params
+        return $order;
+    }
+
+    // Create order
+    public static function createOrder(array $order): Order {
+
+        // Create and return order
+        return Order::create($order);
+    }
+
+    // ===============================================
+
+    // Collect item params
+    public static function collectItemParams(OrderItemsDTO $orderItemsDTO, array $item): array {
+
+        // Gain product form DB by id
+        $product = Product::find($item['product_id']);
+
+        // Collecting item params
+        $orderItem = [
+            'order_id' => $orderItemsDTO->getOrderId(),
+            'product_id' => $item['product_id'],
+            'product_name' => $product->name,
+            'quantity' => $item['quantity'],
+        ];
+
+        // Return item params
+        return $orderItem;
+    }
+
+    // Create item
+    public static function createItem(array $orderItem): void {
+
+        // Create item
+        OrderItems::create($orderItem);
+    }
+    
 }

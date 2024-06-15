@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('obtaining');
             $table->string('address')->nullable();
             $table->unsignedBigInteger('total_price');
+            $table->string('status');
             $table->softDeletes();
             $table->timestamps();
         });

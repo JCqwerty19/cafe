@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Client routes' group
-Route::group(['namespace' => 'Client'], function () {
+Route::group(['namespace' => 'Client'], function() {
 
     // Main controller route to show site
     Route::get('/', 'MainController@index')->name('main.index');
@@ -26,7 +26,13 @@ Route::group(['namespace' => 'Client'], function () {
 
 // ===============================================
 
-Route::get('/kitchen', 'KitchenController@index')->name('kitchen.index');
+Route::group(['namespace' => 'Staff'], function() {
+
+    // Kitchen controller routes
+    Route::get('/kitchen', 'KitchenController@index')->name('kitchen.index');
+});
+
+
 
 // Заказать
 
