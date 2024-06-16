@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('customer_name');
             $table->string('customer_phone');
             $table->string('obtaining');
-            $table->string('address')->nullable();
             $table->unsignedBigInteger('total_price');
             $table->string('status');
             $table->softDeletes();

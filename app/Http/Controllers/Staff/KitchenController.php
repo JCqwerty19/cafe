@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Staff;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Staff\BaseController;
 use Illuminate\Http\Request;
 
 use App\Models\Client\Order;
 
-class KitchenController extends Controller
+class KitchenController extends BaseController
 {
     public function index() {
 

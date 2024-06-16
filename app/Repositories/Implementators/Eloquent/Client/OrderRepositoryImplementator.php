@@ -55,14 +55,21 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
         $order = [
             'customer_name' => $orderDTO->getCustomerName(),
             'customer_phone' => $orderDTO->getCustomerPhone(),
-            'obtaining' => $orderDTO->getObtaining(),
-            'address' => $orderDTO->getAddress(),
+            'obtaining' => static::obtainingMethod($orderDTO),
             'total_price' => $orderDTO->getTotalPrice(),
             'status' => 'new_order',
         ];
 
         // Return order params
         return $order;
+    }
+
+    public static function obtainingMethod(OrderMakeDTO $orderDTO): string {
+        if ($orderDTO->getObtaining() === 'delivery') {
+            return $orderDTO->getAddress();
+        }
+
+        return $orderDTO->getObtaining();
     }
 
     // Create order

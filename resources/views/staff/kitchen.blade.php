@@ -1,24 +1,24 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Cafe orders
+Orders list
 @endsection
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Список заказов</h1>
+    <h1 class="mb-4">Orders' list</h1>
     
         @foreach($orders as $order)
         <div class="card mb-3">
 
             <div class="card-header">
-                <strong>Customer name:</strong> {{ $order->customer_name }}
+                <strong>Customer name: </strong>{{ $order->customer_name }}
             </div>
 
             <div class="card-body">
-                <p><strong>Customer phone:</strong>{{ $order->customer_phone }}</p>
+                <p><strong>Customer phone: </strong>{{ $order->customer_phone }}</p>
                 <table class="table table-striped">
-                <p><strong>Delivery:</strong>{{ $order->obtaining }}</p>
+                <p><strong>Delivery: </strong>{{ $order->obtaining }}</p>
                     <thead>
                         <tr>
                             <th>Product ID</th>
@@ -35,7 +35,10 @@ Cafe orders
                         </tr>
                         @endforeach
                     </tbody>
-                    <button class="btn btn-success">Issued</button>
+                    <form action="{{ route('distribution.distribute', $order) }}" method="POST">
+                        @csrf
+                        <button class="btn btn-success" type="submit">Issued</button>
+                    </form>
                     <br><br>
                 </table>
             </div>

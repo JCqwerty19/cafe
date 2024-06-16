@@ -22,14 +22,20 @@ Route::group(['namespace' => 'Client'], function() {
     // Order controller routes
     Route::get('/order', 'OrderController@create')->name('order.create');
     Route::post('/order', 'OrderController@make')->name('order.make');
+
+    // 
+    Route::get('/hall', 'MainController@table')->name('main.table');
 });
 
 // ===============================================
 
+// Staff routes' group
 Route::group(['namespace' => 'Staff'], function() {
 
     // Kitchen controller routes
     Route::get('/kitchen', 'KitchenController@index')->name('kitchen.index');
+
+    Route::post('/distribution/{order}', 'DistriputionController@distribute')->name('distribution.distribute');
 });
 
 
