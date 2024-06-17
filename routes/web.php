@@ -35,7 +35,11 @@ Route::group(['namespace' => 'Staff'], function() {
     // Kitchen controller routes
     Route::get('/kitchen', 'KitchenController@index')->name('kitchen.index');
 
-    Route::post('/distribution/{order}', 'DistriputionController@distribute')->name('distribution.distribute');
+    Route::post('/distribution/{order}', 'DistributionController@distribute')->name('distribution.distribute');
+
+    Route::get('/delivery/list', 'DeliveryController@list')->name('delivery.list');
+    Route::post('/delivery/deliver/{order}', 'DeliveryController@deliver')->name('delivery.deliver');
+    Route::get('/delivery/orders', 'DeliveryController@orders')->name('delivery.orders');
 });
 
 

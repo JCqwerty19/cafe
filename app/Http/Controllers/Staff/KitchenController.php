@@ -12,7 +12,7 @@ class KitchenController extends BaseController
     public function index() {
 
         $variables = [
-            'orders' => Order::query()->where('status', 'new_order')->get(),
+            'orders' => Order::query()->where('status', 'Preparing')->get(),
         ];
 
         return view('staff.kitchen', $variables);

@@ -6,7 +6,7 @@ namespace App\Repositories\Implementators\Eloquent\Client;
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 
 // Import models
-use App\Models\Product;
+use App\Models\Admin\Product;
 use App\Models\Client\Order;
 use App\Models\Client\OrderItems;
 
@@ -57,7 +57,8 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
             'customer_phone' => $orderDTO->getCustomerPhone(),
             'obtaining' => static::obtainingMethod($orderDTO),
             'total_price' => $orderDTO->getTotalPrice(),
-            'status' => 'new_order',
+            'additional_price' => $orderDTO->getAdditionalPrice(),
+            'status' => 'Preparing',
         ];
 
         // Return order params

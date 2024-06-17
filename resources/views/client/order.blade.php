@@ -34,10 +34,7 @@ Cafe
 		<form action="{{ route('order.make') }}" method="POST">
 			@csrf
 
-			<!-- Total price -->
-			<h2>Total price: <span id="total-price"></span></h2>
-			<input type="text" name="total_price" class="invisible" id="total_price_input" value="">
-			<br>
+			
 			
 			<!-- Clear cart button -->
 			<button type="button" class="btn btn-danger btn-sm" onclick="clearCart()">Clear cart</button>
@@ -81,20 +78,34 @@ Cafe
     			<div class="form-group">
     			    <label for="deliveryOption">Obtaining method</label>
     			    <select class="form-control" name="obtaining" id="deliveryOption" value="{{ old('obtaining') }}" onchange="toggleAddressField()">
-    			        <option value="pickup">Pickup / In the cafe</option>
+    			        <option value="pickup">Pickup</option>
+						<option value="hall">Cafe</option>
     			        <option value="delivery">Delivery</option>
     			    </select>
 					@error('obtaining')
 					<p class="text-danger">{{ $message }}</p>
 					@enderror
     			</div>
+
+				
+
     			<div class="form-group d-none" id="addressField">
     			    <label for="address">Address</label>
     			    <input type="text" class="form-control" name="address" id="address" placeholder="Text your address" value="{{ old('address') }}">
 					@error('address')
 					<p class="text-danger">{{ $message }}</p>
 					@enderror
+					<br>
     			</div>
+
+				<h6>Order price: $<span id="order-price">0</span></h6>
+				
+
+				<h6 id="additionalPriceType">Additional Price: $<span id="additionalPriceInt">0</span><input type="text" id="additionalPriceInput" name="additional_price" class="invisible" value=""></h6>
+
+				<!-- Total price -->
+				<h2>Total price: $<span id="total-price">0</span></h2>
+				<input type="text" name="total_price" class="invisible" id="total_price_input" value=""><br>
     			<button type="submit" class="btn btn-primary">Sent</button>
 			</div>
 			<!-- end personal info -->

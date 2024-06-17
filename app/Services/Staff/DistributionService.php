@@ -4,6 +4,8 @@ namespace App\Services\Staff;
 
 use App\Repositories\Interfaces\Staff\DistributionRepositoryInterface;
 
+use App\DTO\Staff\DistributeDTO;
+
 class DistributionService {
 
     // Construction order service
@@ -16,10 +18,8 @@ class DistributionService {
 
     public function distribute(DistributeDTO $orderDTO) {
         $orderDTO = new DistributeDTO(
-            customer_name: $orderDTO->getCustomerName(),
-            customer_phone: $orderDTO->getCustomerPhone(),
+            order_id: $orderDTO->getOrderId(),
             obtaining: $orderDTO->getObtaining(),
-            total_price: $orderDTO->getTotalPrice(),
             status: $orderDTO->getStatus(),
         );
 

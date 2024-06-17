@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
-use App\Models\Product;
+use App\Models\Admin\Product;
 use App\Http\Requests\OrderRequest;
 
 use App\DTO\Client\OrderMakeDTO;
@@ -40,6 +40,7 @@ class OrderController extends BaseController
             obtaining: $orderData['obtaining'],
             address: $orderData['address'],
             total_price: $orderData['total_price'],
+            additional_price: $orderData['additional_price'],
         );
 
         // Make and gain order

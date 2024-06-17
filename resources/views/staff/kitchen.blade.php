@@ -12,10 +12,11 @@ Orders list
         <div class="card mb-3">
 
             <div class="card-header">
-                <strong>Customer name: </strong>{{ $order->customer_name }}
+                <strong>Order number: #{{ $order->id }}</strong>
             </div>
 
             <div class="card-body">
+                <strong>Customer name: </strong>{{ $order->customer_name }}
                 <p><strong>Customer phone: </strong>{{ $order->customer_phone }}</p>
                 <table class="table table-striped">
                 <p><strong>Delivery: </strong>{{ $order->obtaining }}</p>

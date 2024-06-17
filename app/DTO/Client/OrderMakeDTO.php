@@ -11,12 +11,14 @@ class OrderMakeDTO
         protected string $obtaining,
         protected ?string $address,
         protected int $total_price,
+        protected int $additional_price,
     ) {
         $this->customer_name = $customer_name;
         $this->customer_phone = $customer_phone;
         $this->obtaining = $obtaining;
         $this->address = $address;
         $this->total_price = $total_price;
+        $this->additional_price = $additional_price;
     }
 
     // ===============================================
@@ -77,5 +79,16 @@ class OrderMakeDTO
     // Total price getter
     public function getTotalPrice(): int {
         return $this->total_price;
+    }
+
+    // ===============================================
+
+    public function setAdditionalPrice(int $value): void {
+        $this->additional_price = $value;
+    }
+
+    // Total price getter
+    public function getAdditionalPrice(): int {
+        return $this->additional_price;
     }
 }

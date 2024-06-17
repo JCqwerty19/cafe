@@ -1,7 +1,7 @@
 @extends('client.layouts.main')
 
 @section('title')
-cafe
+Cafe
 @endsection
 
 @section('content')

@@ -32,6 +32,7 @@ class OrderService
             obtaining: $orderDTO->getObtaining(),
             address: $orderDTO->getAddress(),
             total_price: $orderDTO->getTotalPrice(),
+            additional_price: $orderDTO->getAdditionalPrice(),
         );
 
         // Make order in repository and return

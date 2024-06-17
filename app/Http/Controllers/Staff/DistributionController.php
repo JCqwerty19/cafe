@@ -14,10 +14,8 @@ class DistributionController extends BaseController
     public function distribute(Order $order) {
 
         $orderDTO = new DistributeDTO(
-            customer_name: $order->customer_name,
-            customer_phone: $order->customer_phone,
+            order_id: $order->id,
             obtaining: $order->obtaining,
-            total_price: $order->total_price,
             status: $order->status,
         );
 
