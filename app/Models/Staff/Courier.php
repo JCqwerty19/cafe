@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Courier extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    // Import traits
+    use HasFactory, SoftDeletes;
 
+    // Gaining access to CRUD producs
     protected $guarded = false;
 }

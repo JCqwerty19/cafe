@@ -14,9 +14,9 @@ use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
 
 // Import requests
-use App\Http\Requests\Client\User\PostCreateRequest;
-use App\Http\Requests\Client\User\PostLoginRequest;
-use App\Http\Requests\Client\User\PostUpdateRequest;
+use App\Http\Requests\Client\User\UserRegisterRequest;
+use App\Http\Requests\Client\User\UserLoginRequest;
+use App\Http\Requests\Client\User\UserUpdateRequest;
 
 class UserController extends BaseController
 {
@@ -54,7 +54,7 @@ class UserController extends BaseController
     }
 
     // Sign in user
-    public function singin(UserLoginRequest $userLoginRequest) {
+    public function signin(UserLoginRequest $userLoginRequest) {
 
         // Validate user request data
         $userData = $userLoginRequest->validated();
@@ -66,7 +66,7 @@ class UserController extends BaseController
         );
 
         // Login through service
-        $this->userService->singin($userLoginDTO);
+        $this->userService->signin($userLoginDTO);
     }
 
     // User update

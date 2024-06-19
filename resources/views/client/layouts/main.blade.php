@@ -69,7 +69,7 @@
 			</div>
 		</div>
 	</header><!-- #header -->
-
+	
 	@yield('content')
 
 	<!-- start footer Area -->

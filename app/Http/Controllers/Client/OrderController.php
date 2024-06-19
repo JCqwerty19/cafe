@@ -27,7 +27,7 @@ class OrderController extends BaseController
         ];
 
         // Show create order page
-        return view('client.order', $variables);
+        return view('client.main.order', $variables);
     }
 
     // Make order

@@ -21,6 +21,6 @@ class MainController extends BaseController
         ];
 
         // Show main page
-        return view('client.index', $variables);
+        return view('client.main.index', $variables);
     }
 }
