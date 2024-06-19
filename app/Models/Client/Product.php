@@ -5,7 +5,7 @@ namespace App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Product extends Model
 {
     // Import traits
     use SoftDeletes;

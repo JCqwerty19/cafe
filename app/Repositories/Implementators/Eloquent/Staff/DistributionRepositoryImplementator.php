@@ -18,7 +18,7 @@ class DistributionRepositoryImplementator implements DistributionRepositoryInter
         // Checking and distribution
         if ($orderDTO->getObtaining() === 'pickup') {
 
-            static::orderPickUp($order);
+            static::orderPickup($order);
 
         } else if ($orderDTO->getObtaining() === 'hall') {
 
@@ -39,12 +39,14 @@ class DistributionRepositoryImplementator implements DistributionRepositoryInter
 
     }
 
-    public static function orderPickUp(Order $order): void {
+    public static function orderPickup(Order $order): void {
         $order->status = 'Order waiting for you';
+        $order->save();
     }
 
     public static function orderHall(Order $order): void {
         $order->status = 'Ready';
+        $order->save();
     }
 
     public static function orderDelivery(Order $order): void {

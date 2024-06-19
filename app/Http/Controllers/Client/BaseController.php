@@ -5,19 +5,21 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+// Import services
 use App\Services\Client\OrderService;
+use App\Services\Client\PostService;
+use App\Services\Client\UserService;
 
 class BaseController extends Controller
 {
-    // Client base controller constructor
+    // Construct base for the client side of project
     public function __construct(
-        protected OrderService $orderService,
+        public OrderService $orderService,
+        public PostService $postService,
+        public UserService $userService,
     ) {
         $this->orderService = $orderService;
-    }
-
-    // Order service getter
-    public function getOrderService() {
-        return $this->orderService;
+        $this->postService = $postService;
+        $this->userService = $userService;
     }
 }

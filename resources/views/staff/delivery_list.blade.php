@@ -1,7 +1,7 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Deliver list
+Delivery list
 @endsection
 
 @section('content')

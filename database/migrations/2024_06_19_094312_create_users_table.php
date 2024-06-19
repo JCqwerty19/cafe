@@ -13,14 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('delivery_orders', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('courier_id');
-            $table->unsignedBigInteger('order_id');
-            $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');
         });
     }
 
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('delivery_orders');
+        Schema::dropIfExists('users');
     }
 };

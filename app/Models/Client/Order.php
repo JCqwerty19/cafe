@@ -2,7 +2,6 @@
 
 namespace App\Models\Client;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -11,11 +10,14 @@ use APp\Models\Staff\DeliveryOrders;
 
 class Order extends Model
 {
-    use HasFactory;
+    // Import traits
     use SoftDeletes;
 
+    // Gaining access to CRUD producs
     protected $guarded = false;
 
+    // ========================================
+    
     public function items() {
         return $this->hasMany(OrderItems::class);
     }

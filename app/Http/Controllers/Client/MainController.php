@@ -5,26 +5,22 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
-use App\Models\Admin\Product;
+// Import models
+use App\Models\Client\Product;
 use App\Models\Client\Post;
-use App\Models\Client\Order;
 
 class MainController extends BaseController
 {
+    // Show main page
     public function index() {
+
+        // Objects for the main page
         $variables = [
             'products' => Product::all(),
             'posts' => Post::all(),
         ];
 
+        // Show main page
         return view('client.index', $variables);
-    }
-
-    public function table() {
-        $variables = [
-            'orders' => Order::all(),
-        ];
-
-        return view('client.hall', $variables);
     }
 }

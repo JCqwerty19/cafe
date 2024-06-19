@@ -5,69 +5,77 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
-use App\Models\Admin\Product;
-use App\Http\Requests\OrderRequest;
+// Import models
+use App\Models\Client\Product;
+use App\Models\Client\Order;
+use App\Models\Client\User;
 
-use App\DTO\Client\OrderMakeDTO;
-use App\DTO\Client\OrderItemsDTO;
+// Import DTO
+use App\DTO\Client\Order\OrderCreateDTO;
+
+// Import requests
+use App\Http\Requests\Client\Order\OrderCreateRequest;
 
 class OrderController extends BaseController
 {
-    // Show order create view
+    // Create order
     public function create() {
-
-        // Collect variables for order create view
+        
+        // Objects for the create order page
         $variables = [
             'products' => Product::all(),
         ];
 
-        // Show order create view
+        // Show create order page
         return view('client.order', $variables);
     }
 
-    // ===============================================
-
     // Make order
-    public function make(OrderRequest $orderRequest) {
+    public function make(OrderCreateRequest $orderRequest) {
 
-        // Validate incoming data
+        // Validate order request data
         $orderData = $orderRequest->validated();
 
-        // Create order DTO to show params
-        $orderDTO = new OrderMakeDTO(
+        // Create DTO to show params for making order
+        $orderCreateDTO = new OrderCreateDTO(
             customer_name: $orderData['customer_name'],
             customer_phone: $orderData['customer_phone'],
             obtaining: $orderData['obtaining'],
-            address: $orderData['address'],
+            address: $orderData['obtaining'],
             total_price: $orderData['total_price'],
             additional_price: $orderData['additional_price'],
         );
 
-        // Make and gain order
-        $order = $this->getOrderService()->make($orderDTO);
+        // Make order through service
+        $this->orderService->make($orderCreateDTO);
+    }
 
-        // Create order items DTO to show params
-        $orderItemsDTO = new OrderItemsDTO(
-            order_id: $order->id,
-            items: $orderData['items'],
-        );
+    // List order
+    public function list() {
 
-        // Put order items
-        $this->getOrderService()->putOrderItems($orderItemsDTO);
+        // Get current user
+        $user = User::find(auth()->user()->id);
+        
+        // Objects for the list order page
+        $variables = [
+            'orders' => $user->orders()->get(),
+        ];
+
+        // Show list order page
+        //return view('client.orders', $variables);
+    }
+
+    // Distribute order
+    public function distirbute(Order $order) {
+
+        // Distribute order through service
+        $this->orderService->distirbute($order->id);
+    }
+
+    // Delete order
+    public function delete(Order $order) {
+
+        // Delete order through service
+        $this->orderService->delete($order->id);
     }
 }
-
-
-// массив товаров // имя, количество, сумма
-// далее создаем в БД новый объект заказ
-// Отправляем на кухню
-
-// total-price = цена
-// customer-name = имя заказчика
-// customer-phone = номер заказчика
-// доставка или самомывоз bool
-// address адрес
-// items[] массив(
-//      product_id = id продука
-//      amount = arr
-// )
