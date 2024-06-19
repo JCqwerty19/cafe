@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'Client/MainController@index')->name('main.index');
-Route::get('/post/{}', 'Client/PostController@read')->name('post.read');
+Route::get('/post/{post}', 'Client/PostController@read')->name('post.read');
 
 Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
     

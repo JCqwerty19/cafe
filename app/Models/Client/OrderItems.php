@@ -10,8 +10,7 @@ use App\Models\Client\Order;
 
 class OrderItems extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $guarded = false;
 

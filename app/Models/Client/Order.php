@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Client\OrderItems;
 use APp\Models\Staff\DeliveryOrders;
 
+use App\Models\Client\User;
+
 class Order extends Model
 {
     // Import traits
@@ -15,6 +17,11 @@ class Order extends Model
 
     // Gaining access to CRUD producs
     protected $guarded = false;
+
+    // Get order user function
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 
     // ========================================
     

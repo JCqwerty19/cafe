@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Client;
+namespace App\DTO\Client\Order;
 
 class OrderItemsDTO {
 

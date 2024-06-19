@@ -84,6 +84,7 @@ class UserController extends BaseController
         
         // Create DTO to show data for update user info
         $userUpdateDTO = new UserUpdateDTO(
+            user_id: auth()->user()->id,
             username: $userData['username'],
             email: $userData['email'],
             phone: $userData['phone'],

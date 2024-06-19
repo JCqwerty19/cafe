@@ -38,8 +38,7 @@ class OrderController extends BaseController
 
         // Create DTO to show params for making order
         $orderCreateDTO = new OrderCreateDTO(
-            customer_name: $orderData['customer_name'],
-            customer_phone: $orderData['customer_phone'],
+            user_id: auth()->user()->id,
             obtaining: $orderData['obtaining'],
             address: $orderData['obtaining'],
             total_price: $orderData['total_price'],
