@@ -86,6 +86,6 @@ class PostController extends BaseController
     public function delete(Post $post) {
 
         // Delete post through service
-        $this->postService->delete($post);
+        $this->postService->delete($post->id);
     }
 }

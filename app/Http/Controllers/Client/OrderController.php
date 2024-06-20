@@ -12,6 +12,7 @@ use App\Models\Client\User;
 
 // Import DTO
 use App\DTO\Client\Order\OrderCreateDTO;
+use App\DTO\Client\Order\OrderItemsDTO;
 
 // Import requests
 use App\Http\Requests\Client\Order\OrderCreateRequest;
@@ -46,7 +47,16 @@ class OrderController extends BaseController
         );
 
         // Make order through service
-        $this->orderService->make($orderCreateDTO);
+        $order = $this->orderService->make($orderCreateDTO);
+
+        // Create DTO to show params for putting order items
+        $orderItemsDTO = new OrderItemsDTO(
+            order_id: $order->id,
+            array: $orderData['items'],
+        );
+
+        // Put order items through service
+        $this->orderService->putOrderItems($orderItemsDTO);
     }
 
     // List order

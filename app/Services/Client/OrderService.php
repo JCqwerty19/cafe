@@ -2,20 +2,21 @@
 
 namespace App\Services\Client;
 
+// Import repository interface
+use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
+
 // Import Models
 use App\Models\Client\Order;
 
 // Import DTO
-use App\DTO\Client\OrderMakeDTO;
-use App\DTO\Client\OrderItemsDTO;
-
-use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
+use App\DTO\Client\Order\OrderCreateDTO;
+use App\DTO\Client\Order\OrderItemsDTO;
 
 class OrderService
 {
     // Construction order service
     public function __construct(
-        protected OrderRepositoryInterface $orderRepositoryInterface,
+        public OrderRepositoryInterface $orderRepositoryInterface,
     ) {
         $this->orderRepositoryInterface = $orderRepositoryInterface;
     }
@@ -23,20 +24,19 @@ class OrderService
     // ===============================================
 
     // Order make function
-    public function make(OrderMakeDTO $orderDTO): Order {
+    public function make(OrderCreateDTO $orderDTO): Order {
 
         // Create order DTO to show params
-        $orderDTO = new OrderMakeDTO(
-            customer_name: $orderDTO->getCustomerName(),
-            customer_phone: $orderDTO->getCustomerPhone(),
-            obtaining: $orderDTO->getObtaining(),
-            address: $orderDTO->getAddress(),
-            total_price: $orderDTO->getTotalPrice(),
-            additional_price: $orderDTO->getAdditionalPrice(),
+        $orderDTO = new OrderCreateDTO(
+            user_id: $orderDTO->user_id,
+            obtaining: $orderDTO->obtaining,
+            address: $orderDTO->address,
+            total_price: $orderDTO->total_price,
+            additional_price: $orderDTO->additional_price,
         );
 
         // Make order in repository and return
-        return $this->getOrderRepositoryInterface()->make($orderDTO);
+        return $this->orderRepositoryInterface->make($orderDTO);
     }
 
     // ===============================================
@@ -46,17 +46,25 @@ class OrderService
         
         // Create order items DTO to show params
         $orderItemsDTO = new OrderItemsDTO(
-            order_id: $orderItemsDTO->getOrderId(),
-            items: $orderItemsDTO->getItems(),
+            order_id: $orderItemsDTO->order_id,
+            items: $orderItemsDTO->items,
         );
 
+        // Put order items in repository
         $this->getOrderRepositoryInterface()->putOrderItems($orderItemsDTO);
     }
 
-    // ===============================================
+    // Duistirbute orders function
+    public function distirbute(int $order_id) {
 
-    // Order Repository Interface getter
-    public function getOrderRepositoryInterface(): OrderRepositoryInterface {
-        return $this->orderRepositoryInterface;
+        // Distirbute order in repository
+        $this->orderRepositoryInterface->distirbute($order_id);
+    }
+
+    // Delete order fucntion
+    public function delete(int $order_id) {
+
+        // Delete order in repository
+        $this->orderRepositoryInterface->delete($order_id);
     }
 }

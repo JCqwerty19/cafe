@@ -99,10 +99,10 @@ class DeliveryController extends BaseController
         $this->deliveryService->renew($courierUpdateDTO);
     }
 
-    // Logout user
+    // Logout courier
     public function logout(Courier $courier) {
 
-        // Logoout user through service
+        // Logoout courier through service
         $this->deliveryService->logout($courier->id);
     }
 
@@ -113,6 +113,7 @@ class DeliveryController extends BaseController
         $this->deliveryService->delete($courier->id);
     }
 
+    // Delivery table
     public function table() {
         $variables = [
             'orders' => Order::where('obtaining', 'delivery')->get(),
