@@ -64,6 +64,12 @@
 						<li><a href="#about">About</a></li>
 						<li><a href="#coffee">Coffee</a></li>
 						<li><a href="#blog">Blog</a></li>
+						<li>
+							<form action="{{ route('user.logout') }}" method="POST">
+								@csrf
+								<button type="submit">Logout</button>
+							</form>
+						</li>
 					</ul>
 				</nav><!-- #nav-menu-container -->
 			</div>

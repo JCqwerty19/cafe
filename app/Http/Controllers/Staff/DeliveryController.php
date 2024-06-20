@@ -116,7 +116,7 @@ class DeliveryController extends BaseController
     // Delivery table
     public function table() {
         $variables = [
-            'orders' => Order::where('obtaining', 'delivery')->get(),
+            'orders' => Order::where('status', 'Your order waiting for courier')->get(),
         ];
 
         return view('staff.delivery.table', $variables);

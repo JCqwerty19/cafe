@@ -51,18 +51,18 @@ class OrderService
         );
 
         // Put order items in repository
-        $this->getOrderRepositoryInterface()->putOrderItems($orderItemsDTO);
+        $this->orderRepositoryInterface->putOrderItems($orderItemsDTO);
     }
 
     // Duistirbute orders function
-    public function distirbute(int $order_id) {
+    public function distirbute(int $order_id): void {
 
         // Distirbute order in repository
         $this->orderRepositoryInterface->distirbute($order_id);
     }
 
     // Delete order fucntion
-    public function delete(int $order_id) {
+    public function delete(int $order_id): void {
 
         // Delete order in repository
         $this->orderRepositoryInterface->delete($order_id);

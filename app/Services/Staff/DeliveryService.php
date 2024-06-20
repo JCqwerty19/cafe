@@ -6,7 +6,10 @@ namespace App\Services\Staff;
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
 
 // Import DTO
-use App\DTO\Staff\Delivery\DeliveryDTO;
+use App\DTO\Staff\Courier\CourierCreateDTO;
+use App\DTO\Staff\Courier\CourierLoginDTO;
+use App\DTO\Staff\Courier\CourierUpdateDTO;
+
 
 class DeliveryService
 {
@@ -36,7 +39,7 @@ class DeliveryService
         $this->deliveryRepositoryInterface->signin($courierLoginDTO);
     }
 
-    public function renew(CourierUpdateDTO $courierUpdateDTO) {
+    public function renew(CourierUpdateDTO $courierUpdateDTO): void {
         $courierUpdateDTO = new CourierUpdateDTO(
             user_id: $courierUpdateDTO->user_id,
             couriername: $courierUpdateDTO->couriername,
@@ -44,38 +47,25 @@ class DeliveryService
             phone: $courierUpdateDTO->phone,
             password: $courierUpdateDTO->password,
         );
+
+        $this->deliveryRepositoryInterface->renew($courierUpdateDTO);
     }
 
     // Logout courier
-    public function logout(int $courier_id) {
+    public function logout(int $courier_id): void {
 
         // Logoout courier in repository
-        $this->deliveryService->logout($courier_id);
+        $this->deliveryRepositoryInterface->logout($courier_id);
     }
 
     // Delete an account
-    public function delete(int $courier_id) {
+    public function delete(int $courier_id): void {
 
         // Delete an account in repository
-        $this->deliveryService->delete($courier_id);
+        $this->deliveryRepositoryInterface->delete($courier_id);
     }
 
-
-
-
-
-
-
-
-
-
-
-    public function deliver(DeliveryDTO $deliveryDTO) {
-        $deliveryDTO = new DeliveryDTO(
-            courier_id: $deliveryDTO->getCourierId(),
-            order_id: $deliveryDTO->getOrderId(),
-        );
-
-        $this->getDeliveryRepositoryInterface()->deliver($deliveryDTO);
+    public function deliver(int $order_id): void {
+        $this->deliveryRepositoryInterface->deliver($courier_id);
     }
 }

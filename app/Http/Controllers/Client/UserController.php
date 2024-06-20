@@ -6,7 +6,7 @@ use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
 // Import models
-use App\Models\Client\User;
+use App\Models\User;
 
 // Import DTO
 use App\DTO\Client\User\UserCreateDTO;

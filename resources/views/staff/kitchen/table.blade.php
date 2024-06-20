@@ -36,7 +36,7 @@ Orders list
                         </tr>
                         @endforeach
                     </tbody>
-                    <form action="{{ route('distribution.distribute', $order) }}" method="POST">
+                    <form action="{{ route('order.distribute', $order) }}" method="POST">
                         @csrf
                         <button class="btn btn-success" type="submit">Issued</button>
                     </form>

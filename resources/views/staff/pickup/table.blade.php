@@ -21,13 +21,13 @@ Delivery orders
             @foreach($orders as $order)
             <tr>
                 <td>{{ $order->id }}</td>
-                <td>{{ $order->customer_name }}</td>
-                <td>{{ $order->customer_phone }}</td>
+                <td>{{ $order->user->username }}</td>
+                <td>{{ $order->user->phone }}</td>
                 <td>${{ $order->total_price }}</td>
                 <td>
-                    <form action="{{ route('order.close', $order) }}" method="POST">
+                    <form action="#" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-success">Picked up</button>
+                        <button id="button" type="submit" class="btn btn-success">Picked up</button>
                     </form>
                 </td>
             </tr>

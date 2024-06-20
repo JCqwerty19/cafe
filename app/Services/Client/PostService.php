@@ -3,7 +3,7 @@
 namespace App\Services\Client;
 
 // Import repository interface
-use App\Repository\Interfaces\Client\PostRepositoryInterface;
+use App\Repositories\Interfaces\Client\PostRepositoryInterface;
 
 // Import DTO
 use App\DTO\Client\Post\PostCreateDTO;
@@ -19,7 +19,7 @@ class PostService
     }
     
     // Post make fucntion
-    public function make(PostCreateDTO $postCreateDTO) {
+    public function make(PostCreateDTO $postCreateDTO): void {
 
         // Create DTO to show params for creating post
         $postCreateDTO = new PostCreateDTO(
@@ -32,7 +32,7 @@ class PostService
     }
 
     // Post renew fucntion 
-    public function renew(PostUpdateDTO $postUpdateDTO) {
+    public function renew(PostUpdateDTO $postUpdateDTO): void {
 
         // Create DTO to show params for renew post
         $postUpdateDTO = new PostUpdateDTO(
@@ -46,7 +46,7 @@ class PostService
     }
 
     // Post delete fucntion
-    public function delete(int $post_id) {
+    public function delete(int $post_id): void {
 
         // Delete post in repository
         $this->postRepositoryInterface->delete($post_id);

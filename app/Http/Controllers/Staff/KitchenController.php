@@ -15,6 +15,6 @@ class KitchenController extends BaseController
             'orders' => Order::where('status', 'Preparing')->get(),
         ];
 
-        return view('staff.kitchen.table');
+        return view('staff.kitchen.table', $variables);
     }
 }

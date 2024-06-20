@@ -2,30 +2,189 @@
 
 namespace App\Repositories\Implementators\Eloquent\Staff;
 
+// Import interfaces
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
 
-use App\DTO\Staff\DeliveryDTO\DeliveryDTO;
+// Import models
+use App\Models\Staff\Courier;
+use App\Models\Staff\Deliveries;
 
-use App\Models\Staff\DeliveryList;
+// Import DTO
+use App\DTO\Staff\Courier\CourierCreateDTO;
+use App\DTO\Staff\Courier\CourierLoginDTO;
+use App\DTO\Staff\Courier\CourierUpdateDTO;
 
 class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
 {
-    public function deliver(DeliveryDTO $deliveryDTO) {
-        $delivery = static::collectDeliveryData($deliveryDTO);
+    // Courier make function
+    public function make(CourierCreateDTO $courierCreateDTO): void {
 
-        static::createDelivery($delivery);
+        // Hash password
+        $hashedPassword = static::hashPassword($courierCreateDTO->password);
+
+        // Collect courier data
+        $courierData = static::collectCourierParams($courierCreateDTO, $hashedPassword);
+
+        // Make courier account
+        $courier = static::createCourier($courierData);
+
+        // Login courier
+        static::courierLogin($courier);
     }
 
-    public static function collectDeliveryData(DeliveryDTO $deliveryDTO): array {
-        $delivery = [
-            'courier_id' => $deliveryDTO->getCourierId(),
-            'order_id' => $deliveryDTO->getOrderId(),
+    // Sigin function
+    public function signin(CourierLoginDTO $courierLoginDTO): void {
+
+        // Collect courier data
+        $courierLoginData = static::collectCourierLoginParams($courierLoginDTO);
+
+        // Sigin in courier
+        static::courierLogin($courierLoginData);
+    }
+
+    // Renew courier info function
+    public function renew(CourierUpdateDTO $courierUpdateDTO): void {
+
+        // Find courier
+        $courier = static::findCourier($courierUpdateDTO->courier_id);
+
+        // Hash new password
+        $hashedPassword = static::hashPassword($courierUpdateDTO->password);
+
+        // Collect new courier data
+        $courierData = static::collectCourierUpdateParams($courierUpdateDTO, $hashedPassword);
+
+        // Update courier data
+        static::updateCourier($courierData, $courier);
+    }
+
+    // Logout function
+    public function logout(): void {
+        static::logoutCourier($courier);
+    }
+
+    // Courier delete function
+    public function delete(int $courier_id): void {
+
+        // Find courier
+        $courier = static::findCourier($courier_id);
+
+        // Delete courier
+        static::deleteCourier($courier);
+    }
+
+    public function deliver(int $order_id): void {
+        $courier_id = auth()->user()->id;
+
+        static::deliverOrder($courier_id, $order_id);
+    }
+
+    // COURIER MAKE STATIC FUNCTIONS
+    // ==================================================
+
+    // Collect courier create params
+    public static function collectCourierParams(CourierCreateDTO $courierCreateDTO, string $hashedPassword): array {
+
+        // Collect courier data in array
+        $courierData = [
+            'couriername' => $courierCreateDTO->couriername,
+            'email' => $courierCreateDTO->email,
+            'phone' => $courierCreateDTO->phone,
+            'password' => $hashedPassword,
         ];
 
-        return $delivery;
+        // Return data
+        return $courierData;
     }
 
-    public static function createDelivery(array $delivery): void {
-        DeliveryList::create($delivery);
+    // Create or return new or alredy created courier (checking email)
+    public static function createCourier(array $courierData): Courier {
+        return Courier::firstOrCreate(['email' => $courierData['email']], $courierData);
+    }
+
+    // COURIER SIGNIN STATIC FUNCTIONS
+    // ===================================================
+
+    // Collect courier data for login
+    public static function collectCourierLoginParams(CourierLoginDTO $courierLoginDTO): array {
+
+        // Collect courier data in array
+        $courierLoginData = [
+            'email' => $courierLoginDTO->email,
+            'password' => $courierLoginDTO->password,
+        ];
+
+        // Return data
+        return $courierLoginData;
+    }
+
+    // COURIER SIGNIN STATIC FUNCTIONS
+    // ===================================================
+
+    // Collect new courier data
+    public static function collectCourierUpdateParams(CourierUpdateDTO $courierUpdateDTO, $hashedPassword): array {
+
+        // Collect params in array
+        $courierData = [
+            'couriername' => $courierUpdateDTO->couriername,
+            'email' => $courierUpdateDTO->email,
+            'phone' => $courierUpdateDTO->phone,
+            'password' => $hashedPassword,
+        ];
+
+        // Return it
+        return $courierData;
+    }
+
+    // Update courier data
+    public static function updateCourier(array $courierData, $courier): void {
+        $courier->update($courierData);
+    }
+
+    // GENERAL STATIC FUNCTIONS
+    // ===================================================
+
+    // Find and return courier
+    public static function findCourier(int $courier_id): Courier {
+        return Courier::find($courier_id);
+    }
+
+    // Hash password
+    public static function hashPassword(string $password): string {
+        return Hash::make($password);
+    }
+
+    // Login function
+    public static function courierLogin($courier): void {
+
+        // Check which type courier (it's new courier or alredy created courier)
+        if ($courier instanceof Courier) {
+            Auth::login($courier);
+        } else {
+            Auth::attempt($courier);
+        }
+    }
+
+    // Logout courier function
+    public static function logoutCourier(): void {
+        Auth::logout();
+    }
+
+    // Delete courier account function
+    public static function deleteCourier(Courier $courier): void {
+        $courier->delete();
+    }
+
+    public function findOrder(int $order_id): Order {
+        return Order::find($order_id);
+    }
+
+    public static function deliverOrder(int $courier_id, int $order_id) {
+        $data = [
+            'courier_id' => $courier_id,
+            'order_id' => $order_id,
+        ];
+
+        Deliveries::create($data);
     }
 }

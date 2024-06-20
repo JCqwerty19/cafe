@@ -12,8 +12,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/order', 'Client\OrderController@create')->name('order.create');
-Route::get('/account/update/{user}', 'Client\UserController@update')->name('user.update');
 
 Route::get('/', 'Client\MainController@index')->name('main.index');
 Route::get('/post/{post}', 'Client\PostController@read')->name('post.read');
@@ -35,24 +33,24 @@ Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    //Route::get('/account/update/{user}', 'Client\UserController@update')->name('user.update');
+    Route::get('/account/update/{user}', 'Client\UserController@update')->name('user.update');
     Route::patch('/account/update/{user}', 'Client\UserController@renew')->name('user.renew');
 
     Route::post('/logout', 'Client\UserController@logout')->name('user.logout');
     Route::delete('/account/delete/{user}', 'Client\UserController@delete')->name('user.delete');
 
-    //Route::get('/delivery/update/{user}', 'Client\DeliveryController@update')->name('delivery.update');
+    Route::get('/delivery/update/{user}', 'Client\DeliveryController@update')->name('delivery.update');
     Route::patch('/delivery/update/{courier}', 'Client\DeliveryController@renew')->name('delivery.renew');
 
     Route::post('/delivery/logout', 'Client\DeliveryController@logout')->name('delivery.logout');
     Route::delete('/delivery/delete/{courier}', 'Client\DeliveryController@delete')->name('delivery.delete');
 
-    //Route::get('/order', 'Client\OrderController@create')->name('order.create');
+    Route::get('/order', 'Client\OrderController@create')->name('order.create');
     Route::post('/order', 'Client\OrderController@make')->name('order.make');
 
     Route::get('/order/list', 'Client\OrderController@list')->name('order.list');
 
-    Route::post('/distirbute/{order}', 'Client\OrderController@distirbute')->name('order.distirbute');
+    Route::post('/distirbute/{order}', 'Client\OrderController@distirbute')->name('order.distribute');
 
     Route::delete('/order/delete/{order}', 'Client\OrderController@delete')->name('order.delete');
 });
@@ -69,7 +67,7 @@ Route::group(['middleware' => 'admin'], function () {
     // Routes to make products
 });
 
-Route::group(['middleware' => 'staff'], function () {
+Route::group(['middleware' => 'auth'], function () {
     Route::get('/kitchen/table', 'Staff\KitchenController@table')->name('kitchen.table');
     
     Route::get('/hall/index', 'Staff\HallController@index')->name('hall.index');

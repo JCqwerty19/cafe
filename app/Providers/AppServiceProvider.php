@@ -4,14 +4,20 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+
+
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Client\OrderRepositoryImplementator;
 
-use App\Repositories\Interfaces\Staff\DistributionRepositoryInterface;
-use App\Repositories\Implementators\Eloquent\Staff\DistributionRepositoryImplementator;
+use App\Repositories\Interfaces\Client\PostRepositoryInterface;
+use App\Repositories\Implementators\Eloquent\Client\PostRepositoryImplementator;
+
+use App\Repositories\Interfaces\Client\UserRepositoryInterface;
+use App\Repositories\Implementators\Eloquent\Client\UserRepositoryImplementator;
 
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Staff\DeliveryRepositoryImplementator;
+
 
 
 class AppServiceProvider extends ServiceProvider
@@ -34,7 +40,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(OrderRepositoryInterface::class, OrderRepositoryImplementator::class);
-        $this->app->bind(DistributionRepositoryInterface::class, DistributionRepositoryImplementator::class);
+        $this->app->bind(PostRepositoryInterface::class, PostRepositoryImplementator::class);
+        $this->app->bind(UserRepositoryInterface::class, UserRepositoryImplementator::class);
         $this->app->bind(DeliveryRepositoryInterface::class, DeliveryRepositoryImplementator::class);
     }
 }

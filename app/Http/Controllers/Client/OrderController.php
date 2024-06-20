@@ -52,7 +52,7 @@ class OrderController extends BaseController
         // Create DTO to show params for putting order items
         $orderItemsDTO = new OrderItemsDTO(
             order_id: $order->id,
-            array: $orderData['items'],
+            items: $orderData['items'],
         );
 
         // Put order items through service

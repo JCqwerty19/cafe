@@ -12,7 +12,7 @@ class PickupController extends BaseController
 {
     public function table() {
         $variables = [
-            'orders' => Order::where('obtaining', 'pickup')->get(),
+            'orders' => Order::where('status', 'Your order waiting for you')->get(),
         ];
 
         return view('staff.pickup.table', $variables);

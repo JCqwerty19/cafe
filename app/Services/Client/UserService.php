@@ -6,9 +6,9 @@ namespace App\Services\Client;
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
 
 // Import DTO
-use App\DTO\Client\UserCreateDTO;
-use App\DTO\Client\UserLoginDTO;
-use App\DTO\Client\UserUpdateDTO;
+use App\DTO\Client\User\UserCreateDTO;
+use App\DTO\Client\User\UserLoginDTO;
+use App\DTO\Client\User\UserUpdateDTO;
 
 class UserService
 {
@@ -20,7 +20,7 @@ class UserService
     }
     
     // User make function
-    public function make(UserCreateDTO $userCreateDTO) {
+    public function make(UserCreateDTO $userCreateDTO): void {
 
         // Create DTO to show params for user creating
         $userCreateDTO = new UserCreateDTO(
@@ -36,7 +36,7 @@ class UserService
     }
 
     // Signin function
-    public function signin(UserLoginDTO $userLoginDTO) {
+    public function signin(UserLoginDTO $userLoginDTO): void {
 
         // Create DTO to show params for login user
         $userLoginDTO = new UserLoginDTO(
@@ -49,7 +49,7 @@ class UserService
     }
 
     // Renew function
-    public function renew(UserUpdateDTO $userUpdateDTO) {
+    public function renew(UserUpdateDTO $userUpdateDTO): void {
 
         // Create DTO to show params for user updating
         $userUpdateDTO = new UserUpdateDTO(
@@ -66,14 +66,14 @@ class UserService
     }
 
     // Logout function
-    public function logout(int $user_id) {
+    public function logout(): void {
 
         // Logoout user in repository
-        $this->userRepositoryInterface->logout($user_id);
+        $this->userRepositoryInterface->logout();
     }
 
     // Delete fucntion
-    public function delete(int $user_id) {
+    public function delete(int $user_id): void {
 
         // Delete user in repository
         $this->userRepositoryInterface->delete($user_id);
