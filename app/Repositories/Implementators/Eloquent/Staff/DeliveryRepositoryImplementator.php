@@ -22,7 +22,15 @@ use App\DTO\Staff\Courier\CourierUpdateDTO;
 class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
 {
     // Courier make function
-    public function make(CourierCreateDTO $courierCreateDTO): void {
+    public function make(CourierCreateDTO $courierCreateDTO): bool {
+
+        // Check existanse couriers
+        if (!static::checkCouriers($courierCreateDTO->email)) {
+            return false;
+        }
+
+        // Check trashed users
+        static::checkTash($courierCreateDTO->email);
 
         // Hash password
         $hashedPassword = static::hashPassword($courierCreateDTO->password);
@@ -35,16 +43,18 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
 
         // Login courier
         static::courierLogin($courier);
+
+        return true;
     }
 
     // Sigin function
-    public function signin(CourierLoginDTO $courierLoginDTO): void {
+    public function signin(CourierLoginDTO $courierLoginDTO): bool {
 
         // Collect courier data
         $courierLoginData = static::collectCourierLoginParams($courierLoginDTO);
 
         // Sigin in courier
-        static::courierLogin($courierLoginData);
+        return static::courierLogin($courierLoginData);
     }
 
     // Renew courier info function
@@ -73,6 +83,9 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
 
         // Find courier
         $courier = static::findCourier($courier_id);
+
+        // Delete deliveries
+        static::deleteDeliveries($courier);
 
         // Delete courier
         static::deleteCourier($courier);
@@ -168,14 +181,29 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
     }
 
     // Login function
-    public static function courierLogin($courier): void {
+    public static function courierLogin($courier): ?bool {
 
-        // Check which type courier (it's new courier or alredy created courier)
-        if ($courier instanceof Courier) {
-            Auth::guard('courier')->login($courier);
+        // Check which type courier (it's new courier or already created courier)
+        if (is_array($courier)) {
+            
+            // Find the courier by email or other unique field
+            $courierModel = Courier::where('email', $courier['email'])->first();
+
+            if ($courierModel) {
+                Auth::guard('courier')->login($courierModel);
+            } else {
+                // Handle the case where the courier does not exist
+                return false;
+            }
+
         } else {
-            Auth::guard('courier')->attempt($courier);
+            Auth::guard('courier')->login($courier);
         }
+
+        return Auth::guard('courier')->attempt([
+            'email' => $courier['email'],
+            'password' => $courier['password'],
+        ]);
     }
 
     // Logout courier function
@@ -204,5 +232,35 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
     public function changeStatus(Order $order): void {
         $order->status = 'Courier will deliver it soon';
         $order->save();
+    }
+
+    public static function checkTash(string $email): void {
+        $user = Courier::onlyTrashed()->where('email', $email)->first();
+        if ($user) {
+            $user->forceDelete();
+        }
+    }
+
+    public static function checkCouriers(string $email): bool {
+        if (Courier::where('email', $email)->first() !== null) {
+            return false;
+        } 
+
+        return true;
+    }
+
+    public static function deleteDeliveries(Courier $courier): void {
+        $deliveries = $courier->deliveries;
+
+        foreach($deliveries as $delivery) {
+            $order = $delivery->order;
+
+            if ($order) {
+                $order->status = 'Your order waiting for courier';
+                $order->save();
+            }
+        }
+
+        $courier->deliveries()->delete();
     }
 }

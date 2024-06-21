@@ -4,7 +4,7 @@ namespace App\DTO\Staff\Courier;
 
 class CourierCreateDTO {
 
-    // Construction user create DTO
+    // Construction courier create DTO
     public function __construct(
         public string $couriername,
         public string $email,

@@ -4,7 +4,7 @@ namespace App\DTO\Staff\Courier;
 
 class CourierUpdateDTO {
 
-    // Construction user update DTO
+    // Construction courier update DTO
     public function __construct(
         public int $courier_id,
         public string $couriername,

@@ -13,8 +13,9 @@ Update post
                    <h3>Update post</h3>
                </div>
                <div class="card-body">
-                   <form action="{{ route('post.make') }}" method="POST">
+                   <form action="{{ route('post.renew', $post) }}" method="POST">
                     @csrf
+                    @method('patch')
                        <div class="form-group">
                            <label for="title">Title</label>
                            <input type="text" class="form-control" name="title" id="title" placeholder="Text title" value="{{ $post->title }}">
@@ -35,5 +36,5 @@ Update post
            </div>
        </div>
    </div>
-/div>
+</div>
 @endsection

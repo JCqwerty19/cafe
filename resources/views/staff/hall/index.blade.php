@@ -1,12 +1,12 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Cafe orders
+Hall orders
 @endsection
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Cafe orders</h1>
+    <h1 class="text-center mb-4">Orders</h1>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <tr>

@@ -16,12 +16,12 @@ Cafe
 			@foreach($products as $product)
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->name }}">
+                    <img src="{{ $product->image }}" class="card-img-top" alt="{{ $product->title }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $product->name }}</h5>
+                        <h5 class="card-title">{{ $product->title }}</h5>
                         <p class="card-text">{{ $product->content }}</p>
 						<h5 class="card-text">${{ $product->price }}</h5><br>
-                        <button class="btn btn-success" onclick="addToCart('{{ $product->name }}', '{{ $product->price }}', '{{ $product->id }}')">Add</button>
+                        <button class="btn btn-success" onclick="addToCart('{{ $product->title }}', '{{ $product->price }}', '{{ $product->id }}')">Add</button>
                     </div>
                 </div>
             </div>
@@ -61,17 +61,11 @@ Cafe
 			<!-- personal info -->
 			<div class="container mt-5">
     			<h2>Set your info</h2>
-    			<div class="form-group">
-    			    <label for="name">Name</label>
-    			    <input type="text" class="form-control" name="customer_name" id="name" placeholder="Text your name" value="{{ $user->username }}">
-					@error('customer_name')
-					<p class="text-danger">{{ $message }}</p>
-					@enderror
-    			</div>
+    			
     			<div class="form-group">
     			    <label for="phone">Phone number</label>
-    			    <input type="tel" class="form-control" name="customer_phone" id="phone" placeholder="Text your phone number" value="{{ $user->phone }}">
-					@error('customer_phone')
+    			    <input type="tel" class="form-control" name="phone" id="phone" placeholder="Text your phone number" value="{{ $user->phone }}">
+					@error('phone')
 					<p class="text-danger">{{ $message }}</p>
 					@enderror
     			</div>
@@ -106,10 +100,12 @@ Cafe
 				<!-- Total price -->
 				<h2>Total price: $<span id="total-price">0</span></h2>
 				<input type="text" name="total_price" class="invisible" id="total_price_input" value=""><br>
-    			<button type="submit" class="btn btn-primary">Sent</button>
+				<div id="inputs"></div>
+    			<button type="submit" class="btn btn-success">Order</button>
 			</div>
 			<!-- end personal info -->
 		</form>
+		
 		<!-- end form -->
     </div>
 </section>

@@ -4,6 +4,10 @@
 Login courier
 @endsection
 
+@section('button')
+<a href="{{ route('delivery.register') }}" type="button" class="btn btn-dark">Register</a>
+@endsection
+
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">

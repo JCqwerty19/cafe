@@ -23,4 +23,11 @@ class MainController extends BaseController
         // Show main page
         return view('client.main.index', $variables);
     }
+
+    // Show main page for staff
+    public function courier() {
+
+        // Show main page for staff
+        return view('staff.main.index');
+    }
 }

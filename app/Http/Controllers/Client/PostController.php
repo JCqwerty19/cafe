@@ -8,13 +8,13 @@ use Illuminate\Http\Request;
 // Import models
 use App\Models\Client\Post;
 
-// Import DTO
-use App\DTO\Client\Post\PostCreateDTO;
-use App\DTO\Client\Post\PostUpdateDTO;
-
 // Import requests
 use App\Http\Requests\Client\Post\PostCreateRequest;
 use App\Http\Requests\Client\Post\PostUpdateRequest;
+
+// Import DTO
+use App\DTO\Client\Post\PostCreateDTO;
+use App\DTO\Client\Post\PostUpdateDTO;
 
 class PostController extends BaseController
 {
@@ -33,8 +33,8 @@ class PostController extends BaseController
 
         // Create DTO to show params for making post
         $postCreateDTO = new PostCreateDTO(
-            title: $postData->title,
-            content: $postData->content,
+            title: $postData['title'],
+            content: $postData['content'],
         );
 
         // Make post through service
@@ -66,10 +66,11 @@ class PostController extends BaseController
         return view('client.post.update', $variables);
     }
 
+    // Post renew function
     public function renew(PostUpdateRequest $postUpdateRequest, Post $post) {
 
         // Validate post update request data
-        $postData = $postCreateRequest->validated();
+        $postData = $postUpdateRequest->validated();
 
         // Create DTO to show params for update post
         $postUpdateDTO = new PostUpdateDTO(

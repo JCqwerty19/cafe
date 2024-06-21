@@ -6,19 +6,38 @@ My orders
 
 @section('content')
 <div class="container">
-    <h1 class="my-4">Orders List</h1>
-
+    <h1 class="my-4">My orders</h1>
+    @error('delete')
+        <p class="text-danger">{{ $message }}</p> 
+    @enderror
     @foreach($orders as $order)
         <div class="card mb-3">
 
             <div class="card-header">
-                <strong>Order number: #{{ $order->id }}</strong> <br>
-                <strong>Order status: {{ $order->status }}</strong>
+                <strong>Order number: #{{ $order->id }}</strong><br>
+                <strong>Order status: {{ $order->status }}</strong><br>
+                <strong>Delivery: {{ $order->obtaining }} </strong><br>
+                <strong >Courier phone: 
+                    @if($order->delivery && $order->delivery->courier)
+                        +{{ $order->delivery->courier->phone }}
+                    @else
+                        Not declared
+                    @endif
+                </strong><br>
+                <strong>
+                     <h6>Order price: $<span id="order-price"></span></h6>
+                </strong>
+                <strong>
+                     <h6 >Service price: $<span id="additional-price">{{ $order->additional_price }}</span></h6>
+                </strong><br>
+                <strong>
+                    <h3>Totla price: $<span id="total-price">{{ $order->total_price }}</span></h3>
+                </strong>
             </div>
 
             <div class="card-body">
                 <table class="table table-striped">
-                <p><strong>Delivery: </strong>{{ $order->obtaining }}</p>
+                
                     <thead>
                         <tr>
                             <th>Product ID</th>
@@ -40,19 +59,14 @@ My orders
                         @method('delete')
                         <button class="btn btn-danger" type="submit">Delete</button>
                     </form>
+                    
                     <br><br>
-                </table>
+                </table>   
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                    @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                    @endforeach
-                    </ul>
-                </div>
-            @endif
         </div>
         @endforeach
+
+        @include('client.includes.order_scripts')
 </div>
-    @endsection
+@endsection
+

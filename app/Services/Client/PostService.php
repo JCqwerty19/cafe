@@ -23,8 +23,8 @@ class PostService
 
         // Create DTO to show params for creating post
         $postCreateDTO = new PostCreateDTO(
-            title: $postData->title,
-            content: $postData->content,
+            title: $postCreateDTO->title,
+            content: $postCreateDTO->content,
         );
 
         // Make post in repository

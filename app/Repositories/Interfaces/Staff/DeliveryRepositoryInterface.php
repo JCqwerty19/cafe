@@ -10,10 +10,10 @@ use App\DTO\Staff\Courier\CourierUpdateDTO;
 interface DeliveryRepositoryInterface
 {
     // Courier make function
-    public function make(CourierCreateDTO $courierCreateDTO): void;
+    public function make(CourierCreateDTO $courierCreateDTO): bool;
 
     // Courier signin function
-    public function signin(CourierLoginDTO $courierLoginDTO): void;
+    public function signin(CourierLoginDTO $courierLoginDTO): bool;
 
     // Courier renew function
     public function renew(CourierUpdateDTO $courierUpdateDTO): void;

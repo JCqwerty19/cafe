@@ -4,6 +4,10 @@
 Register courier
 @endsection
 
+@section('button')
+<a href="{{ route('delivery.login') }}" type="button" class="btn btn-dark">Login</a>
+@endsection
+
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -47,6 +51,9 @@ Register courier
                     </form>
                 </div>
                 <div class="card-footer text-center">
+                    @error('account')
+                    <p class="text-danger">{{ $message }}</p>
+                    @enderror
                     <a href="{{ route('delivery.login') }}">Alredy have an account? Login</a>
                 </div>
             </div>

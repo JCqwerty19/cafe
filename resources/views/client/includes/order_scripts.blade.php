@@ -3,3 +3,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="{{ asset('storage/client/js/order-table.js') }}"></script>
 <script src="{{ asset('storage/client/js/order-form.js') }}"></script>
+<script src="{{ asset('storage/client/js/order-price.js') }}"></script>

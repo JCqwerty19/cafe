@@ -45,13 +45,13 @@
     	      		<li><a href="{{ route('main.index') }}" class="btn btn-dark rounded-pill px-3">Home</a></li>
 					@if (Auth::user())
 
-					<li><a href="{{ route('order.create') }}">Order</a></li>
-					<li><a href="{{ route('user.orders') }}">My orders</a></li>
-					<li><a href="{{ route('user.update') }}">Settings</a></li>
+					<li><a href="{{ route('order.create') }}" class="btn btn-warning rounded-pill px-3">Order</a></li>
+					<li><a href="{{ route('user.orders') }}" class="btn btn-warning rounded-pill px-3">My orders</a></li>
+					<li><a href="{{ route('user.update') }}" class="btn btn-warning rounded-pill px-3">Settings</a></li>
 					<li>
 						<form action="{{ route('user.logout') }}" method="POST">
 							@csrf
-							<button type="submit">Logout</button>
+							<button type="submit" class="btn btn-gray rounded-pill px-3">Logout</button>
 						</form>
 					</li>
     	    	</ul>
@@ -78,7 +78,7 @@
 					<div class="single-footer-widget">
 						<h6>About Us</h6>
 						<p>
-						Welcome to our Coffee Cafe, where we serve exceptional, sustainably
+						Welcome to our Cafe, where we serve exceptional, sustainably
 						sourced coffee in a warm and inviting atmosphere. Our skilled baristas craft
 						each cup with passion, ensuring a delightful experience with every sip.
 						</p>

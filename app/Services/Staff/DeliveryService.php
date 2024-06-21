@@ -19,7 +19,7 @@ class DeliveryService
         $this->deliveryRepositoryInterface = $deliveryRepositoryInterface;
     }
 
-    public function make(CourierCreateDTO $courierCreateDTO) {
+    public function make(CourierCreateDTO $courierCreateDTO): bool {
         $courierCreateDTO = new CourierCreateDTO(
             couriername: $courierCreateDTO->couriername,
             email: $courierCreateDTO->email,
@@ -27,16 +27,16 @@ class DeliveryService
             password: $courierCreateDTO->password,
         );
 
-        $this->deliveryRepositoryInterface->make($courierCreateDTO);
+        return $this->deliveryRepositoryInterface->make($courierCreateDTO);
     }
 
-    public function singin(CourierLoginDTO $courierLoginDTO) {
+    public function singin(CourierLoginDTO $courierLoginDTO): bool {
         $courierLoginDTO = new CourierLoginDTO(
             email: $courierLoginDTO->email,
             password: $courierLoginDTO->password,
         );
 
-        $this->deliveryRepositoryInterface->signin($courierLoginDTO);
+        return $this->deliveryRepositoryInterface->signin($courierLoginDTO);
     }
 
     public function renew(CourierUpdateDTO $courierUpdateDTO): void {
@@ -59,10 +59,10 @@ class DeliveryService
     }
 
     // Delete an account
-    public function delete(int $courier_id): void {
+    public function delete(int $courier_id): bool {
 
         // Delete an account in repository
-        $this->deliveryRepositoryInterface->delete($courier_id);
+        return $this->deliveryRepositoryInterface->delete($courier_id);
     }
 
     public function deliver(int $order_id): void {

@@ -15,7 +15,8 @@
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             
                 @if (!Auth::guard('courier')->user())
-                <a href="{{ route('delivery.login') }}" type="button" class="btn btn-dark">Login / Register</a>
+
+                @yield('button')
                 
                 @else
                 <a href="{{ route('delivery.table') }}" type="button" class="btn btn-dark">Delivery table</a>

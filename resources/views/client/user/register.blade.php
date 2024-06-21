@@ -58,6 +58,9 @@ Register
                     </form>
                 </div>
                 <div class="card-footer text-center">
+                    @error('account')
+                    <p class="text-danger">{{ $message }}</p>
+                    @enderror
                     <a href="{{ route('user.login') }}">Alredy have an account? Login</a>
                 </div>
             </div>

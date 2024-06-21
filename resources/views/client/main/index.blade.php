@@ -65,19 +65,19 @@ Cafe
 		</div>
 		<div class="row">
 		@foreach($products as $product)
-				<div class="col-lg-4">
-					<div class="single-menu">
-						<div class="title-div justify-content-between d-flex">
-							<a href="{{ route('order.create') }}"><h4>{{ $product->name }}</h4></a>
-							<p class="price float-right">
-								${{ $product->price }}
-							</p>
-						</div>
-						<p>
-							{{ $product->content }}
+			<div class="col-lg-4">
+				<div class="single-menu">
+					<div class="title-div justify-content-between d-flex">
+						<a href="{{ route('order.create') }}"><h4>{{ $product->title }}</h4></a>
+						<p class="price float-right">
+							${{ $product->price }}
 						</p>
 					</div>
+					<p>
+						{{ $product->content }}
+					</p>
 				</div>
+			</div>
 		@endforeach
 		</div>
 	</div>
@@ -145,7 +145,7 @@ Cafe
 					<li><a href="#">Travel</a></li>
 					<li><a href="#">Life Style</a></li>
 				</ul>
-				<a href="#">
+				<a href="{{ route('post.read', $post) }}">
 					<h4>{{ $post->title }}</h4>
 				</a>
 				<p>

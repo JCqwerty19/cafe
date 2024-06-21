@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 // Routes for all
 Route::get('/', 'Client\MainController@index')->name('main.index');
 Route::get('/post/{post}', 'Client\PostController@read')->name('post.read');
+Route::get('/courier', 'Client\MainController@courier')->name('courier.index');
 
 
 // =============================================================================================
@@ -129,7 +130,7 @@ Route::group(['prefix' => 'hall'], function () {
 Route::group(['prefix' => 'pickup'], function () {
 
     // Pickup order list route
-    Route::get('/pickup/table', 'Staff\PickupController@table')->name('pickup.table');
+    Route::get('/table', 'Staff\PickupController@table')->name('pickup.table');
 });
 
 
@@ -142,27 +143,63 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 // Routes for authorized admin
-Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
+Route::group(['prefix' => 'admin'], function () {
+
+    Route::get('/', 'AdminController@admin')->name('admin.index');
 
     // Routes for manage posts
     Route::group(['prefix' => 'post'], function () {
 
+        Route::get('/index', 'AdminController@posts')->name('post.index');
+
         // Create post
-        Route::get('/post/create', 'Client\PostController@create')->name('post.create');
-        Route::post('/post/create', 'Client\PostConctroller@make')->name('post.make');
+        Route::get('/create', 'Client\PostController@create')->name('post.create');
+        Route::post('/create', 'Client\PostController@make')->name('post.make');
 
         // Update post
-        Route::get('/post/update/{post}', 'Client\PostController@update')->name('post.update');
-        Route::patch('/post/update/{post}', 'Client\PostController@renew')->name('post.renew');
+        Route::get('/update/{post}', 'Client\PostController@update')->name('post.update');
+        Route::patch('/update/{post}', 'Client\PostController@renew')->name('post.renew');
 
         // Delete post
-        Route::delete('/post/delete/{post}', 'Client\PostController@delete')->name('post.delete');
+        Route::delete('/delete/{post}', 'Client\PostController@delete')->name('post.delete');
     });
 
     // Routes for manage products
     Route::group(['prefix' => 'product'], function () {
+        Route::get('/index', 'AdminController@products')->name('product.index');
 
+        // Create post
+        Route::get('/create', 'Client\ProductController@create')->name('product.create');
+        Route::post('/create', 'Client\ProductController@make')->name('product.make');
+
+        // Update post
+        Route::get('/update/{product}', 'Client\ProductController@update')->name('product.update');
+        Route::patch('/update/{product}', 'Client\ProductController@renew')->name('product.renew');
+
+        // Delete post
+        Route::delete('/delete/{product}', 'Client\ProductController@delete')->name('product.delete');
     });
+
+    Route::get('/courier/index', 'AdminController@couriers')->name('courier.index');
+
+    Route::get('/users/index', 'AdminController@users')->name('user.index');    
 });
 
 // =============================================================================================
+
+// comments all code
+// git remote
+// git push
+// link
+
+// ==========
+// Order price problem
+// Restore password
+// Confirmation email
+// Admin login
+// Deletes
+// Active orders / deliveries
+// Posts manage
+// Products create and image
+// Order create error to no items
+// comments all blade

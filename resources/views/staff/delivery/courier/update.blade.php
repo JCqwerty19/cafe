@@ -1,7 +1,7 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Update courier
+Settings
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@ Update courier
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3>Update</h3>
+                    <h3>Settings</h3>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('delivery.renew') }}" method="POST">

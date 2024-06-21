@@ -1,25 +1,37 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Orders list
+Kitchen
 @endsection
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Orders' list</h1>
+    <h1 class="mb-4">Orders</h1>
     
         @foreach($orders as $order)
+        
+
         <div class="card mb-3">
 
             <div class="card-header">
-                <strong>Order number: #{{ $order->id }}</strong>
+                <strong>Order number: #{{ $order->id }}</strong><br>
+                <strong>Customer name: </strong>{{ $order->user->username }}
+                <p><strong>Customer phone: </strong>{{ $order->user->phone }}</p>
+                <br>
+                <strong>
+                     <h6>Order price: $<span id="order-price"></span></h6>
+                </strong>
+                <strong>
+                     <h6 >Service price: $<span id="additional-price">{{ $order->additional_price }}</span></h6>
+                </strong><br>
+                <strong>
+                    <h3>Totla price: $<span id="total-price">{{ $order->total_price }}</span></h3>
+                </strong>
             </div>
 
             <div class="card-body">
-                <strong>Customer name: </strong>{{ $order->user->username }}
-                <p><strong>Customer phone: </strong>{{ $order->user->phone }}</p>
                 <table class="table table-striped">
-                <p><strong>Delivery: </strong>{{ $order->obtaining }}</p>
+                
                     <thead>
                         <tr>
                             <th>Product ID</th>
@@ -40,12 +52,18 @@ Orders list
                         @csrf
                         <button class="btn btn-success" type="submit">Issued</button>
                     </form>
+                    
                     <br><br>
-                </table>
+                </table>   
             </div>
-            
         </div>
+
+        @include('client.includes.order_scripts')
+        
         @endforeach
+
+        
+
         <br><br><br><br>
 </div>
 @endsection

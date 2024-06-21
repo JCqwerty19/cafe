@@ -10,7 +10,7 @@ use App\DTO\Client\User\UserUpdateDTO;
 interface UserRepositoryInterface
 {
     // Make function
-    public function make(UserCreateDTO $userCreateDTO): void;
+    public function make(UserCreateDTO $userCreateDTO): bool;
 
     // Signin function
     public function signin(UserLoginDTO $userLoginDTO): bool;
@@ -22,5 +22,5 @@ interface UserRepositoryInterface
     public function logout(): void;
 
     // Delete function
-    public function delete(int $user_id): void;
+    public function delete(int $user_id): bool;
 }

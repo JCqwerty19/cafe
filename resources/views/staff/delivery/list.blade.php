@@ -1,7 +1,7 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Delivery orders
+My deliveries
 @endsection
 
 @section('content')
@@ -14,6 +14,7 @@ Delivery orders
                 <th>Address</th>
                 <th>Customer name</th>
                 <th>Customer number</th>
+                <th>Order price</th>
                 <th>Delivery price</th>
                 <th>Total price</th>
                 <th>Delivered</th>
@@ -26,6 +27,7 @@ Delivery orders
                 <td>{{ $order->obtaining }}</td>
                 <td>{{ $order->user->username }}</td>
                 <td>{{ $order->user->phone }}</td>
+                <td><span id="order-price"></span></td>
                 <td>$<span id="additional-price">{{ $order->additional_price }}</span></td>
                 <td>$<span id="total-price">{{ $order->total_price }}</span></td>
                 <td>
@@ -39,5 +41,7 @@ Delivery orders
             <!-- Дополнительные строки можно добавить здесь -->
         </tbody>
     </table>
+
+    @include('client.includes.order_scripts')
 </div>
 @endsection

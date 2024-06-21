@@ -20,7 +20,7 @@ class UserService
     }
     
     // User make function
-    public function make(UserCreateDTO $userCreateDTO): void {
+    public function make(UserCreateDTO $userCreateDTO): bool {
 
         // Create DTO to show params for user creating
         $userCreateDTO = new UserCreateDTO(
@@ -32,7 +32,7 @@ class UserService
         );
 
         // Make user in repository
-        $this->userRepositoryInterface->make($userCreateDTO);
+        return $this->userRepositoryInterface->make($userCreateDTO);
     }
 
     // Signin function

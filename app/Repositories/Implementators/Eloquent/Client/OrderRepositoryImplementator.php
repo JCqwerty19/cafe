@@ -8,6 +8,7 @@ use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 // Import models
 use App\Models\Client\Product;
 use App\Models\Client\Order;
+use App\Models\User;
 use App\Models\Client\OrderItems;
 
 // Import DTO
@@ -21,6 +22,8 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
 
         // Collect data for order
         $order = static::collectOrderParams($orderDTO, 'Preparing');
+
+        static::putUserNumber($orderDTO);
 
         // Create and return order
         return static::createOrder($order);
@@ -76,11 +79,26 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
     }
 
     public static function obtainingMethod(OrderCreateDTO $orderDTO): string {
+
         if ($orderDTO->obtaining === 'delivery') {
+            if (!$orderDTO->address) {
+                return "Need to clarify";
+            }
+
             return $orderDTO->address;
         }
 
         return $orderDTO->obtaining;
+        
+    }
+
+    public static function putUserNumber(OrderCreateDTO $orderDTO): void {
+        $user = User::find($orderDTO->user_id);
+
+        $user->phone = $orderDTO->phone;
+        $user->address = $orderDTO->address;
+
+        $user->save();
     }
 
     // Create order
@@ -102,7 +120,7 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
         $orderItem = [
             'order_id' => $orderItemsDTO->order_id,
             'product_id' => $item['product_id'],
-            'product_name' => $product->name,
+            'product_name' => $product->title,
             'quantity' => $item['quantity'],
         ];
 

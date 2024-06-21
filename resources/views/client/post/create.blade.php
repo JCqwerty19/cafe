@@ -35,5 +35,5 @@ Create post
            </div>
        </div>
    </div>
-/div>
+</div>
 @endsection

@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+use App\Models\Staff\Deliveries;
+
 class Courier extends Authenticatable
 {
     // Import traits
@@ -22,4 +24,8 @@ class Courier extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function deliveries() {
+        return $this->hasMany(Deliveries::class);
+    }
 }

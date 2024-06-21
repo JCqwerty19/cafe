@@ -10,7 +10,7 @@ Update
         <div class="col-md-6">
             <div class="card">
                 <div class="card-header text-center">
-                    <h3>Update</h3>
+                    <h3>Settings</h3>
                 </div>
                 <div class="card-body">
                     <form action="{{ route('user.renew') }}" method="POST">
@@ -64,6 +64,9 @@ Update
                 @method('delete')
                 <button class="btn-danger btn" type="submit">Delete</button>
             </form>
+            @error('delete')
+            <p class="text-danger">{{ $message }}</p>
+            @enderror
         </div>
     </div>
 </div>

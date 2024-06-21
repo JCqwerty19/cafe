@@ -37,10 +37,15 @@ use App\DTO\Client\User\UserUpdateDTO;
 class UserRepositoryImplementator implements UserRepositoryInterface {
     
     // User make function
-    public function make(UserCreateDTO $userCreateDTO): void {
+    public function make(UserCreateDTO $userCreateDTO): bool {
+
+        // Check existanse users
+        if (!static::checkUsers($userCreateDTO->email)) {
+            return false;
+        }
 
         // Check trashed users
-        static::checkTash($userCreateDTO);
+        static::checkTash($userCreateDTO->email);
 
         // Hash password
         $hashedPassword = static::hashPassword($userCreateDTO->password);
@@ -53,6 +58,8 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
 
         // Login user
         static::userLogin($user);
+
+        return true;
     }
 
     // Sigin function
@@ -87,13 +94,19 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
     }
 
     // User delete function
-    public function delete(int $user_id): void {
+    public function delete(int $user_id): bool {
 
         // Find user
         $user = static::findUser($user_id);
 
+        if (!static::checkOrders($user)) {
+            return false;
+        };
+
         // Delete user
         static::deleteUser($user);
+
+        return true;
     }
 
     // STATIC FUNCTIONS ===========================================================================
@@ -203,11 +216,27 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
         $user->delete();
     }
 
-    public static function checkTash(UserCreateDTO $userCreateDTO) {
-        $user = User::onlyTrashed()->where('email', $userCreateDTO->email)->first();
+    public static function checkTash(string $email): void {
+        $user = User::onlyTrashed()->where('email', $email)->first();
         if ($user) {
             $user->forceDelete();
         }
+    }
+
+    public static function checkUsers(string $email): bool {
+        if (User::where('email', $email)->first() !== null) {
+            return false;
+        } 
+
+        return true;
+    }
+
+    public static function checkOrders(User $user): ?bool {
+        if ($user->orders()->exists()) {
+            return false;
+        }
+
+        return true;
     }
 
     

@@ -10,12 +10,12 @@ use App\Models\Client\Product;
 use App\Models\Client\Order;
 use App\Models\Client\User;
 
+// Import requests
+use App\Http\Requests\Client\Order\OrderCreateRequest;
+
 // Import DTO
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
-
-// Import requests
-use App\Http\Requests\Client\Order\OrderCreateRequest;
 
 class OrderController extends BaseController
 {
@@ -42,6 +42,7 @@ class OrderController extends BaseController
         $orderCreateDTO = new OrderCreateDTO(
             user_id: auth()->user()->id,
             obtaining: $orderData['obtaining'],
+            phone: $orderData['phone'],
             address: $orderData['address'],
             total_price: $orderData['total_price'],
             additional_price: $orderData['additional_price'],
@@ -59,6 +60,7 @@ class OrderController extends BaseController
         // Put order items through service
         $this->orderService->putOrderItems($orderItemsDTO);
 
+        // return to the my orders page
         return redirect()->route('user.orders');
     }
 
@@ -68,6 +70,7 @@ class OrderController extends BaseController
         // Distribute order through service
         $this->orderService->distirbute($order->id);
 
+        // return to the kitchen table page
         return redirect()->route('kitchen.table');
     }
 
@@ -77,10 +80,12 @@ class OrderController extends BaseController
         // Delete order through service
         $response = $this->orderService->delete($order->id);
 
+        // Cheking user's order statuses 
         if (!$response) {
-            back()->withErrors(['message' => 'Sorry, after preparing, order cannot be deleted']);
+            back()->withErrors(['delete' => 'Sorry, after preparing, order cannot be deleted']);
         }
         
+        // Return back to the my orders page
         return back();
     }
 }

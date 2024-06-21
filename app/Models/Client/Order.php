@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Client\OrderItems;
-use APp\Models\Staff\Deliveries;
+use App\Models\Staff\Deliveries;
 
 use App\Models\User;
 
@@ -22,14 +22,12 @@ class Order extends Model
     public function user() {
         return $this->belongsTo(User::class);
     }
-
-    // ========================================
     
     public function items() {
         return $this->hasMany(OrderItems::class);
     }
 
     public function delivery() {
-        return $this->hasMany(Deliveries::class);
+        return $this->hasOne(Deliveries::class, 'order_id');
     }
 }

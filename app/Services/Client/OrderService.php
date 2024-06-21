@@ -30,6 +30,7 @@ class OrderService
         $orderDTO = new OrderCreateDTO(
             user_id: $orderDTO->user_id,
             obtaining: $orderDTO->obtaining,
+            phone: $orderDTO->phone,
             address: $orderDTO->address,
             total_price: $orderDTO->total_price,
             additional_price: $orderDTO->additional_price,

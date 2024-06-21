@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Services\Client\OrderService;
 use App\Services\Client\PostService;
 use App\Services\Client\UserService;
+use App\Services\Client\ProductService;
 
 class BaseController extends Controller
 {
@@ -17,9 +18,11 @@ class BaseController extends Controller
         public OrderService $orderService,
         public PostService $postService,
         public UserService $userService,
+        public ProductService $productService,
     ) {
         $this->orderService = $orderService;
         $this->postService = $postService;
         $this->userService = $userService;
+        $this->productService = $productService;
     }
 }

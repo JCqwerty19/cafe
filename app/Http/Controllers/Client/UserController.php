@@ -5,21 +5,22 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
+// Import facades
 use Illuminate\Support\Facades\Hash;
 
 // Import models
 use App\Models\User;
 use App\Models\Client\Order;
 
-// Import DTO
-use App\DTO\Client\User\UserCreateDTO;
-use App\DTO\Client\User\UserLoginDTO;
-use App\DTO\Client\User\UserUpdateDTO;
-
 // Import requests
 use App\Http\Requests\Client\User\UserRegisterRequest;
 use App\Http\Requests\Client\User\UserLoginRequest;
 use App\Http\Requests\Client\User\UserUpdateRequest;
+
+// Import DTO
+use App\DTO\Client\User\UserCreateDTO;
+use App\DTO\Client\User\UserLoginDTO;
+use App\DTO\Client\User\UserUpdateDTO;
 
 class UserController extends BaseController
 {
@@ -47,8 +48,14 @@ class UserController extends BaseController
         );
 
         // Make an account through service
-        $this->userService->make($userCreateDTO);
+        $response = $this->userService->make($userCreateDTO);
 
+        // Checking user to existance of account
+        if (!$response) {
+            return redirect()->route('user.register')->withErrors(['account' => 'You have been registrated']);
+        }
+
+        // Redirect to the main page
         return redirect()->route('main.index');
     }
 
@@ -76,9 +83,11 @@ class UserController extends BaseController
 
         // Show errors if login failed
         if (!$response) {
+
             // Check if user exists but the password is incorrect
             $user = User::where('email', $userData['email'])->first();
             if ($user && !Hash::check($userData['password'], $user->password)) {
+
                 // Incorrect password
                 return redirect()->route('user.login')->withErrors(['password' => 'Incorrect password.']);
             }
@@ -94,6 +103,7 @@ class UserController extends BaseController
     // User update
     public function update() {
 
+        // Objects for the user update page
         $variables = [
             'user' => auth()->user(),
         ];
@@ -130,6 +140,7 @@ class UserController extends BaseController
         // Logoout user through service
         $this->userService->logout($user->id);
 
+        // Redirect to the main page
         return redirect()->route('main.index');
     }
 
@@ -137,16 +148,29 @@ class UserController extends BaseController
     public function delete(User $user) {
 
         // Delete an account through service
-        $this->userService->delete($user->id);
+        $response = $this->userService->delete($user->id);
 
+        // Checking user orders existamse
+        if (!$response) {
+            return redirect()->route('user.update')
+                ->withErrors(['delete' => 'Account can\'t be deleted while you have orders']);
+        }
+
+        // Redirect to the main page
         return redirect()->route('main.index');
     }
 
+    // Show user orders function
     public function orders() {
+
+        // Objects for the my orders page
         $variables = [
-            'orders' => Order::where('user_id', auth()->user()->id)->get(),
+            'orders' => Order::where('user_id', auth()->user()->id)
+            ->with('delivery.courier')
+            ->get(),
         ];
 
+        // Show my orders page
         return view('client.user.orders', $variables);
     }
 }

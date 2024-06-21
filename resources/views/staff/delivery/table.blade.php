@@ -1,17 +1,18 @@
 @extends('staff.layouts.main')
 
 @section('title')
-Delivery list
+All deliveries
 @endsection
 
 @section('content')
 <div class="container mt-5">
-    <h1 class="mb-4">Deliver list</h1>
+    <h1 class="mb-4">All deliveries</h1>
     <table class="table table-striped table-bordered">
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Address</th>
+                <th>Order price</th>
                 <th>Delivery price</th>
                 <th>Total price</th>
                 <th>Deliver</th>
@@ -22,6 +23,7 @@ Delivery list
             <tr>
                 <td>{{ $order->id }}</td>
                 <td>{{ $order->obtaining }}</td>
+                <td><span id="order-price"></span></td>
                 <td>$<span id="additional-price">{{ $order->additional_price }}</span></td>
                 <td>$<span id="total-price">{{ $order->total_price }}</span></td>
                 <td>
@@ -34,5 +36,7 @@ Delivery list
             @endforeach
         </tbody>
     </table>
+
+    @include('client.includes.order_scripts')
 </div>
 @endsection

@@ -24,9 +24,8 @@ class OrderCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'customer_name' => 'required|string',
-            'customer_phone' => 'required',
             'obtaining' => 'required|string',
+            'phone' => 'required',
             'address' => 'nullable|string',
             'total_price' => 'required|numeric',
             'additional_price' => 'required|numeric',
