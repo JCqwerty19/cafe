@@ -9,9 +9,9 @@ class UserUpdateDTO {
         public int $user_id,
         public string $username,
         public string $email,
-        public string $phone,
-        public string $address,
-        public string $password,
+        public ?string $phone,
+        public ?string $address,
+        public ?string $password,
     ) {
         $this->user_id = $user_id;
         $this->username = $username;

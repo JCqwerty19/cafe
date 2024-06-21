@@ -10,7 +10,7 @@ class CourierUpdateDTO {
         public string $couriername,
         public string $email,
         public string $phone,
-        public string $password,
+        public ?string $password,
     ) {
         $this->user_id = $courier_id;
         $this->username = $couriername;

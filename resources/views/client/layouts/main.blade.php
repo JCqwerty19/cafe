@@ -33,50 +33,42 @@
 </head>
 
 <body>
-	<header id="header" id="home">
-		<div class="header-top">
-			<div class="container">
-				<div class="row justify-content-end">
-					<div class="col-lg-8 col-sm-4 col-8 header-top-right no-padding">
-						<ul>
-							<li>
-								Mon-Fri: 8am to 2pm
-							</li>
-							<li>
-								Sat-Sun: 11am to 4pm
-							</li>
-							<li>
-								<a href="tel:(012) 6985 236 7512">(012) 6985 236 7512</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row align-items-center justify-content-between d-flex">
-				<div id="logo">
-					<a href="index.html"><img src="{{ asset('storage/client/img/logo.png') }}" alt="" title="" /></a>
-				</div>
-				<nav id="nav-menu-container">
-					<ul class="nav-menu">
-						<li class="menu-active"><a href="#home">Home</a></li>
-						<li><a href="#about">About</a></li>
-						<li><a href="#coffee">Coffee</a></li>
-						<li><a href="#blog">Blog</a></li>
-						<li>
-							<form action="{{ route('user.logout') }}" method="POST">
-								@csrf
-								<button type="submit">Logout</button>
-							</form>
-						</li>
-					</ul>
-				</nav><!-- #nav-menu-container -->
-			</div>
-		</div>
-	</header><!-- #header -->
-	
+	<header class="p-3 text-bg-dark">
+    	<div class="container">
+    	  <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+    	    	<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+    	      		<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+    	    	</a>
+
+    	    	<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+
+    	      		<li><a href="{{ route('main.index') }}" class="btn btn-dark rounded-pill px-3">Home</a></li>
+					@if (Auth::user())
+
+					<li><a href="{{ route('order.create') }}">Order</a></li>
+					<li><a href="{{ route('user.orders') }}">My orders</a></li>
+					<li><a href="{{ route('user.update') }}">Settings</a></li>
+					<li>
+						<form action="{{ route('user.logout') }}" method="POST">
+							@csrf
+							<button type="submit">Logout</button>
+						</form>
+					</li>
+    	    	</ul>
+
+    	    	<div class="text-end">
+				@else
+					@yield('button')
+				@endif
+    	    	</div>
+    	  	</div>
+    	</div>
+	</header>
+	@section('button')
+					<a href="{{ route('user.login') }}" type="button" class="btn btn-primary me-2">Login</a>
+					@endsection
 	@yield('content')
+	<br><br><br><br><br><br><br><br>
 
 	<!-- start footer Area -->
 	<footer class="footer-area section-gap">
@@ -158,11 +150,6 @@
 	<script src="{{ asset('storage/client/js/jquery.counterup.min.js') }}"></script>
 	<script src="{{ asset('storage/client/js/mail-script.js') }}"></script>
 	<script src="{{ asset('storage/client/js/main.js') }}"></script>
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="{{ asset('storage/client/js/order-table.js') }}"></script>
-	<script src="{{ asset('storage/client/js/order-form.js') }}"></script>
 </body>
 
 </html>

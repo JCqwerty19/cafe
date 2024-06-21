@@ -4,6 +4,10 @@
 Cafe
 @endsection
 
+@section('button')
+<a href="{{ route('user.login') }}" type="button" class="btn btn-warning me-2">Login / Regiter</a>
+@endsection
+
 @section('content')
 
 <!-- start banner Area -->

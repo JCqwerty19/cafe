@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Client\User;
+namespace App\Http\Requests\Staff\Courier;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -27,7 +27,7 @@ class CourierUpdateRequest extends FormRequest
             'couriername' => 'required|string',
             'email' => 'required|email',
             'phone' => 'required',
-            'password' => 'required',
+            'password' => '',
         ];
     }
 }

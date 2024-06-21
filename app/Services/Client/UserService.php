@@ -36,7 +36,7 @@ class UserService
     }
 
     // Signin function
-    public function signin(UserLoginDTO $userLoginDTO): void {
+    public function signin(UserLoginDTO $userLoginDTO): bool {
 
         // Create DTO to show params for login user
         $userLoginDTO = new UserLoginDTO(
@@ -45,7 +45,7 @@ class UserService
         );
 
         // Login user in repository
-        $this->userRepositoryInterface->signin($userLoginDTO);
+        return $this->userRepositoryInterface->signin($userLoginDTO);
     }
 
     // Renew function

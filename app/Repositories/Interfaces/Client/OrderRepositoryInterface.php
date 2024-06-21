@@ -21,6 +21,6 @@ interface OrderRepositoryInterface {
     public function distirbute(int $order_id): void;
 
     // Delete function
-    public function delete(int $order_id): void;
+    public function delete(int $order_id): bool;
 
 }

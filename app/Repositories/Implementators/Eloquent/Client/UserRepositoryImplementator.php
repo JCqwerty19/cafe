@@ -17,14 +17,34 @@ use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
 
+// register
+
+/**
+ * if registrated and trashed (trash)
+ * if have no registrated (register)
+ */
+
+// login
+/**
+ * If registrated and trashed (return (you have not account, register pleace))
+ */
+
+
+
+
+
+
 class UserRepositoryImplementator implements UserRepositoryInterface {
     
     // User make function
     public function make(UserCreateDTO $userCreateDTO): void {
 
+        // Check trashed users
+        static::checkTash($userCreateDTO);
+
         // Hash password
         $hashedPassword = static::hashPassword($userCreateDTO->password);
-
+        
         // Collect user data
         $userData = static::collectUserParams($userCreateDTO, $hashedPassword);
 
@@ -36,16 +56,16 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
     }
 
     // Sigin function
-    public function signin(UserLoginDTO $userLoginDTO): void {
+    public function signin(UserLoginDTO $userLoginDTO): bool {
 
         // Collect user data
         $userLoginData = static::collectUserLoginParams($userLoginDTO);
 
-        // Sigin in user
-        static::userLogin($userLoginData);
+        // Sigin in user and return it's result
+        return static::userLogin($userLoginData); 
     }
 
-    // Renew user info function
+    // User update function
     public function renew(UserUpdateDTO $userUpdateDTO): void {
 
         // Find user
@@ -101,6 +121,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
 
     // Create or return new or alredy created user (checking email)
     public static function createUser(array $userData): User {
+
         return User::firstOrCreate(['email' => $userData['email']], $userData);
     }
 
@@ -144,6 +165,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
         $user->update($userData);
     }
 
+
     // GENERAL STATIC FUNCTIONS
     // ===================================================
 
@@ -153,19 +175,22 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
     }
 
     // Hash password
-    public static function hashPassword(string $password): string {
-        return Hash::make($password);
+    public static function hashPassword(?string $password): string {
+        if ($password !== null) {
+            return Hash::make($password);
+        }
+
+        return auth()->user()->password;
+        
     }
 
     // Login function
-    public static function userLogin($user): void {
-
-        // Check which type user (it's new user or alredy created user)
-        if ($user instanceof User) {
-            Auth::login($user);
-        } else {
-            Auth::attempt($user);
+    public static function userLogin($user): ?bool {
+        if (is_array($user)) {
+            return Auth::attempt($user);
         }
+    
+        return Auth::login($user);
     }
 
     // Logout user function
@@ -178,6 +203,12 @@ class UserRepositoryImplementator implements UserRepositoryInterface {
         $user->delete();
     }
 
+    public static function checkTash(UserCreateDTO $userCreateDTO) {
+        $user = User::onlyTrashed()->where('email', $userCreateDTO->email)->first();
+        if ($user) {
+            $user->forceDelete();
+        }
+    }
 
     
 }

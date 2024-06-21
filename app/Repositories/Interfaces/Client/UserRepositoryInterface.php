@@ -13,7 +13,7 @@ interface UserRepositoryInterface
     public function make(UserCreateDTO $userCreateDTO): void;
 
     // Signin function
-    public function signin(UserLoginDTO $userLoginDTO): void;
+    public function signin(UserLoginDTO $userLoginDTO): bool;
 
     // Renew function
     public function renew(UserUpdateDTO $userUpdateDTO): void;

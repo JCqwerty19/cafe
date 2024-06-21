@@ -4,6 +4,10 @@
 Register
 @endsection
 
+@section('button')
+<a href="{{ route('user.login') }}" type="button" class="btn btn-primary me-2">Login</a>
+@endsection
+
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">

@@ -1,4 +1,4 @@
-@extends('client.layouts.hall')
+@extends('staff.layouts.main')
 
 @section('title')
 Cafe orders

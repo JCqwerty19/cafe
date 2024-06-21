@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Client\OrderItems;
-use APp\Models\Staff\DeliveryOrders;
+use APp\Models\Staff\Deliveries;
 
 use App\Models\User;
 
@@ -30,6 +30,6 @@ class Order extends Model
     }
 
     public function delivery() {
-        return $this->hasMany(DeliveryOrders::class);
+        return $this->hasMany(Deliveries::class);
     }
 }

@@ -25,22 +25,15 @@ Update courier
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your email" value="{{ $user->email }}">
+                            <input type="email" class="form-control" name="email" id="email" placeholder="Your email" value="{{ $courier->email }}">
                             @error('email')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="form-group">
                             <label for="phone"><span class="text-danger">*</span> Phone</label>
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone number" value="{{ $user->phone }}">
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="Your Phone number" value="{{ $courier->phone }}">
                             @error('phone')
-                            <p class="text-danger">{{ $message }}</p>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label for="address"><span class="text-danger">*</span> Address for delivery</label>
-                            <input type="text" class="form-control" name="address" id="address" placeholder="Your address" value="{{ $user->address }}">
-                            @error('address')
                             <p class="text-danger">{{ $message }}</p>
                             @enderror
                         </div>
@@ -55,6 +48,14 @@ Update courier
                     </form>
                 </div>
             </div>
+
+            <br><br>
+            <p class="text-danger">Delete account</p>
+            <form action="{{ route('delivery.delete') }}" method="POST">
+                @csrf
+                @method('delete')
+                <button class="btn-danger btn" type="submit">Delete</button>
+            </form>
         </div>
     </div>
 </div>

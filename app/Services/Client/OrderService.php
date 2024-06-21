@@ -62,9 +62,9 @@ class OrderService
     }
 
     // Delete order fucntion
-    public function delete(int $order_id): void {
+    public function delete(int $order_id): bool {
 
         // Delete order in repository
-        $this->orderRepositoryInterface->delete($order_id);
+        return $this->orderRepositoryInterface->delete($order_id);
     }
 }

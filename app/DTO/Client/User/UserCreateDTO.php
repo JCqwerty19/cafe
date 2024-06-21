@@ -8,8 +8,8 @@ class UserCreateDTO {
     public function __construct(
         public string $username,
         public string $email,
-        public string $phone,
-        public string $address,
+        public ?string $phone,
+        public ?string $address,
         public string $password,
     ) {
         $this->username = $username;

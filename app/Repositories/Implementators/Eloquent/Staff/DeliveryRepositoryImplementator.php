@@ -5,7 +5,12 @@ namespace App\Repositories\Implementators\Eloquent\Staff;
 // Import interfaces
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
 
+// Import facades
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
+
 // Import models
+use App\Models\Client\Order;
 use App\Models\Staff\Courier;
 use App\Models\Staff\Deliveries;
 
@@ -60,7 +65,7 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
 
     // Logout function
     public function logout(): void {
-        static::logoutCourier($courier);
+        static::logoutCourier();
     }
 
     // Courier delete function
@@ -74,7 +79,11 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
     }
 
     public function deliver(int $order_id): void {
-        $courier_id = auth()->user()->id;
+        $courier_id = Auth::guard('courier')->user()->id;
+
+        $order = static::findOrder($order_id);
+
+        static::changeStatus($order);
 
         static::deliverOrder($courier_id, $order_id);
     }
@@ -150,8 +159,12 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
     }
 
     // Hash password
-    public static function hashPassword(string $password): string {
-        return Hash::make($password);
+    public static function hashPassword(?string $password): string {
+        if ($password !== null) {
+            return Hash::make($password);
+        }
+        
+        return Auth::guard('courier')->user()->password;
     }
 
     // Login function
@@ -159,15 +172,15 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
 
         // Check which type courier (it's new courier or alredy created courier)
         if ($courier instanceof Courier) {
-            Auth::login($courier);
+            Auth::guard('courier')->login($courier);
         } else {
-            Auth::attempt($courier);
+            Auth::guard('courier')->attempt($courier);
         }
     }
 
     // Logout courier function
     public static function logoutCourier(): void {
-        Auth::logout();
+        Auth::guard('courier')->logout();
     }
 
     // Delete courier account function
@@ -186,5 +199,10 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
         ];
 
         Deliveries::create($data);
+    }
+
+    public function changeStatus(Order $order): void {
+        $order->status = 'Courier will deliver it soon';
+        $order->save();
     }
 }

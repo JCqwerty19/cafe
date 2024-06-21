@@ -14,7 +14,6 @@ Delivery orders
                 <th>Address</th>
                 <th>Customer name</th>
                 <th>Customer number</th>
-                <th>Order price</th>
                 <th>Delivery price</th>
                 <th>Total price</th>
                 <th>Delivered</th>
@@ -25,13 +24,12 @@ Delivery orders
             <tr>
                 <td>{{ $order->id }}</td>
                 <td>{{ $order->obtaining }}</td>
-                <td>{{ $order->customer_name }}</td>
-                <td>{{ $order->customer_phone }}</td>
-                <td id="price"></td>
+                <td>{{ $order->user->username }}</td>
+                <td>{{ $order->user->phone }}</td>
                 <td>$<span id="additional-price">{{ $order->additional_price }}</span></td>
                 <td>$<span id="total-price">{{ $order->total_price }}</span></td>
                 <td>
-                    <form action="{{ route('order.close', $order) }}" method="POST">
+                    <form action="#" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success">Delivered</button>
                     </form>
@@ -41,12 +39,5 @@ Delivery orders
             <!-- Дополнительные строки можно добавить здесь -->
         </tbody>
     </table>
-    <script>
-        const price = document.querySelector('#price');
-        const additional_price = parseInt(document.querySelector('#additional-price').textContent);
-        const total_price = parseInt(document.querySelector('#total-price').textContent);
-
-        price.textContent = '$' + (total_price - additional_price);
-    </script>
 </div>
 @endsection

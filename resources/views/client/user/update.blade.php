@@ -53,8 +53,17 @@ Update
                         </div>
                         <button type="submit" class="btn btn-primary btn-block">Update</button>
                     </form>
+                    
                 </div>
             </div>
+
+            <br><br>
+            <p class="text-danger">Delete account</p>
+            <form action="{{ route('user.delete', auth()->user()) }}" method="POST">
+                @csrf
+                @method('delete')
+                <button class="btn-danger btn" type="submit">Delete</button>
+            </form>
         </div>
     </div>
 </div>

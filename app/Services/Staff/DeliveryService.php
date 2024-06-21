@@ -41,7 +41,7 @@ class DeliveryService
 
     public function renew(CourierUpdateDTO $courierUpdateDTO): void {
         $courierUpdateDTO = new CourierUpdateDTO(
-            user_id: $courierUpdateDTO->user_id,
+            courier_id: $courierUpdateDTO->user_id,
             couriername: $courierUpdateDTO->couriername,
             email: $courierUpdateDTO->email,
             phone: $courierUpdateDTO->phone,
@@ -52,10 +52,10 @@ class DeliveryService
     }
 
     // Logout courier
-    public function logout(int $courier_id): void {
+    public function logout(): void {
 
         // Logoout courier in repository
-        $this->deliveryRepositoryInterface->logout($courier_id);
+        $this->deliveryRepositoryInterface->logout();
     }
 
     // Delete an account
@@ -66,6 +66,6 @@ class DeliveryService
     }
 
     public function deliver(int $order_id): void {
-        $this->deliveryRepositoryInterface->deliver($courier_id);
+        $this->deliveryRepositoryInterface->deliver($order_id);
     }
 }

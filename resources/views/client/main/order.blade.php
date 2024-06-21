@@ -63,14 +63,14 @@ Cafe
     			<h2>Set your info</h2>
     			<div class="form-group">
     			    <label for="name">Name</label>
-    			    <input type="text" class="form-control" name="customer_name" id="name" placeholder="Text your name" value="{{ old('customer_name') }}">
+    			    <input type="text" class="form-control" name="customer_name" id="name" placeholder="Text your name" value="{{ $user->username }}">
 					@error('customer_name')
 					<p class="text-danger">{{ $message }}</p>
 					@enderror
     			</div>
     			<div class="form-group">
     			    <label for="phone">Phone number</label>
-    			    <input type="tel" class="form-control" name="customer_phone" id="phone" placeholder="Text your phone number" value="{{ old('customer_phone') }}">
+    			    <input type="tel" class="form-control" name="customer_phone" id="phone" placeholder="Text your phone number" value="{{ $user->phone }}">
 					@error('customer_phone')
 					<p class="text-danger">{{ $message }}</p>
 					@enderror
@@ -91,7 +91,7 @@ Cafe
 
     			<div class="form-group d-none" id="addressField">
     			    <label for="address">Address</label>
-    			    <input type="text" class="form-control" name="address" id="address" placeholder="Text your address" value="{{ old('address') }}">
+    			    <input type="text" class="form-control" name="address" id="address" placeholder="Text your address" value="{{ $user->address }}">
 					@error('address')
 					<p class="text-danger">{{ $message }}</p>
 					@enderror
@@ -113,5 +113,7 @@ Cafe
 		<!-- end form -->
     </div>
 </section>
+
+@include('client.includes.order_scripts')
 
 @endsection

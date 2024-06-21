@@ -24,6 +24,7 @@ class OrderController extends BaseController
         
         // Objects for the create order page
         $variables = [
+            'user' => auth()->user(),
             'products' => Product::all(),
         ];
 
@@ -41,7 +42,7 @@ class OrderController extends BaseController
         $orderCreateDTO = new OrderCreateDTO(
             user_id: auth()->user()->id,
             obtaining: $orderData['obtaining'],
-            address: $orderData['obtaining'],
+            address: $orderData['address'],
             total_price: $orderData['total_price'],
             additional_price: $orderData['additional_price'],
         );
@@ -57,21 +58,8 @@ class OrderController extends BaseController
 
         // Put order items through service
         $this->orderService->putOrderItems($orderItemsDTO);
-    }
 
-    // List order
-    public function list() {
-
-        // Get current user
-        $user = User::find(auth()->user()->id);
-        
-        // Objects for the list order page
-        $variables = [
-            'orders' => $user->orders()->get(),
-        ];
-
-        // Show list order page
-        //return view('client.orders', $variables);
+        return redirect()->route('user.orders');
     }
 
     // Distribute order
@@ -79,12 +67,20 @@ class OrderController extends BaseController
 
         // Distribute order through service
         $this->orderService->distirbute($order->id);
+
+        return redirect()->route('kitchen.table');
     }
 
     // Delete order
     public function delete(Order $order) {
 
         // Delete order through service
-        $this->orderService->delete($order->id);
+        $response = $this->orderService->delete($order->id);
+
+        if (!$response) {
+            back()->withErrors(['message' => 'Sorry, after preparing, order cannot be deleted']);
+        }
+        
+        return back();
     }
 }

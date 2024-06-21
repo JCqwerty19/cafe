@@ -5,8 +5,12 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Staff\BaseController;
 use Illuminate\Http\Request;
 
+// Import facades
+use Illuminate\Support\Facades\Auth;
+
 // Import models
 use App\Models\Staff\Courier;
+use App\Models\Staff\Deliveries;
 use App\Models\Client\Order;
 
 // Import DTO
@@ -44,6 +48,8 @@ class DeliveryController extends BaseController
 
         // Make an account through service
         $this->deliveryService->make($courierCreateDTO);
+
+        return redirect()->route('delivery.table');
     }
 
     // Login User
@@ -54,7 +60,7 @@ class DeliveryController extends BaseController
     }
 
     // Sign in user
-    public function singin(CourierLoginRequest $courierLoginRequest) {
+    public function signin(CourierLoginRequest $courierLoginRequest) {
 
         // Validate user request data
         $courierData = $courierLoginRequest->validated();
@@ -67,17 +73,19 @@ class DeliveryController extends BaseController
 
         // Login through service
         $this->deliveryService->singin($courierLoginDTO);
+
+        return redirect()->route('delivery.table');
     }
 
     // User update
-    public function update(Courier $courier) {
+    public function update() {
 
         $variables = [
-            'courier' => $courier,
+            'courier' => Auth::guard('courier')->user(),
         ];
 
         // Show settings page
-        return view('staff.delivery.courier.update');
+        return view('staff.delivery.courier.update', $variables);
     }
 
     // Renew user
@@ -88,7 +96,7 @@ class DeliveryController extends BaseController
         
         // Create DTO to show data for update user info
         $courierUpdateDTO = new CourierUpdateDTO(
-            user_id: auth()->user()->id,
+            courier_id: Auth::guard('courier')->user()->id,
             couriername: $courierData['couriername'],
             email: $courierData['email'],
             phone: $courierData['phone'],
@@ -97,20 +105,26 @@ class DeliveryController extends BaseController
 
         // Update user through service
         $this->deliveryService->renew($courierUpdateDTO);
+
+        return redirect()->route('delivery.table');
     }
 
     // Logout courier
-    public function logout(Courier $courier) {
+    public function logout() {
 
         // Logoout courier through service
-        $this->deliveryService->logout($courier->id);
+        $this->deliveryService->logout();
+
+        return redirect()->route('delivery.login');
     }
 
     // Delete an account
-    public function delete(Courier $courier) {
+    public function delete() {
 
         // Delete an account through service
-        $this->deliveryService->delete($courier->id);
+        $this->deliveryService->delete(Auth::guard('courier')->user()->id);
+
+        return redirect()->route('delivery.register');
     }
 
     // Delivery table
@@ -124,14 +138,16 @@ class DeliveryController extends BaseController
 
     public function deliver(Order $order) {
         $this->deliveryService->deliver($order->id);
+
+        return redirect()->route('delivery.list');
     }
 
     public function list() {
         $variables = [
-            'orders' => Deliveries::where('courier_id', auth()->user()->id)->get(),
+            'orders' => Deliveries::where('courier_id', Auth::guard('courier')->user()->id)->with('order')->get()->pluck('order'),
         ];
 
-        return view('staff.delivery.list');
+        return view('staff.delivery.list', $variables);
     }
 
 

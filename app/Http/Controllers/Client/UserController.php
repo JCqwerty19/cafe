@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Client;
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Hash;
+
 // Import models
 use App\Models\User;
+use App\Models\Client\Order;
 
 // Import DTO
 use App\DTO\Client\User\UserCreateDTO;
@@ -33,6 +36,7 @@ class UserController extends BaseController
         // Validate user register request data
         $userData = $userRegusterRequest->validated();
 
+
         // Create DTO to show user create data
         $userCreateDTO = new UserCreateDTO(
             username: $userData['username'],
@@ -44,6 +48,8 @@ class UserController extends BaseController
 
         // Make an account through service
         $this->userService->make($userCreateDTO);
+
+        return redirect()->route('main.index');
     }
 
     // Login User
@@ -66,14 +72,34 @@ class UserController extends BaseController
         );
 
         // Login through service
-        $this->userService->signin($userLoginDTO);
+        $response = $this->userService->signin($userLoginDTO);
+
+        // Show errors if login failed
+        if (!$response) {
+            // Check if user exists but the password is incorrect
+            $user = User::where('email', $userData['email'])->first();
+            if ($user && !Hash::check($userData['password'], $user->password)) {
+                // Incorrect password
+                return redirect()->route('user.login')->withErrors(['password' => 'Incorrect password.']);
+            }
+    
+            // User does not exist or some other error
+            return redirect()->route('user.login')->withErrors(['email' => 'You have not an account, register first']);
+        }
+    
+        // If login successful
+        return redirect()->route('main.index');
     }
 
     // User update
     public function update() {
 
+        $variables = [
+            'user' => auth()->user(),
+        ];
+
         // Show settings page
-        return view('client.user.update');
+        return view('client.user.update', $variables);
     }
 
     // Renew user
@@ -94,6 +120,8 @@ class UserController extends BaseController
 
         // Update user through service
         $this->userService->renew($userUpdateDTO);
+
+        return redirect()->route('main.index');
     }
 
     // Logout user
@@ -101,6 +129,8 @@ class UserController extends BaseController
 
         // Logoout user through service
         $this->userService->logout($user->id);
+
+        return redirect()->route('main.index');
     }
 
     // Delete an account
@@ -108,5 +138,15 @@ class UserController extends BaseController
 
         // Delete an account through service
         $this->userService->delete($user->id);
+
+        return redirect()->route('main.index');
+    }
+
+    public function orders() {
+        $variables = [
+            'orders' => Order::where('user_id', auth()->user()->id)->get(),
+        ];
+
+        return view('client.user.orders', $variables);
     }
 }

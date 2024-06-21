@@ -51,10 +51,10 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
         static::orderDistirbute($order);
     }
 
-    public function delete(int $order_id): void {
+    public function delete(int $order_id): bool {
         $order = static::findOrder($order_id);
 
-        $order->delete();
+        return static::deleteOrder($order);
     }
 
     // ===============================================
@@ -135,5 +135,14 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface {
             $order->status = 'Your order waiting for courier';
             $order->save();
         }
+    }
+
+    public static function deleteOrder(Order $order): bool {
+        if ($order->status === 'Preparing') {
+            $order->delete();
+            return true;
+        }
+
+        return false;
     }
 }

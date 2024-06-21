@@ -15,7 +15,7 @@ class HallController extends BaseController
             'orders' => Order::where('obtaining', 'hall')->get(),
         ];
 
-        return view('staff.hall.index');
+        return view('staff.hall.index', $variables);
     }
 
     public function table() {
@@ -23,6 +23,6 @@ class HallController extends BaseController
             'orders' => Order::where('obtaining', 'hall')->get(),
         ];
 
-        return view('staff.hall.table');
+        return view('staff.hall.table', $variables);
     }
 }

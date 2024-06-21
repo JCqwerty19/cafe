@@ -4,6 +4,10 @@
 Login
 @endsection
 
+@section('button')
+<a href="{{ route('user.register') }}" type="button" class="btn btn-warning">Register</a>
+@endsection
+
 @section('content')
 <div class="container mt-5">
     <div class="row justify-content-center">
@@ -30,6 +34,7 @@ Login
                             @enderror
                         </div>  
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
+                        
                     </form>
                 </div>
                 <div class="card-footer text-center">

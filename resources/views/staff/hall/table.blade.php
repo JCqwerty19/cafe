@@ -25,7 +25,7 @@ Orders list
                 <td>$<span id="additional-price">{{ $order->additional_price }}</span></td>
                 <td>$<span id="total-price">{{ $order->total_price }}</span></td>
                 <td>
-                    <form action="{{ route('order.close', $order) }}" method="POST">
+                    <form action="#" method="POST">
                         @csrf
                         <button type="submit" class="btn btn-success">Served</button>
                     </form>

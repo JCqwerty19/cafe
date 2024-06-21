@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('couriers', function (Blueprint $table) {
             $table->id();
-            $table->string('courier_name');
-            $table->unsignedBigInteger('courier_phone');
+            $table->string('couriername');
+            $table->unsignedBigInteger('phone');
+            $table->string('email');
+            $table->string('password');
             $table->softDeletes();
             $table->timestamps();
         });
