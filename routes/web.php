@@ -187,12 +187,8 @@ Route::group(['prefix' => 'admin'], function () {
 
 // =============================================================================================
 
-// comments all code
-// git remote
-// git push
-// link
-
 // ==========
+// comments all code
 // Order price problem
 // Restore password
 // Confirmation email
