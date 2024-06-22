@@ -35,7 +35,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
 });
 
 // Routes for authorized clients
-Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'user'], function () {
 
     // Update routes
     Route::get('/update', 'Client\UserController@update')->name('user.update');
@@ -77,7 +77,7 @@ Route::group(['prefix' => 'courier', 'middleware' => 'guest'], function () {
 });
 
 // Routes for authorized couriers
-Route::group(['prefix' => 'courier', 'middleware' => 'courier'], function () {
+Route::group(['prefix' => 'courier'], function () {
 
     // Update routes
     Route::get('/update', 'Staff\DeliveryController@update')->name('delivery.update');
@@ -85,7 +85,7 @@ Route::group(['prefix' => 'courier', 'middleware' => 'courier'], function () {
 
     // Logout and delete routes
     Route::post('/logout', 'Staff\DeliveryController@logout')->name('delivery.logout');
-    Route::delete('/delete', 'Staff\DeliveryController@delete')->name('delivery.delete');
+    Route::delete('/delete{courier}', 'Staff\DeliveryController@delete')->name('courier.delete');
 
     // Deliveries routes
     Route::get('/delivery/table', 'Staff\DeliveryController@table')->name('delivery.table');

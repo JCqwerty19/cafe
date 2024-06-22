@@ -16,6 +16,7 @@ Users
                 <th>Email</th>
                 <th>Phone</th>
                 <th>Address</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,16 @@ Users
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->phone }}</td>
                 <td>{{ $user->address }}</td>
+                <th>
+                    <form action="{{ route('user.delete', $user) }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                    @error('delete')
+                    <p class="text-danger">{{ $message }}</p>
+                    @enderror
+                </th>
             </tr>
             @endforeach
         </tbody>

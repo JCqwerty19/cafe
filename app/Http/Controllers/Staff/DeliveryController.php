@@ -148,13 +148,13 @@ class DeliveryController extends BaseController
     }
 
     // Delete an account
-    public function delete() {
+    public function delete(Courier $courier) {
 
         // Delete an account through service
-        $this->deliveryService->delete(Auth::guard('courier')->user()->id);
+        $this->deliveryService->delete($courier->id);
 
         // Redirect to the courier register page
-        return redirect()->route('delivery.register');
+        return back();
     }
 
     // Delivery table

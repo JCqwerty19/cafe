@@ -16,6 +16,7 @@ Couriers
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,13 @@ Couriers
                 <td>{{ $courier->couriername }}</td>
                 <td>{{ $courier->email }}</td>
                 <td>{{ $courier->phone }}</td>
+                <td>
+                    <form action="{{ route('courier.delete', $courier) }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

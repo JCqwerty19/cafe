@@ -152,8 +152,7 @@ class UserController extends BaseController
 
         // Checking user orders existamse
         if (!$response) {
-            return redirect()->route('user.update')
-                ->withErrors(['delete' => 'Account can\'t be deleted while you have orders']);
+            return back()->withErrors(['delete' => 'Account can\'t be deleted while there are open orders']);
         }
 
         // Redirect to the main page

@@ -59,7 +59,7 @@ Update
 
             <br><br>
             <p class="text-danger">Delete account</p>
-            <form action="{{ route('user.delete', auth()->user()) }}" method="POST">
+            <form action="{{ route('user.delete', $user) }}" method="POST">
                 @csrf
                 @method('delete')
                 <button class="btn-danger btn" type="submit">Delete</button>

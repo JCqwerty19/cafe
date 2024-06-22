@@ -51,7 +51,7 @@ Settings
 
             <br><br>
             <p class="text-danger">Delete account</p>
-            <form action="{{ route('delivery.delete') }}" method="POST">
+            <form action="{{ route('courier.delete', $courier) }}" method="POST">
                 @csrf
                 @method('delete')
                 <button class="btn-danger btn" type="submit">Delete</button>

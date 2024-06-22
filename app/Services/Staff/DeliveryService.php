@@ -59,10 +59,10 @@ class DeliveryService
     }
 
     // Delete an account
-    public function delete(int $courier_id): bool {
+    public function delete(int $courier_id): void {
 
         // Delete an account in repository
-        return $this->deliveryRepositoryInterface->delete($courier_id);
+        $this->deliveryRepositoryInterface->delete($courier_id);
     }
 
     public function deliver(int $order_id): void {
