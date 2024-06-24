@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 // Routes for all
 Route::get('/', 'Client\MainController@index')->name('main.index');
-Route::get('/post/{post}', 'Client\PostController@read')->name('post.read');
+Route::get('/post/{post}', 'Admin\PostController@read')->name('post.read');
 Route::get('/courier', 'Client\MainController@courier')->name('courier.index');
 
 
@@ -145,52 +145,52 @@ Route::group(['prefix' => 'pickup'], function () {
 
 // Routes for guest admin
 Route::group(['prefix' => 'admin'], function () {
-    // ADMIN LOGIN
+    Route::get('/login', 'Admin/AdminController@login')->name('admin.login');
 });
 
 // Routes for authorized admin
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['middlware' => 'admin'], function () {
 
-    Route::get('/', 'AdminController@admin')->name('admin.index');
+    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
 
     // Routes for manage posts
     Route::group(['prefix' => 'post'], function () {
 
-        Route::get('/index', 'AdminController@posts')->name('post.index');
+        Route::get('/index',  'Admin\AdminController@posts')->name('post.index');
 
         // Create post
-        Route::get('/create', 'Client\PostController@create')->name('post.create');
-        Route::post('/create', 'Client\PostController@make')->name('post.make');
+        Route::get('/create', 'Admin\PostController@create')->name('post.create');
+        Route::post('/create', 'Admin\PostController@make')->name('post.make');
 
         // Update post
-        Route::get('/update/{post}', 'Client\PostController@update')->name('post.update');
-        Route::patch('/update/{post}', 'Client\PostController@renew')->name('post.renew');
+        Route::get('/update/{post}', 'Admin\PostController@update')->name('post.update');
+        Route::patch('/update/{post}', 'Admin\PostController@renew')->name('post.renew');
 
         // Delete post
-        Route::delete('/delete/{post}', 'Client\PostController@delete')->name('post.delete');
+        Route::delete('/delete/{post}', 'Admin\PostController@delete')->name('post.delete');
     });
 
     // Routes for manage products
     Route::group(['prefix' => 'product'], function () {
-        Route::get('/index', 'AdminController@products')->name('product.index');
+        Route::get('/index', 'Admin\AdminController@products')->name('product.index');
 
         // Create post
-        Route::get('/create', 'Client\ProductController@create')->name('product.create');
-        Route::post('/create', 'Client\ProductController@make')->name('product.make');
+        Route::get('/create', 'Admin\ProductController@create')->name('product.create');
+        Route::post('/create', 'Admin\ProductController@make')->name('product.make');
 
         // Update post
-        Route::get('/update/{product}', 'Client\ProductController@update')->name('product.update');
-        Route::patch('/update/{product}', 'Client\ProductController@renew')->name('product.renew');
+        Route::get('/update/{product}', 'Admin\ProductController@update')->name('product.update');
+        Route::patch('/update/{product}', 'Admin\ProductController@renew')->name('product.renew');
 
         // Delete post
-        Route::delete('/delete/{product}', 'Client\ProductController@delete')->name('product.delete');
+        Route::delete('/delete/{product}', 'Admin\ProductController@delete')->name('product.delete');
     });
 
     // Couriers list route
-    Route::get('/courier/index', 'AdminController@couriers')->name('courier.index');
+    Route::get('/courier/index', 'Admin\AdminController@couriers')->name('courier.index');
 
     // Users list route
-    Route::get('/users/index', 'AdminController@users')->name('user.index');    
+    Route::get('/users/index', 'Admin\AdminController@users')->name('user.index');    
 });
 
 // =============================================================================================

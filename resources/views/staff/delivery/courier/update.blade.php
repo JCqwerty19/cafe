@@ -13,7 +13,7 @@ Settings
                     <h3>Settings</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('delivery.renew') }}" method="POST">
+                    <form action="{{ route('courier.renew') }}" method="POST">
                         @csrf
                         @method('patch')
                         <div class="form-group">

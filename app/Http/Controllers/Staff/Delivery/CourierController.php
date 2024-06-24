@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Staff\Delivery;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Staff\BaseController;
 use Illuminate\Http\Request;
 
 // Import facades
@@ -22,7 +22,7 @@ use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
 
-class CourierController extends Controller
+class CourierController extends BaseController
 {
     // Register courier
     public function register() {
@@ -50,7 +50,7 @@ class CourierController extends Controller
 
         // Checking courier to it's alredy been registrated
         if (!$response) {
-            return redirect()->route('delivery.register')
+            return redirect()->route('courier.register')
                 ->withErrors(['account' => 'You have been registrated']);
         }
 
@@ -88,12 +88,12 @@ class CourierController extends Controller
             if ($courier && !Hash::check($courierData['password'], $courier->password)) {
 
                 // Incorrect password
-                return redirect()->route('delivery.login')
+                return redirect()->route('courier.login')
                     ->withErrors(['password' => 'Incorrect password.']);
             }
     
             // courier does not exist or some other error
-            return redirect()->route('delivery.login')
+            return redirect()->route('courier.login')
                 ->withErrors(['email' => 'You have not an account, register first']);
         }
     
@@ -105,7 +105,7 @@ class CourierController extends Controller
     public function update() {
 
         $variables = [
-            'courier' => Auth::guard('courier')->courier(),
+            'courier' => Auth::guard('courier')->user(),
         ];
 
         // Show settings page
@@ -120,7 +120,7 @@ class CourierController extends Controller
         
         // Create DTO to show data for update courier info
         $courierUpdateDTO = new CourierUpdateDTO(
-            courier_id: Auth::guard('courier')->courier()->id,
+            courier_id: Auth::guard('courier')->user()->id,
             couriername: $courierData['couriername'],
             email: $courierData['email'],
             phone: $courierData['phone'],
@@ -141,7 +141,7 @@ class CourierController extends Controller
         $this->deliveryService->logout();
 
         // Redirect to the courier login page
-        return redirect()->route('delivery.login');
+        return redirect()->route('courier.login');
     }
 
     // Delete an account

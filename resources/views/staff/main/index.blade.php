@@ -10,7 +10,7 @@ Become a courier
     <a href="{{ route('delivery.register') }}" class="btn btn-primary btn-lg mb-3">Register</a>
     <div>
         <p>Already working with us?</p>
-        <a href="{{ route('delivery.login') }}" class="btn btn-secondary btn-lg">Login</a>
+        <a href="{{ route('courier.login') }}" class="btn btn-secondary btn-lg">Login</a>
     </div>
 </div>
 @endsection

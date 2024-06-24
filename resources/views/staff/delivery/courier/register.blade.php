@@ -5,7 +5,7 @@ Register courier
 @endsection
 
 @section('button')
-<a href="{{ route('delivery.login') }}" type="button" class="btn btn-dark">Login</a>
+<a href="{{ route('courier.login') }}" type="button" class="btn btn-dark">Login</a>
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@ Register courier
                     <h3>Register</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('delivery.make') }}" method="POST">
+                    <form action="{{ route('courier.make') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="couriername">Name</label>
@@ -54,7 +54,7 @@ Register courier
                     @error('account')
                     <p class="text-danger">{{ $message }}</p>
                     @enderror
-                    <a href="{{ route('delivery.login') }}">Alredy have an account? Login</a>
+                    <a href="{{ route('courier.login') }}">Alredy have an account? Login</a>
                 </div>
             </div>
         </div>

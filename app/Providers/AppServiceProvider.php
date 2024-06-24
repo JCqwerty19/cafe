@@ -9,11 +9,11 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Client\OrderRepositoryImplementator;
 
-use App\Repositories\Interfaces\Client\PostRepositoryInterface;
-use App\Repositories\Implementators\Eloquent\Client\PostRepositoryImplementator;
+use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
+use App\Repositories\Implementators\Eloquent\Admin\PostRepositoryImplementator;
 
-use App\Repositories\Interfaces\Client\ProductRepositoryInterface;
-use App\Repositories\Implementators\Eloquent\Client\ProductRepositoryImplementator;
+use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
+use App\Repositories\Implementators\Eloquent\Admin\ProductRepositoryImplementator;
 
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Client\UserRepositoryImplementator;

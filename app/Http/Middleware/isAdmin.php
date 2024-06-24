@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class IsCourier
+class isAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,11 +16,10 @@ class IsCourier
      */
     public function handle(Request $request, Closure $next)
     {
-
-        if (!Auth::guard('courier')->check()) {
-            return redirect()->route('courier.login');
+        if (!Auth::guard('admin')->check()) {
+            return redirect()->route('admin.login');
         }
-
+        
         return $next($request);
     }
 }

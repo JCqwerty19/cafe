@@ -21,9 +21,9 @@
                 @else
                 <a href="{{ route('delivery.table') }}" type="button" class="btn btn-dark">Delivery table</a>
                 <a href="{{ route('delivery.list') }}" type="button" class="btn btn-dark">My deliveries</a>
-                <a href="{{ route('delivery.update') }}" type="button" class="btn btn-dark">Settings</a>
+                <a href="{{ route('courier.update') }}" type="button" class="btn btn-dark">Settings</a>
 
-                <form action="{{ route('delivery.logout') }}" method="POST">
+                <form action="{{ route('courier.logout') }}" method="POST">
                     @csrf
                     <button type="submit" class="btn btn-dark">Logout</button>
                 </form>

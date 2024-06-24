@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Client\Product;
+namespace App\DTO\Admin\Product;
 
 class ProductUpdateDTO
 {

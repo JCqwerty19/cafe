@@ -18,7 +18,7 @@
                     </p>
                 </div>
                 <div class="card-footer text-right">
-                    <a href="#" class="btn btn-secondary">Back</a>
+                    <button onclick="window.history.back()" class="btn btn-secondary">Back</button>
                 </div>
             </div>
             <!-- Слайдер других постов -->

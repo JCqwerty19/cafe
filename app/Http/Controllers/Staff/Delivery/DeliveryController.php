@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Staff\Delivery;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Staff\BaseController;
 use Illuminate\Http\Request;
 
 // Import facades
@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Staff\Deliveries;
 use App\Models\Client\Order;
 
-class DeliveryController extends Controller
+class DeliveryController extends BaseController
 {
     // Delivery table
     public function table() {

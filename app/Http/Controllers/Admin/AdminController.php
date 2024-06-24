@@ -10,10 +10,20 @@ use App\Models\Admin\Product;
 use App\Models\Staff\Courier;
 use App\Models\Client\User;
 
+use App\Http\Requests\Admin\Admin\AdminLoginRequest;
+
 class AdminController extends Controller
 {
-    public function admin() {
-        return view('admin.index');
+    public function index() {
+        return view('admin.dashboard.index');
+    }
+
+    public function login() {
+        return view('admin.main.login');
+    }
+
+    public function signin(AdminLoginRequest $adminLoginRequest) {
+        
     }
 
     public function posts() {
@@ -21,7 +31,7 @@ class AdminController extends Controller
             'posts' => Post::all(),
         ];
 
-        return view('admin.posts', $variables);
+        return view('admin.dashboard.posts', $variables);
     }
 
     public function products() {
@@ -29,7 +39,7 @@ class AdminController extends Controller
             'products' => Product::all(),
         ];
 
-        return view('admin.products', $variables);
+        return view('admin.dashboard.products', $variables);
     }
 
     public function couriers() {
@@ -37,7 +47,7 @@ class AdminController extends Controller
             'couriers' => Courier::all(),
         ];
 
-        return view('admin.couriers', $variables);
+        return view('admin.dashboard.couriers', $variables);
     }
 
     public function users() {
@@ -45,6 +55,6 @@ class AdminController extends Controller
             'users' => User::all(),
         ];
 
-        return view('admin.users', $variables);
+        return view('admin.dashboard.users', $variables);
     }
 }

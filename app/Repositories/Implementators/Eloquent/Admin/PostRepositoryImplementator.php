@@ -3,7 +3,7 @@
 namespace App\Repositories\Implementators\Eloquent\Admin;
 
 // Import parent
-use App\Repositories\Interfaces\Client\PostRepositoryInterface;
+use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
 
 // Import models
 use App\Models\Admin\Post;

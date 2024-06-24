@@ -5,7 +5,7 @@ Login courier
 @endsection
 
 @section('button')
-<a href="{{ route('delivery.register') }}" type="button" class="btn btn-dark">Register</a>
+<a href="{{ route('courier.register') }}" type="button" class="btn btn-dark">Register</a>
 @endsection
 
 @section('content')
@@ -17,7 +17,7 @@ Login courier
                     <h3>Login</h3>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('delivery.signin') }}" method="POST">
+                    <form action="{{ route('courier.signin') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label for="email">Email</label>
@@ -37,7 +37,7 @@ Login courier
                     </form>
                 </div>
                 <div class="card-footer text-center">
-                    <a href="{{ route('delivery.register') }}">Have not an account? Register</a>
+                    <a href="{{ route('courier.register') }}">Have not an account? Register</a>
                 </div>
             </div>
         </div>
