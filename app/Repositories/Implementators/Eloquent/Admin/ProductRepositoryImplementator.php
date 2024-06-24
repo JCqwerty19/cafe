@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Repositories\Implementators\Eloquent\Client;
+namespace App\Repositories\Implementators\Eloquent\Admin;
 
 // Import parent
-use App\Repositories\Interfaces\Client\ProductRepositoryInterface;
+use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
 
 // Import models
-use App\Models\Client\Product;
+use App\Models\Admin\Product;
 
 // Import DTO
-use App\DTO\Client\Product\ProductCreateDTO;
-use App\DTO\Client\Product\ProductUpdateDTO;
+use App\DTO\Admin\Product\ProductCreateDTO;
+use App\DTO\Admin\Product\ProductUpdateDTO;
 
 class ProductRepositoryImplementator implements ProductRepositoryInterface {
     public function make(ProductCreateDTO $productCreateDTO): void {

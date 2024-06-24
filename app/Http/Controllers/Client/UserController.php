@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 // Import models
-use App\Models\User;
+use App\Models\Client\User;
 use App\Models\Client\Order;
 
 // Import requests

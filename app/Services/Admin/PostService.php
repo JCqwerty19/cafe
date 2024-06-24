@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Client;
+namespace App\Services\Admin;
 
 // Import repository interface
-use App\Repositories\Interfaces\Client\PostRepositoryInterface;
+use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
 
 // Import DTO
-use App\DTO\Client\Post\PostCreateDTO;
-use App\DTO\Client\Post\PostUpdateDTO;
+use App\DTO\Admin\Post\PostCreateDTO;
+use App\DTO\Admin\Post\PostUpdateDTO;
 
 class PostService
 {

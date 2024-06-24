@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Repositories\Interfaces\Client;
+namespace App\Repositories\Interfaces\Admin;
 
 // Import DTO
-use App\DTO\Client\Product\ProductCreateDTO;
-use App\DTO\Client\Product\ProductUpdateDTO;
+use App\DTO\Admin\Product\ProductCreateDTO;
+use App\DTO\Admin\Product\ProductUpdateDTO;
 
 interface ProductRepositoryInterface {
 

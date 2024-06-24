@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Services\Client;
+namespace App\Services\Admin;
 
 // Import repository interface
-use App\Repositories\Interfaces\Client\ProductRepositoryInterface;
+use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
 
 // Import DTO
-use App\DTO\Client\Product\ProductCreateDTO;
-use App\DTO\Client\Product\ProductUpdateDTO;
+use App\DTO\Admin\Product\ProductCreateDTO;
+use App\DTO\Admin\Product\ProductUpdateDTO;
 
 class ProductService
 {

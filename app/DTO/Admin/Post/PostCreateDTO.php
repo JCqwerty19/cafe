@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTO\Client\Post;
+namespace App\DTO\Admin\Post;
 
 class PostCreateDTO
 {

@@ -21,7 +21,6 @@ Route::get('/courier', 'Client\MainController@courier')->name('courier.index');
 
 // =============================================================================================
 
-
 // Routes for guest clients
 Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
 
@@ -35,14 +34,11 @@ Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
 });
 
 // Routes for authorized clients
-Route::group(['prefix' => 'user'], function () {
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
 
     // Update routes
     Route::get('/update', 'Client\UserController@update')->name('user.update');
     Route::patch('/update', 'Client\UserController@renew')->name('user.renew');
-
-    // Show orders route
-    Route::get('/orders', 'Client\UserController@orders')->name('user.orders');
 
     // Logout and delete routes
     Route::post('/logout', 'Client\UserController@logout')->name('user.logout');
@@ -50,11 +46,14 @@ Route::group(['prefix' => 'user'], function () {
 });
 
 // Routes for client to manage orders
-Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'orders', 'middleware' => 'auth'], function () {
+
+    // Show orders route
+    Route::get('/', 'Client\UserController@orders')->name('user.orders');
 
     // Order create routes
-    Route::get('/', 'Client\OrderController@create')->name('order.create');
-    Route::post('/', 'Client\OrderController@make')->name('order.make');
+    Route::get('/create', 'Client\OrderController@create')->name('order.create');
+    Route::post('/create', 'Client\OrderController@make')->name('order.make');
 
     // Order delete route
     Route::delete('/delete/{order}', 'Client\OrderController@delete')->name('order.delete');
@@ -68,31 +67,38 @@ Route::group(['prefix' => 'order', 'middleware' => 'auth'], function () {
 Route::group(['prefix' => 'courier', 'middleware' => 'guest'], function () {
 
     // Register routes
-    Route::get('/register', 'Staff\DeliveryController@register')->name('delivery.register');
-    Route::post('/register', 'Staff\DeliveryController@make')->name('delivery.make');
+    Route::get('/register', 'Staff\Delivery\CourierController@register')->name('courier.register');
+    Route::post('/register', 'Staff\Delivery\CourierController@make')->name('courier.make');
 
     // Login routes
-    Route::get('/login', 'Staff\DeliveryController@login')->name('delivery.login');
-    Route::post('/login', 'Staff\DeliveryController@signin')->name('delivery.signin');
+    Route::get('/login', 'Staff\Delivery\CourierController@login')->name('courier.login');
+    Route::post('/login', 'Staff\Delivery\CourierController@signin')->name('courier.signin');
 });
 
 // Routes for authorized couriers
-Route::group(['prefix' => 'courier'], function () {
+Route::group(['prefix' => 'courier', 'middleware' => 'courier'], function () {
 
     // Update routes
-    Route::get('/update', 'Staff\DeliveryController@update')->name('delivery.update');
-    Route::patch('/update', 'Staff\DeliveryController@renew')->name('delivery.renew');
+    Route::get('/update', 'Staff\Delivery\CourierController@update')->name('courier.update');
+    Route::patch('/update', 'Staff\Delivery\CourierController@renew')->name('courier.renew');
 
     // Logout and delete routes
-    Route::post('/logout', 'Staff\DeliveryController@logout')->name('delivery.logout');
-    Route::delete('/delete{courier}', 'Staff\DeliveryController@delete')->name('courier.delete');
+    Route::post('/logout', 'Staff\Delivery\CourierController@logout')->name('courier.logout');
+    Route::delete('/delete{courier}', 'Staff\Delivery\CourierController@delete')->name('courier.delete');
+});
 
-    // Deliveries routes
-    Route::get('/delivery/table', 'Staff\DeliveryController@table')->name('delivery.table');
-    Route::post('/delivery/deliver/{order}', 'Staff\DeliveryController@deliver')->name('delivery.deliver');
+// Routes for couriers to manage deliveries
+Route::group(['prefix' => 'delivery', 'middleware' => 'courier'], function () {
 
     // My deliveries route
-    Route::get('/delivery/list', 'Staff\DeliveryController@list')->name('delivery.list');
+    Route::get('/list', 'Staff\Delivery\DeliveryController@list')->name('delivery.list');
+
+    // Deliveries routes
+    Route::get('/table', 'Staff\Delivery\DeliveryController@table')->name('delivery.table');
+    Route::post('/deliver/{order}', 'Staff\Delivery\DeliveryController@deliver')->name('delivery.deliver');
+
+    // Delivery delete route
+    Route::delete('/delete/{order}', 'Staff\Delivery\DeliveryController@delete')->name('delivery.delete');
 });
 
 
@@ -139,7 +145,7 @@ Route::group(['prefix' => 'pickup'], function () {
 
 // Routes for guest admin
 Route::group(['prefix' => 'admin'], function () {
-    
+    // ADMIN LOGIN
 });
 
 // Routes for authorized admin
@@ -180,8 +186,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::delete('/delete/{product}', 'Client\ProductController@delete')->name('product.delete');
     });
 
+    // Couriers list route
     Route::get('/courier/index', 'AdminController@couriers')->name('courier.index');
 
+    // Users list route
     Route::get('/users/index', 'AdminController@users')->name('user.index');    
 });
 

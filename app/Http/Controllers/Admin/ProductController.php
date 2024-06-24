@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Client\BaseController;
+use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Http\Request;
 
 // Import models
-use App\Models\Client\Product;
+use App\Models\Admin\Product;
 
 // Import requests
-use App\Http\Requests\Client\Product\ProductCreateRequest;
-use App\Http\Requests\Client\Product\ProductUpdateRequest;
+use App\Http\Requests\Admin\Product\ProductCreateRequest;
+use App\Http\Requests\Admin\Product\ProductUpdateRequest;
 
 // Import DTO
-use App\DTO\Client\Product\ProductCreateDTO;
-use App\DTO\Client\Product\ProductUpdateDTO;
+use App\DTO\Admin\Product\ProductCreateDTO;
+use App\DTO\Admin\Product\ProductUpdateDTO;
 
 class ProductController extends BaseController
 {
@@ -22,7 +22,7 @@ class ProductController extends BaseController
     public function create() {
 
         // Show create product page
-        return view('client.product.create');
+        return view('admin.product.create');
     }
 
     // Make product
@@ -52,7 +52,7 @@ class ProductController extends BaseController
         ];
 
         // Show product update page
-        return view('client.product.update', $variables);
+        return view('admin.product.update', $variables);
     }
 
     // Product renew function

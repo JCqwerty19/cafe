@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\Client;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Client\BaseController;
+use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Http\Request;
 
 // Import models
-use App\Models\Client\Post;
+use App\Models\Admin\Post;
 
 // Import requests
-use App\Http\Requests\Client\Post\PostCreateRequest;
-use App\Http\Requests\Client\Post\PostUpdateRequest;
+use App\Http\Requests\Admin\Post\PostCreateRequest;
+use App\Http\Requests\Admin\Post\PostUpdateRequest;
 
 // Import DTO
-use App\DTO\Client\Post\PostCreateDTO;
-use App\DTO\Client\Post\PostUpdateDTO;
+use App\DTO\Admin\Post\PostCreateDTO;
+use App\DTO\Admin\Post\PostUpdateDTO;
 
 class PostController extends BaseController
 {
@@ -22,7 +22,7 @@ class PostController extends BaseController
     public function create() {
 
         // Show create post page
-        return view('client.post.create');
+        return view('admin.post.create');
     }
 
     // Make post
@@ -51,7 +51,7 @@ class PostController extends BaseController
         ];
 
         // Show post page
-        return view('client.post.read', $variables);
+        return view('admin.post.read', $variables);
     }
 
     // Update post
@@ -63,7 +63,7 @@ class PostController extends BaseController
         ];
 
         // Show post update page
-        return view('client.post.update', $variables);
+        return view('admin.post.update', $variables);
     }
 
     // Post renew function

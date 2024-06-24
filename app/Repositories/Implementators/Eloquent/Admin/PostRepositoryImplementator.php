@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Repositories\Implementators\Eloquent\Client;
+namespace App\Repositories\Implementators\Eloquent\Admin;
 
 // Import parent
 use App\Repositories\Interfaces\Client\PostRepositoryInterface;
 
 // Import models
-use App\Models\Client\Post;
+use App\Models\Admin\Post;
 
 // Import DTO
-use App\DTO\Client\Post\PostCreateDTO;
-use App\DTO\Client\Post\PostUpdateDTO;
+use App\DTO\Admin\Post\PostCreateDTO;
+use App\DTO\Admin\Post\PostUpdateDTO;
 
 class PostRepositoryImplementator implements PostRepositoryInterface {
     public function make(PostCreateDTO $postCreateDTO): void {
