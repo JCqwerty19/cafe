@@ -6,9 +6,9 @@ namespace App\Repositories\Implementators\Eloquent\Client;
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 
 // Import models
-use App\Models\Client\Product;
+use App\Models\Admin\Product;
 use App\Models\Client\Order;
-use App\Models\User;
+use App\Models\Client\User;
 use App\Models\Client\OrderItems;
 
 // Import DTO

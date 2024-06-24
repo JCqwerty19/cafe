@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models\Client;
+namespace App\Models\Admin;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Post extends Model
+class Product extends Model
 {
     // Import traits
     use SoftDeletes;

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
 
 // Import models
-use App\Models\User;
+use App\Models\Client\User;
 
 // Import DTO
 use App\DTO\Client\User\UserCreateDTO;

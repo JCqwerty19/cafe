@@ -6,7 +6,7 @@ use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
 
 // Import models
-use App\Models\Client\Product;
+use App\Models\Admin\Product;
 use App\Models\Client\Order;
 use App\Models\Client\User;
 

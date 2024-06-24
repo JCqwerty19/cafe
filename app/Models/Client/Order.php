@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Client\OrderItems;
 use App\Models\Staff\Deliveries;
 
-use App\Models\User;
+use App\Models\Client\User;
 
 class Order extends Model
 {
