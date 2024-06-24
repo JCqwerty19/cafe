@@ -18,10 +18,14 @@ class UserService
     ) {
         $this->userRepositoryInterface = $userRepositoryInterface;
     }
+
+
+    // =============================================================
+
     
     // User make function
-    public function make(UserCreateDTO $userCreateDTO): bool {
-
+    public function make(UserCreateDTO $userCreateDTO): bool
+    {
         // Create DTO to show params for user creating
         $userCreateDTO = new UserCreateDTO(
             username: $userCreateDTO->username,
@@ -35,9 +39,13 @@ class UserService
         return $this->userRepositoryInterface->make($userCreateDTO);
     }
 
-    // Signin function
-    public function signin(UserLoginDTO $userLoginDTO): bool {
 
+    // =============================================================
+
+
+    // Signin function
+    public function signin(UserLoginDTO $userLoginDTO): bool
+    {
         // Create DTO to show params for login user
         $userLoginDTO = new UserLoginDTO(
             email: $userLoginDTO->email,
@@ -48,9 +56,13 @@ class UserService
         return $this->userRepositoryInterface->signin($userLoginDTO);
     }
 
-    // Renew function
-    public function renew(UserUpdateDTO $userUpdateDTO): void {
 
+    // =============================================================
+
+
+    // Renew function
+    public function renew(UserUpdateDTO $userUpdateDTO): void
+    {
         // Create DTO to show params for user updating
         $userUpdateDTO = new UserUpdateDTO(
             user_id: $userUpdateDTO->user_id,
@@ -65,17 +77,23 @@ class UserService
         $this->userRepositoryInterface->renew($userUpdateDTO);
     }
 
-    // Logout function
-    public function logout(): void {
 
-        // Logoout user in repository
+    // =============================================================
+
+
+    // Logout function
+    public function logout(): void
+    {
         $this->userRepositoryInterface->logout();
     }
 
-    // Delete fucntion
-    public function delete(int $user_id): void {
 
-        // Delete user in repository
+    // =============================================================
+    
+
+    // Delete fucntion
+    public function delete(int $user_id): void
+    {
         $this->userRepositoryInterface->delete($user_id);
     }
 }

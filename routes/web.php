@@ -151,7 +151,7 @@ Route::group(['prefix' => 'admin'], function () {
 // Routes for authorized admin
 Route::group(['middlware' => 'admin'], function () {
 
-    Route::get('/', 'Admin\AdminController@index')->name('admin.index');
+    Route::get('/', 'Admin\AdminController@dashboard')->name('admin.dashboard');
 
     // Routes for manage posts
     Route::group(['prefix' => 'post'], function () {
@@ -196,7 +196,6 @@ Route::group(['middlware' => 'admin'], function () {
 // =============================================================================================
 
 // ==========
-// comments all code
 // Order price problem
 // Restore password
 // Confirmation email

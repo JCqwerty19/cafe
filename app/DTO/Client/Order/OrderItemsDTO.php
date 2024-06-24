@@ -4,7 +4,7 @@ namespace App\DTO\Client\Order;
 
 class OrderItemsDTO {
 
-    // Construction order items DTO
+    // order update DTO construction
     public function __construct(
         public int $order_id,
         public array $items,

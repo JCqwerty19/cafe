@@ -21,11 +21,13 @@ class OrderService
         $this->orderRepositoryInterface = $orderRepositoryInterface;
     }
 
-    // ===============================================
+
+    // =============================================================
+
 
     // Order make function
-    public function make(OrderCreateDTO $orderDTO): Order {
-
+    public function make(OrderCreateDTO $orderDTO): Order
+    {
         // Create order DTO to show params
         $orderDTO = new OrderCreateDTO(
             user_id: $orderDTO->user_id,
@@ -40,11 +42,13 @@ class OrderService
         return $this->orderRepositoryInterface->make($orderDTO);
     }
 
-    // ===============================================
+
+    // =============================================================
+
 
     // Put order items function
-    public function putOrderItems(OrderItemsDTO $orderItemsDTO): void {
-        
+    public function putOrderItems(OrderItemsDTO $orderItemsDTO): void
+    {
         // Create order items DTO to show params
         $orderItemsDTO = new OrderItemsDTO(
             order_id: $orderItemsDTO->order_id,
@@ -55,17 +59,24 @@ class OrderService
         $this->orderRepositoryInterface->putOrderItems($orderItemsDTO);
     }
 
-    // Duistirbute orders function
-    public function distirbute(int $order_id): void {
 
+    // =============================================================
+
+
+    // Duistirbute orders function
+    public function distirbute(int $order_id): void
+    {
         // Distirbute order in repository
         $this->orderRepositoryInterface->distirbute($order_id);
     }
 
-    // Delete order fucntion
-    public function delete(int $order_id): bool {
 
-        // Delete order in repository
+    // =============================================================
+
+
+    // Delete order fucntion
+    public function delete(int $order_id): bool
+    {
         return $this->orderRepositoryInterface->delete($order_id);
     }
 }

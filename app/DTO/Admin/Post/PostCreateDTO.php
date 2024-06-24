@@ -4,7 +4,7 @@ namespace App\DTO\Admin\Post;
 
 class PostCreateDTO
 {
-    // Construction post create DTO
+    // post create DTO construction
     public function __construct(
         public string $title,
         public string $content,

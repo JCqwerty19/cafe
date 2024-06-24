@@ -9,15 +9,15 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+// import models
 use App\Models\Client\Order;
-
 
 class User extends Authenticatable
 {
     // Import traits
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
-    // Gaining access to CRUD producs
+    // Gaining access to CRUD users
     protected $guarded = false;
 
     /**
@@ -53,7 +53,8 @@ class User extends Authenticatable
     ];
 
     // Get user orders function
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany(Order::class);
     }
 }

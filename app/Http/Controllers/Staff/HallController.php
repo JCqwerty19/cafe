@@ -11,8 +11,8 @@ use App\Models\Client\Order;
 class HallController extends BaseController
 {
     // Show hall list page function
-    public function index() {
-
+    public function index()
+    {
         // Object for the hall list page
         $variables = [
             'orders' => Order::where('obtaining', 'hall')->get(),
@@ -22,9 +22,13 @@ class HallController extends BaseController
         return view('staff.hall.index', $variables);
     }
 
-    // Show hall table page function
-    public function table() {
 
+    // =============================================================
+    
+
+    // Show hall table page function
+    public function table()
+    {
         // Object for the hall table page
         $variables = [
             'orders' => Order::where('obtaining', 'hall')->get(),

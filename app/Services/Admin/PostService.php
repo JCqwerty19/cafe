@@ -17,10 +17,14 @@ class PostService
     ) {
         $this->postRepositoryInterface = $postRepositoryInterface;
     }
+
+
+    // =============================================================
+
     
     // Post make fucntion
-    public function make(PostCreateDTO $postCreateDTO): void {
-
+    public function make(PostCreateDTO $postCreateDTO): void
+    {
         // Create DTO to show params for creating post
         $postCreateDTO = new PostCreateDTO(
             title: $postCreateDTO->title,
@@ -31,9 +35,13 @@ class PostService
         $this->postRepositoryInterface->make($postCreateDTO);
     }
 
-    // Post renew fucntion 
-    public function renew(PostUpdateDTO $postUpdateDTO): void {
 
+    // =============================================================
+
+
+    // Post renew fucntion 
+    public function renew(PostUpdateDTO $postUpdateDTO): void
+    {
         // Create DTO to show params for renew post
         $postUpdateDTO = new PostUpdateDTO(
             post_id: $postUpdateDTO->post_id,
@@ -45,10 +53,13 @@ class PostService
         $this->postRepositoryInterface->renew($postUpdateDTO);
     }
 
-    // Post delete fucntion
-    public function delete(int $post_id): void {
 
-        // Delete post in repository
+    // =============================================================
+
+
+    // Post delete fucntion
+    public function delete(int $post_id): void
+    {
         $this->postRepositoryInterface->delete($post_id);
     }
 }

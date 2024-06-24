@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+// import models
 use App\Models\Staff\Deliveries;
 
 class Courier extends Authenticatable
@@ -15,7 +16,8 @@ class Courier extends Authenticatable
     // Import traits
     use Notifiable, HasFactory, SoftDeletes;
 
-    // Gaining access to CRUD producs
+    // Get access to CRUD couriers
+    protected $guarded = false;
 
     protected $fillable = [
         'couriername', 'email', 'phone', 'password',
@@ -25,7 +27,8 @@ class Courier extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function deliveries() {
+    public function deliveries()
+    {
         return $this->hasMany(Deliveries::class);
     }
 }

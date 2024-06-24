@@ -9,8 +9,8 @@ use App\Models\Client\Order;
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
 
-interface OrderRepositoryInterface {
-    
+interface OrderRepositoryInterface
+{
     // Order make function
     public function make(OrderCreateDTO $orderDTO): Order;
 
@@ -22,5 +22,4 @@ interface OrderRepositoryInterface {
 
     // Delete function
     public function delete(int $order_id): bool;
-
 }

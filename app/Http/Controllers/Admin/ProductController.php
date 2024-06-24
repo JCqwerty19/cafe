@@ -19,15 +19,19 @@ use App\DTO\Admin\Product\ProductUpdateDTO;
 class ProductController extends BaseController
 {
     // Create product
-    public function create() {
-
+    public function create()
+    {
         // Show create product page
         return view('admin.product.create');
     }
 
-    // Make product
-    public function make(ProductCreateRequest $productCreateRequest) {
 
+    // =============================================================
+
+
+    // Make product
+    public function make(ProductCreateRequest $productCreateRequest)
+    {
         // Validate product request data
         $productData = $productCreateRequest->validated();
 
@@ -43,9 +47,13 @@ class ProductController extends BaseController
         $this->productService->make($productCreateDTO);
     }
 
-    // Update product
-    public function update(Product $product) {
 
+    // =============================================================
+
+
+    // Update product
+    public function update(Product $product)
+    {
         // Objects for the update product page
         $variables = [
             'product' => $product,
@@ -55,9 +63,13 @@ class ProductController extends BaseController
         return view('admin.product.update', $variables);
     }
 
-    // Product renew function
-    public function renew(ProductUpdateRequest $productUpdateRequest, Product $product) {
 
+    // =============================================================
+
+
+    // Product renew function
+    public function renew(ProductUpdateRequest $productUpdateRequest, Product $product)
+    {
         // Validate product update request data
         $productData = $productUpdateRequest->validated();
 
@@ -74,9 +86,13 @@ class ProductController extends BaseController
         $this->productService->renew($productUpdateDTO);
     }
 
-    // Delete product
-    public function delete(Product $product) {
 
+    // =============================================================
+    
+
+    // Delete product
+    public function delete(Product $product)
+    {
         // Delete product through service
         $this->productService->delete($product->id);
     }

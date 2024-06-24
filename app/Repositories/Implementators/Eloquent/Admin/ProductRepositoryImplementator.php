@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Implementators\Eloquent\Admin;
 
-// Import parent
+// Import interfaces
 use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
 
 // Import models
@@ -12,31 +12,64 @@ use App\Models\Admin\Product;
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
-class ProductRepositoryImplementator implements ProductRepositoryInterface {
-    public function make(ProductCreateDTO $productCreateDTO): void {
+class ProductRepositoryImplementator implements ProductRepositoryInterface
+{
+    // product make
+    public function make(ProductCreateDTO $productCreateDTO): void
+    {
+        // collect product data
         $productData = static::collectProductParams($productCreateDTO);
 
+        // create product
         static::createProduct($productData);
     }
 
-    public function renew(ProductUpdateDTO $productUpdateDTO): void {
+
+    // =============================================================
+
+
+    // product renew
+    public function renew(ProductUpdateDTO $productUpdateDTO): void
+    {
+        // find updating product
         $product = static::findProduct($productUpdateDTO->product_id);
 
+        // collect new product data
         $productNewData = static::collectProductNewParams($productUpdateDTO);
 
+        // renew product
         static::renewProduct($product, $productNewData);
-
     }
 
-    public function delete(int $product_id): void {
+
+    // =============================================================
+
+
+    // product delete
+    public function delete(int $product_id): void
+    {
+        // find deleting product
         $product = static::findProduct($product_id);
+
+        // delete product
         static::productDelete($product);
     }
 
-    // POST MAKE STATIC FUNCTIONS
-    // ===================================================
 
-    public static function collectProductParams(ProductCreateDTO $productCreateDTO): array {
+
+    // =============================================================
+    // STATIC FUNCTIONS
+    // =============================================================
+
+
+
+    // PRODUCT MAKE STATIC FUNCTIONS
+    // =============================================================
+
+
+    public static function collectProductParams(ProductCreateDTO $productCreateDTO): array
+    {
+        // collect data from DTO to array
         $productData = [
             'image' => $productCreateDTO->image,
             'title' => $productCreateDTO->title,
@@ -44,17 +77,29 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface {
             'price' => $productCreateDTO->price,
         ];
 
+        // return array
         return $productData;
     }
 
-    public static function createProduct(array $productData): void {
+    
+    // =============================================================
+
+
+    // create product
+    public static function createProduct(array $productData): void
+    {
         Product::firstOrCreate($productData);
     }
 
-    // POST RENEW STATIC FUNCTIONS
-    // ===================================================
 
-    public static function collectProductNewParams(ProductUpdateDTO $productUpdateDTO): array {
+    // PRODUCT RENEW STATIC FUNCTIONS
+    // =============================================================
+
+
+    // collect product params
+    public static function collectProductNewParams(ProductUpdateDTO $productUpdateDTO): array
+    {
+        // collect data from DTO to array
         $productNewData = [
             'image' => $productUpdateDTO->image,
             'title' => $productUpdateDTO->title,
@@ -62,24 +107,39 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface {
             'price' => $productUpdateDTO->price,
         ];
 
+        // return array
         return $productNewData;
     }
 
-    public static function renewProduct(Product $product, array $productNewData): void {
+
+    // =============================================================
+
+
+    // renew product
+    public static function renewProduct(Product $product, array $productNewData): void
+    {
         $product->update($productNewData);
     }
 
-    // POST DELETE STATIC FUNCTIONS
-    // ===================================================
 
-    public static function productDelete(Product $product) {
+    // PRODUCT DELETE STATIC FUNCTIONS
+    // =============================================================
+
+
+    // product delete
+    public static function productDelete(Product $product)
+    {
         $product->delete();
     }
+    
 
     // GENERAL STATIC FUNCTIONS
-    // ===================================================
+    // =============================================================
+
     
-    public static function findProduct(int $product_id): Product {
+    // find product
+    public static function findProduct(int $product_id): Product
+    {
         return Product::find($product_id);
     }
     

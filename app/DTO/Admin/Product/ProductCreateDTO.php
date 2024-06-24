@@ -4,7 +4,7 @@ namespace App\DTO\Admin\Product;
 
 class ProductCreateDTO
 {
-    // Construction product create DTO
+    // product create DTO construction
     public function __construct(
         public string $image,
         public string $title,

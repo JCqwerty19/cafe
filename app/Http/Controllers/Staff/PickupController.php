@@ -11,8 +11,8 @@ use App\Models\Client\Order;
 class PickupController extends BaseController
 {
     // Show pickup table page
-    public function table() {
-
+    public function table()
+    {
         // Objects for the pickup table page
         $variables = [
             'orders' => Order::where('status', 'Your order waiting for you')->get(),

@@ -20,8 +20,8 @@ use App\DTO\Client\Order\OrderItemsDTO;
 class OrderController extends BaseController
 {
     // Create order
-    public function create() {
-        
+    public function create()
+    {
         // Objects for the create order page
         $variables = [
             'user' => auth()->user(),
@@ -32,9 +32,13 @@ class OrderController extends BaseController
         return view('client.main.order', $variables);
     }
 
-    // Make order
-    public function make(OrderCreateRequest $orderRequest) {
 
+    // =============================================================
+
+
+    // Make order
+    public function make(OrderCreateRequest $orderRequest)
+    {
         // Validate order request data
         $orderData = $orderRequest->validated();
 
@@ -64,9 +68,13 @@ class OrderController extends BaseController
         return redirect()->route('user.orders');
     }
 
-    // Distribute order
-    public function distirbute(Order $order) {
 
+    // =============================================================
+
+
+    // Distribute order
+    public function distirbute(Order $order)
+    {
         // Distribute order through service
         $this->orderService->distirbute($order->id);
 
@@ -74,9 +82,13 @@ class OrderController extends BaseController
         return redirect()->route('kitchen.table');
     }
 
-    // Delete order
-    public function delete(Order $order) {
 
+    // =============================================================
+    
+
+    // Delete order
+    public function delete(Order $order)
+    {
         // Delete order through service
         $response = $this->orderService->delete($order->id);
 

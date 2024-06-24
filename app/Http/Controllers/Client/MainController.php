@@ -12,8 +12,8 @@ use App\Models\Admin\Post;
 class MainController extends BaseController
 {
     // Show main page
-    public function index() {
-
+    public function index()
+    {
         // Objects for the main page
         $variables = [
             'products' => Product::all(),
@@ -24,10 +24,13 @@ class MainController extends BaseController
         return view('client.main.index', $variables);
     }
 
-    // Show main page for staff
-    public function courier() {
+    
+    // =============================================================
 
-        // Show main page for staff
+
+    // Show main page for staff
+    public function courier()
+    {
         return view('staff.main.index');
     }
 }

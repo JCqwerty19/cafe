@@ -4,7 +4,7 @@ namespace App\DTO\Client\User;
 
 class UserCreateDTO {
 
-    // Construction user create DTO
+    // user create DTO construction
     public function __construct(
         public string $username,
         public string $email,

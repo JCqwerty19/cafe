@@ -17,10 +17,14 @@ class ProductService
     ) {
         $this->productRepositoryInterface = $productRepositoryInterface;
     }
+
+
+    // =============================================================
+
     
     // Product make fucntion
-    public function make(ProductCreateDTO $productCreateDTO): void {
-
+    public function make(ProductCreateDTO $productCreateDTO): void
+    {
         // Create DTO to show params for creating product
         $productCreateDTO = new ProductCreateDTO(
             image: $productCreateDTO->image,
@@ -33,9 +37,13 @@ class ProductService
         $this->productRepositoryInterface->make($productCreateDTO);
     }
 
-    // Product renew fucntion 
-    public function renew(ProductUpdateDTO $productUpdateDTO): void {
 
+    // =============================================================
+
+
+    // Product renew fucntion 
+    public function renew(ProductUpdateDTO $productUpdateDTO): void
+    {
         // Create DTO to show params for renew product
         $productUpdateDTO = new ProductUpdateDTO(
             product_id: $productUpdateDTO->product_id,
@@ -49,10 +57,13 @@ class ProductService
         $this->productRepositoryInterface->renew($productUpdateDTO);
     }
 
-    // Product delete fucntion
-    public function delete(int $product_id): void {
 
-        // Delete product in repository
+    // =============================================================
+
+
+    // Product delete fucntion
+    public function delete(int $product_id): void
+    {
         $this->productRepositoryInterface->delete($product_id);
     }
 }

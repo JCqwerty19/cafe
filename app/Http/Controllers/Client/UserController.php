@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 // Import models
-use App\Models\Client\User;
 use App\Models\Client\Order;
+use App\Models\Client\User;
 
 // Import requests
 use App\Http\Requests\Client\User\UserRegisterRequest;
@@ -25,15 +25,18 @@ use App\DTO\Client\User\UserUpdateDTO;
 class UserController extends BaseController
 {
     // Register user
-    public function register() {
-
-        // Show register page
+    public function register()
+    {
         return view('client.user.register');
     }
 
-    // Make an account for user
-    public function make(UserRegisterRequest $userRegusterRequest) {
 
+    // =============================================================
+
+
+    // Make an account for user
+    public function make(UserRegisterRequest $userRegusterRequest)
+    {
         // Validate user register request data
         $userData = $userRegusterRequest->validated();
 
@@ -52,23 +55,27 @@ class UserController extends BaseController
 
         // Checking user to existance of account
         if (!$response) {
-            return redirect()->route('user.register')->withErrors(['account' => 'You have been registrated']);
+            return back()->withErrors(['account' => 'You have been registrated']);
         }
 
         // Redirect to the main page
         return redirect()->route('main.index');
     }
 
-    // Login User
-    public function login() {
 
+    // =============================================================
+
+
+    // Login User
+    public function login()
+    {
         // Show login page
         return view('client.user.login');
     }
 
     // Sign in user
-    public function signin(UserLoginRequest $userLoginRequest) {
-
+    public function signin(UserLoginRequest $userLoginRequest)
+    {
         // Validate user request data
         $userData = $userLoginRequest->validated();
         
@@ -89,20 +96,24 @@ class UserController extends BaseController
             if ($user && !Hash::check($userData['password'], $user->password)) {
 
                 // Incorrect password
-                return redirect()->route('user.login')->withErrors(['password' => 'Incorrect password.']);
+                return back()->withErrors(['password' => 'Incorrect password.']);
             }
     
             // User does not exist or some other error
-            return redirect()->route('user.login')->withErrors(['email' => 'You have not an account, register first']);
+            return back()->withErrors(['email' => 'You have not an account, register first']);
         }
     
         // If login successful
         return redirect()->route('main.index');
     }
 
-    // User update
-    public function update() {
 
+    // =============================================================
+
+
+    // User update
+    public function update()
+    {
         // Objects for the user update page
         $variables = [
             'user' => auth()->user(),
@@ -112,9 +123,13 @@ class UserController extends BaseController
         return view('client.user.update', $variables);
     }
 
-    // Renew user
-    public function renew(UserUpdateRequest $userUpdateRequest) {
 
+    // =============================================================
+
+
+    // Renew user
+    public function renew(UserUpdateRequest $userUpdateRequest)
+    {
         // Valdate user request data
         $userData = $userUpdateRequest->validated();
         
@@ -131,12 +146,17 @@ class UserController extends BaseController
         // Update user through service
         $this->userService->renew($userUpdateDTO);
 
+        // redirect to the main page
         return redirect()->route('main.index');
     }
 
-    // Logout user
-    public function logout(User $user) {
 
+    // =============================================================
+
+
+    // Logout user
+    public function logout(User $user)
+    {
         // Logoout user through service
         $this->userService->logout($user->id);
 
@@ -144,9 +164,13 @@ class UserController extends BaseController
         return redirect()->route('main.index');
     }
 
-    // Delete an account
-    public function delete(User $user) {
 
+    // =============================================================
+
+
+    // Delete an account
+    public function delete(User $user)
+    {
         // Delete an account through service
         $response = $this->userService->delete($user->id);
 
@@ -159,9 +183,13 @@ class UserController extends BaseController
         return redirect()->route('main.index');
     }
 
-    // Show user orders function
-    public function orders() {
 
+    // =============================================================
+    
+
+    // Show user orders function
+    public function orders()
+    {
         // Objects for the my orders page
         $variables = [
             'orders' => Order::where('user_id', auth()->user()->id)

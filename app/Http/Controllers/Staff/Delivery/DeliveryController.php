@@ -10,14 +10,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 // Import models
-use App\Models\Staff\Deliveries;
 use App\Models\Client\Order;
+use App\Models\Staff\Deliveries;
 
 class DeliveryController extends BaseController
 {
     // Delivery table
-    public function table() {
-
+    public function table()
+    {
         // Collect object for the delivery table page
         $variables = [
             'orders' => Order::where('status', 'Your order waiting for courier')->get(),
@@ -27,9 +27,13 @@ class DeliveryController extends BaseController
         return view('staff.delivery.table', $variables);
     }
 
-    // Deliver function
-    public function deliver(Order $order) {
 
+    // =============================================================
+
+
+    // Deliver function
+    public function deliver(Order $order)
+    {
         // Deliver function through service
         $this->deliveryService->deliver($order->id);
 
@@ -37,9 +41,13 @@ class DeliveryController extends BaseController
         return redirect()->route('delivery.list');
     }
 
-    // Show deliver list page function
-    public function list() {
 
+    // =============================================================
+
+
+    // Show deliver list page function
+    public function list()
+    {
         // Collect object for the my delivery list page
         $variables = [
             'orders' => Deliveries::where('courier_id', Auth::guard('courier')->user()->id)

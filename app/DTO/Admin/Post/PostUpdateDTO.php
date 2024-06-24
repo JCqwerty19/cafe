@@ -4,7 +4,7 @@ namespace App\DTO\Admin\Post;
 
 class PostUpdateDTO
 {
-    // Construction post update DTO
+    // post update DTO construction
     public function __construct(
         public int $post_id,
         public string $title,

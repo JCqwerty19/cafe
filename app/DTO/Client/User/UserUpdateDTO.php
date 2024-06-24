@@ -4,7 +4,7 @@ namespace App\DTO\Client\User;
 
 class UserUpdateDTO {
 
-    // Construction user update DTO
+    // user update DTO contruction
     public function __construct(
         public int $user_id,
         public string $username,

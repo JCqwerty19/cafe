@@ -6,8 +6,8 @@ namespace App\Repositories\Interfaces\Admin;
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
-interface PostRepositoryInterface {
-
+interface PostRepositoryInterface
+{
     // Post make function
     public function make(PostCreateDTO $postCreateDTO): void;
 
@@ -16,5 +16,4 @@ interface PostRepositoryInterface {
 
     // Post delete function
     public function delete(int $post_id): void;
-    
 }

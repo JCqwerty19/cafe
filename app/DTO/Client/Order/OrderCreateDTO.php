@@ -4,7 +4,7 @@ namespace App\DTO\Client\Order;
 
 class OrderCreateDTO
 {
-    // Construction order create DTO
+    // order create DTO construction
     public function __construct(
         public int $user_id,
         public string $obtaining,

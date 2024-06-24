@@ -6,7 +6,8 @@ namespace App\Repositories\Interfaces\Admin;
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
-interface ProductRepositoryInterface {
+interface ProductRepositoryInterface
+{
 
     // Product make function
     public function make(ProductCreateDTO $productCreateDTO): void;

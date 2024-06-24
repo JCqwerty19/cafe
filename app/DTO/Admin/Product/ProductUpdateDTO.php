@@ -4,7 +4,7 @@ namespace App\DTO\Admin\Product;
 
 class ProductUpdateDTO
 {
-    // Construction product update DTO
+    // product update DTO construction
     public function __construct(
         public int $product_id,
         public string $image,
