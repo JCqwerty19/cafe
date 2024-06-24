@@ -90,6 +90,18 @@ class PostRepositoryImplementator implements PostRepositoryInterface
     // POST RENEW STATIC FUNCTIONS
     // =============================================================
 
+    // collect post new params
+    public static function collectPostNewParams(PostUpdateDTO $postUpdateDTO): array
+    {
+        // collect data in array from DTO
+        $postData = [
+            'title' => $postUpdateDTO->title,
+            'content' => $postUpdateDTO->content,
+        ];
+
+        // return array
+        return $postData;
+    }
 
     // post renew
     public static function renewPost(Post $post, array $postNewData): void

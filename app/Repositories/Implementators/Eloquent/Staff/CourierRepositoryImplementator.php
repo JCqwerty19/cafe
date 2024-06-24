@@ -18,7 +18,7 @@ use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
 
 
-class CourierRepositoryImplementator
+class CourierRepositoryImplementator implements CourierRepositoryInterface
 {
     // Courier make function
     public function make(CourierCreateDTO $courierCreateDTO): bool
@@ -28,7 +28,7 @@ class CourierRepositoryImplementator
             return false;
         }
 
-        // Check trashed users
+        // Check trashed couriers
         static::checkTash($courierCreateDTO->email);
 
         // Hash password
@@ -137,8 +137,12 @@ class CourierRepositoryImplementator
     // if courier already registrated and trashed force delete it
     public static function checkTash(string $email): void
     {
-        if (Courier::onlyTrashed()->where('email', $email)->first()) {
-            $user->forceDelete();
+        // find trashed couriers with given email
+        $courier = Courier::onlyTrashed()->where('email', $email)->first();
+
+        // delete if it's exist
+        if ($courier) {
+            $courier->forceDelete();
         }
     }
 

@@ -149,7 +149,7 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 // Routes for authorized admin
-Route::group(['middlware' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middlware' => 'admin'], function () {
 
     Route::get('/', 'Admin\AdminController@dashboard')->name('admin.dashboard');
 
@@ -206,3 +206,5 @@ Route::group(['middlware' => 'admin'], function () {
 // Products create and image
 // Order create error to no items
 // comments all blade
+
+// updating // the same email

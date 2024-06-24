@@ -36,7 +36,7 @@ class CourierService
         );
 
         // create courier in reposiitory
-        return $this->deliveryRepositoryInterface->make($courierCreateDTO);
+        return $this->courierRepositoryInterface->make($courierCreateDTO);
     }
 
 
@@ -53,7 +53,7 @@ class CourierService
         );
 
         // login courier in repository
-        return $this->deliveryRepositoryInterface->signin($courierLoginDTO);
+        return $this->courierRepositoryInterface->signin($courierLoginDTO);
     }
 
 
@@ -73,7 +73,7 @@ class CourierService
         );
 
         // update courier through repository
-        $this->deliveryRepositoryInterface->renew($courierUpdateDTO);
+        $this->courierRepositoryInterface->renew($courierUpdateDTO);
     }
 
 
@@ -83,7 +83,7 @@ class CourierService
     // Logout courier
     public function logout(): void
     {
-        $this->deliveryRepositoryInterface->logout();
+        $this->courierRepositoryInterface->logout();
     }
 
 
@@ -93,6 +93,6 @@ class CourierService
     // Delete an account
     public function delete(int $courier_id): void
     {
-        $this->deliveryRepositoryInterface->delete($courier_id);
+        $this->courierRepositoryInterface->delete($courier_id);
     }
 }

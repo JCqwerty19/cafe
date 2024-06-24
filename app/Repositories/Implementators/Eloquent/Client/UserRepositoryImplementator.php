@@ -141,8 +141,11 @@ class UserRepositoryImplementator implements UserRepositoryInterface
     // check trashed users
     public static function checkTash(string $email): void
     {
+        // find trashed user
+        $user = User::onlyTrashed()->where('email', $email)->first();
+        
         // if user alerdy registrated and trashed, trash user
-        if (User::onlyTrashed()->where('email', $email)->first()) {
+        if ($user) {
             $user->forceDelete();
         }
     }
