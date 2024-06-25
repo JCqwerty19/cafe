@@ -115,7 +115,6 @@ Route::group(['prefix' => 'kitchen'], function () {
     Route::post('/distirbute/{order}', 'Client\OrderController@distirbute')->name('order.distribute');
 });
 
-
 // =============================================================================================
 
 
