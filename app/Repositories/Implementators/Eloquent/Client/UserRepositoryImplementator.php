@@ -2,14 +2,14 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
+// Import intefaces
+use App\Repositories\Interfaces\Client\UserRepositoryInterface;
+
 // Import facades and supports
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-
-// Import intefaces
-use App\Repositories\Interfaces\Client\UserRepositoryInterface;
 
 // Import models
 use App\Models\Client\User;
@@ -112,6 +112,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface
 
     // =============================================================
 
+    // Password reset function
     public function reset(UserPasswordResetDTO $userDTO): void
     {
         $user = static::findUser($userDTO->email);

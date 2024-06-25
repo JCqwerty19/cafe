@@ -9,7 +9,7 @@ use App\Repositories\Interfaces\Staff\CourierRepositoryInterface;
 use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
-
+use App\DTO\Staff\Courier\CourierPasswordResetDTO;
 
 class CourierService
 {
@@ -74,6 +74,34 @@ class CourierService
 
         // update courier through repository
         $this->courierRepositoryInterface->renew($courierUpdateDTO);
+    }
+
+
+    // =============================================================
+
+
+    // Send link for password reset through repository
+    public function sendLink(string $email): void
+    {
+        $this->courierRepositoryInterface->sendLink($email);
+    }
+
+
+    // =============================================================
+
+
+    // Password reset function
+    public function reset(CourierPasswordResetDTO $courierPasswordResetDTO): void
+    {
+        // create DTO to show user data
+        $courierDTO = new CourierPasswordResetDTO(
+            email: $courierPasswordResetDTO->email,
+            token: $courierPasswordResetDTO->token,
+            password: $courierPasswordResetDTO->password,
+        );
+
+        // reset password through repository
+        $this->courierRepositoryInterface->reset($courierDTO);
     }
 
 

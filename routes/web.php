@@ -32,9 +32,11 @@ Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
     Route::get('/login', 'Client\UserController@login')->name('user.login');
     Route::post('/login', 'Client\UserController@signin')->name('user.signin');
 
+    // Forgot password routes
     Route::get('/password/forgot', 'Client\UserController@linkPage')->name('user.password.link');
     Route::post('/password/forgot', 'Client\UserController@sendLink')->name('user.password.send');
 
+    // Reset password routes
     Route::get('/password/reset/{token}/{email}', 'Client\UserController@resetPage')->name('user.password.page');
     Route::post('/password/reset', 'Client\UserController@reset')->name('user.password.reset');
 });
@@ -79,6 +81,14 @@ Route::group(['prefix' => 'courier', 'middleware' => 'guest'], function () {
     // Login routes
     Route::get('/login', 'Staff\Delivery\CourierController@login')->name('courier.login');
     Route::post('/login', 'Staff\Delivery\CourierController@signin')->name('courier.signin');
+
+    // Forgot password routes
+    Route::get('/password/forgot', 'Staff\Delivery\CourierController@linkPage')->name('courier.password.link');
+    Route::post('/password/forgot', 'Staff\Delivery\CourierController@sendLink')->name('courier.password.send');
+
+    // Reset password routes
+    Route::get('/password/reset/{token}/{email}', 'Staff\Delivery\CourierController@resetPage')->name('courier.password.page');
+    Route::post('/password/reset', 'Staff\Delivery\CourierController@reset')->name('courier.password.reset');
 });
 
 // Routes for authorized couriers

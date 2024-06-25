@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('phone');
             $table->string('email');
             $table->string('password');
+            $table->string('password_reset_token')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

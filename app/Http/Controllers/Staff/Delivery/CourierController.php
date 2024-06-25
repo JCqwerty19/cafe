@@ -16,11 +16,14 @@ use App\Models\Staff\Courier;
 use App\Http\Requests\Staff\Courier\CourierRegisterRequest;
 use App\Http\Requests\Staff\Courier\CourierLoginRequest;
 use App\Http\Requests\Staff\Courier\CourierUpdateRequest;
+use App\Http\Requests\Staff\Courier\CourierEmailRequest;
+use App\Http\Requests\Staff\Courier\CourierPasswordResetRequest;
 
 // Import DTO
 use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
+use App\DTO\Staff\Courier\CourierPasswordResetDTO;
 
 class CourierController extends BaseController
 {
@@ -148,6 +151,86 @@ class CourierController extends BaseController
 
         // Redirect to the delivery table page
         return redirect()->route('delivery.table');
+    }
+
+
+    // =============================================================
+
+
+    // Show email require page for password reset
+    public function linkPage()
+    {
+        return view('staff.delivery.courier.password.request');
+    }
+
+
+    // =============================================================
+
+
+    // Send email fucntion
+    public function sendLink(CourierEmailRequest $courierEmailRequest)
+    {
+        // validate email data
+        $emailData = $courierEmailRequest->validated();
+
+        // send link through service
+        $this->courierService->sendLink($emailData['email']);
+
+        // return back to the email require page with message
+        return back()->with('message', 'Password reset link has been sent to your email.');
+    }
+
+
+    // =============================================================
+
+
+    // Reset page function
+    public function resetPage(string $token, string $email)
+    {
+        // collect data for reset page
+        $variables = [
+            'token' => $token,
+            'email' => $email
+        ];
+
+        // show reset page
+        return view('staff.delivery.courier.password.reset', $variables);
+    }
+
+
+    // =============================================================
+
+
+    // Reset password function
+    public function reset(CourierPasswordResetRequest $courierPasswordResetRequest)
+    {
+        // validate courier data
+        $courierData = $courierPasswordResetRequest->validated();
+
+        // create DTO to show courier password reset data
+        $courierDTO = new CourierPasswordResetDTO(
+            email: $courierData['email'],
+            token: $courierData['token'],
+            password: $courierData['password'],
+        );
+
+        // find courier for checking it's token
+        $courier = Courier::where('email', $courierDTO->email)->first();
+
+        // check token
+        if ($courierDTO->token !== $courier->password_reset_token){
+            return back()->withErrors(['token' => 'something wrong, try again']);
+
+            // check password match
+        } else if ($courierDTO->password !== $courierData['password_confirmation']) {
+            return back()->withErrors(['password' => 'passwords don\'t match']);
+        }
+
+        // reset password through service
+        $this->courierService->reset($courierDTO);
+
+        // retirect to the login page
+        return redirect()->route('courier.login');
     }
 
 

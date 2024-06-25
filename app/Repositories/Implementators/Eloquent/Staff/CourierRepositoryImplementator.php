@@ -5,9 +5,11 @@ namespace App\Repositories\Implementators\Eloquent\Staff;
 // Import interfaces
 use App\Repositories\Interfaces\Staff\CourierRepositoryInterface;
 
-// Import facades
+// Import facades and supports
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 // Import models
 use App\Models\Staff\Courier;
@@ -16,6 +18,10 @@ use App\Models\Staff\Courier;
 use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
+use App\DTO\Staff\Courier\CourierPasswordResetDTO;
+
+// Import mailers
+use App\Mail\Staff\Courier\CourierPasswordReset;
 
 
 class CourierRepositoryImplementator implements CourierRepositoryInterface
@@ -79,6 +85,44 @@ class CourierRepositoryImplementator implements CourierRepositoryInterface
 
         // Update courier data
         static::updateCourier($courierData, $courier);
+    }
+
+
+    // =============================================================
+
+
+    // Send link for password reset fucntion
+    public function sendLink(string $email): void
+    {
+        // find user
+        $courier = static::findCourier($email);
+
+        // generate passowrd reset token
+        $token = static::generatePasswordToken($courier);
+
+        // create url
+        $url = static::createUrl($token, $courier->email);
+
+        // create stdObject
+        $object = static::createStdObject($courier->email, $token, $url);
+
+        // send link
+        static::mailLink($object);
+    }
+
+
+    // =============================================================
+
+    // Password reset function
+    public function reset(CourierPasswordResetDTO $courierDTO): void
+    {
+        $courier = static::findCourier($courierDTO->email);
+
+        static::deleteToken($courier);
+
+        $password = static::hashPassword($courierDTO->password);
+
+        static::resetPassword($courier, $password);
     }
 
 
@@ -237,6 +281,81 @@ class CourierRepositoryImplementator implements CourierRepositoryInterface
     }
 
 
+    // COURIER RESET PASSWORD STATIC FUNCTIONS
+    // =============================================================
+
+
+    // generate password reset token function
+    public static function generatePasswordToken(Courier $courier): string
+    {
+        // generate token
+        $token = Str::random(60);
+
+        // put token into db
+        $courier->password_reset_token = $token;
+        $courier->save();
+
+        // return generated token
+        return $token;
+    }
+
+
+    // =============================================================
+
+
+    // delete token function
+    public static function deleteToken(Courier $courier): void
+    {
+        $courier->password_reset_token = null;
+        $courier->save();
+    }
+
+
+    // =============================================================
+
+
+    // create url function
+    public static function createUrl(string $token, string $email): string
+    {
+        return url('/courier/password/reset/' . $token . '/' . $email);
+    }
+
+
+    // =============================================================
+
+
+    // create and return std object for mailer
+    public static function createStdObject(string $email, string $token, string $url): object
+    {
+        return (object) [
+            'email' => $email,
+            'token' => $token,
+            'url' => $url,
+        ];
+    }
+
+
+    // =============================================================
+
+
+    // reset password
+    public static function resetPassword(Courier $courier, string $password): void
+    {
+        $courier->password = $password;
+        $courier->save();
+    }
+
+
+    // =============================================================
+
+
+    // send link
+    public static function mailLink(object $object): void
+    {
+        Mail::to($object->email)->send(new CourierPasswordReset($object));
+    }
+
+
     // COURIER LOGOUT STATIC FUNCTIONS
     // =============================================================
 
@@ -287,9 +406,15 @@ class CourierRepositoryImplementator implements CourierRepositoryInterface
 
 
     // Find and return courier
-    public static function findCourier(int $courier_id): Courier
+    public static function findcourier(int|string $courierData): Courier
     {
-        return Courier::find($courier_id);
+        // if input data id then find by id
+        if (is_int($courierData)) {
+            return Courier::find($courierData);
+        }
+
+        // else find by email
+        return Courier::where('email', $courierData)->first();   
     }
 
 

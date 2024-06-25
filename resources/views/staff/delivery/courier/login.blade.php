@@ -39,6 +39,9 @@ Login courier
                 <div class="card-footer text-center">
                     <a href="{{ route('courier.register') }}">Have not an account? Register</a>
                 </div>
+                <div class="card-footer text-center">
+                    <a href="{{ route('courier.password.link') }}">Forgot password?</a>
+                </div>
             </div>
         </div>
     </div>
