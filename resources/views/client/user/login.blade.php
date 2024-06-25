@@ -40,6 +40,9 @@ Login
                 <div class="card-footer text-center">
                     <a href="{{ route('user.register') }}">Have no an account? Register</a>
                 </div>
+                <div class="card-footer text-center">
+                    <a href="{{ route('user.password.link') }}">Forgot password?</a>
+                </div>
             </div>
         </div>
     </div>

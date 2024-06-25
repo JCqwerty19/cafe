@@ -31,6 +31,12 @@ Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
     // Login routes
     Route::get('/login', 'Client\UserController@login')->name('user.login');
     Route::post('/login', 'Client\UserController@signin')->name('user.signin');
+
+    Route::get('/password/forgot', 'Client\UserController@linkPage')->name('user.password.link');
+    Route::post('/password/forgot', 'Client\UserController@sendLink')->name('user.password.send');
+
+    Route::get('/password/reset/{token}/{email}', 'Client\UserController@resetPage')->name('user.password.page');
+    Route::post('/password/reset', 'Client\UserController@reset')->name('user.password.reset');
 });
 
 // Routes for authorized clients

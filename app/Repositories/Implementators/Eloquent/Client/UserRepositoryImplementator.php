@@ -2,9 +2,11 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
-// Import facades
+// Import facades and supports
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 // Import intefaces
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
@@ -16,6 +18,10 @@ use App\Models\Client\User;
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
+use App\DTO\Client\User\UserPasswordResetDTO;
+
+// Import mailers
+use App\Mail\Client\User\UserPasswordReset;
 
 class UserRepositoryImplementator implements UserRepositoryInterface
 {
@@ -78,6 +84,43 @@ class UserRepositoryImplementator implements UserRepositoryInterface
 
         // Update user data
         static::updateUser($userData, $user);
+    }
+
+
+    // =============================================================
+
+
+    // Send link for password reset fucntion
+    public function sendLink(string $email): void
+    {
+        // find user
+        $user = static::findUser($email);
+
+        // generate passowrd reset token
+        $token = static::generatePasswordToken($user);
+
+        // create url
+        $url = static::createUrl($token, $user->email);
+
+        // create stdObject
+        $object = static::createStdObject($user->email, $token, $url);
+
+        // send link
+        static::mailLink($object);
+    }
+
+
+    // =============================================================
+
+    public function reset(UserPasswordResetDTO $userDTO): void
+    {
+        $user = static::findUser($userDTO->email);
+
+        static::deleteToken($user);
+
+        $password = static::hashPassword($userDTO->password);
+
+        static::resetPassword($user, $password);
     }
 
     
@@ -154,20 +197,16 @@ class UserRepositoryImplementator implements UserRepositoryInterface
     // =============================================================
 
 
-    // Collect user create params
+    // Collect user create params in array
     public static function collectUserParams(UserCreateDTO $userCreateDTO, string $hashedPassword): array
     {
-        // Collect user data in array
-        $userData = [
+        return [
             'username' => $userCreateDTO->username,
             'email' => $userCreateDTO->email,
             'phone' => $userCreateDTO->phone,
             'address' => $userCreateDTO->address,
             'password' => $hashedPassword,
         ];
-
-        // Return data
-        return $userData;
     }
 
 
@@ -185,17 +224,13 @@ class UserRepositoryImplementator implements UserRepositoryInterface
     // =============================================================
 
 
-    // Collect user data for login
+    // Collect user data for login in array
     public static function collectUserLoginParams(UserLoginDTO $userLoginDTO): array
     {
-        // Collect user data in array
-        $userLoginData = [
+        return [
             'email' => $userLoginDTO->email,
             'password' => $userLoginDTO->password,
         ];
-
-        // Return data
-        return $userLoginData;
     }
 
 
@@ -203,20 +238,16 @@ class UserRepositoryImplementator implements UserRepositoryInterface
     // =============================================================
 
 
-    // Collect new user data
+    // Collect new user data in array
     public static function collectUserUpdateParams(UserUpdateDTO $userUpdateDTO, $hashedPassword): array
     {
-        // Collect params in array
-        $userData = [
+        return [
             'username' => $userUpdateDTO->username,
             'email' => $userUpdateDTO->email,
             'phone' => $userUpdateDTO->phone,
             'address' => $userUpdateDTO->address,
             'password' => $hashedPassword,
         ];
-
-        // Return array
-        return $userData;
     }
 
 
@@ -227,6 +258,81 @@ class UserRepositoryImplementator implements UserRepositoryInterface
     public static function updateUser(array $userData, $user): void
     {
         $user->update($userData);
+    }
+
+
+    // USER RESET PASSWORD STATIC FUNCTIONS
+    // =============================================================
+
+
+    // generate password reset token function
+    public static function generatePasswordToken(User $user): string
+    {
+        // generate token
+        $token = Str::random(60);
+
+        // put token into db
+        $user->password_reset_token = $token;
+        $user->save();
+
+        // return generated token
+        return $token;
+    }
+
+
+    // =============================================================
+
+
+    // delete token function
+    public static function deleteToken(User $user): void
+    {
+        $user->password_reset_token = null;
+        $user->save();
+    }
+
+
+    // =============================================================
+
+
+    // create url function
+    public static function createUrl(string $token, string $email): string
+    {
+        return url('user/password/reset/' . $token . '/' . $email);
+    }
+
+
+    // =============================================================
+
+
+    // create and return std object for mailer
+    public static function createStdObject(string $email, string $token, string $url): object
+    {
+        return (object) [
+            'email' => $email,
+            'token' => $token,
+            'url' => $url,
+        ];
+    }
+
+
+    // =============================================================
+
+
+    // reset password
+    public static function resetPassword(User $user, string $password): void
+    {
+        $user->password = $password;
+        $user->save();
+    }
+
+
+    // =============================================================
+
+
+    // send link
+    public static function mailLink(object $object): void
+    {
+        Mail::to($object->email)->send(new UserPasswordReset($object));
     }
 
 
@@ -273,9 +379,15 @@ class UserRepositoryImplementator implements UserRepositoryInterface
 
 
     // Find and return user
-    public static function findUser(int $user_id): User
+    public static function findUser(int|string $userData): User
     {
-        return User::find($user_id);
+        // if input data id then find by id
+        if (is_int($userData)) {
+            return User::find($userData);
+        }
+
+        // else find by email
+        return User::where('email', $userData)->first();   
     }
 
 

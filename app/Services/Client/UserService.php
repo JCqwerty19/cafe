@@ -9,6 +9,7 @@ use App\Repositories\Interfaces\Client\UserRepositoryInterface;
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
+use App\DTO\Client\User\UserPasswordResetDTO;
 
 class UserService
 {
@@ -75,6 +76,34 @@ class UserService
 
         // Renew user info in repository
         $this->userRepositoryInterface->renew($userUpdateDTO);
+    }
+
+
+    // =============================================================
+
+
+    // Send link for password reset through repository
+    public function sendLink(string $email): void
+    {
+        $this->userRepositoryInterface->sendLink($email);
+    }
+
+
+    // =============================================================
+
+
+    // Password reset function
+    public function reset(UserPasswordResetDTO $userPasswordResetDTO): void
+    {
+        // create DTO to show user data
+        $userDTO = new UserPasswordResetDTO(
+            email: $userPasswordResetDTO->email,
+            token: $userPasswordResetDTO->token,
+            password: $userPasswordResetDTO->password,
+        );
+
+        // reset password through repository
+        $this->userRepositoryInterface->reset($userDTO);
     }
 
 

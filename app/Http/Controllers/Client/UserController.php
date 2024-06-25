@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 // Import facades
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 // Import models
 use App\Models\Client\Order;
@@ -16,11 +17,14 @@ use App\Models\Client\User;
 use App\Http\Requests\Client\User\UserRegisterRequest;
 use App\Http\Requests\Client\User\UserLoginRequest;
 use App\Http\Requests\Client\User\UserUpdateRequest;
+use App\Http\Requests\Client\User\UserEmailRequest;
+use App\Http\Requests\Client\User\UserPasswordResetRequest;
 
 // Import DTO
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
+use App\DTO\Client\User\UserPasswordResetDTO;
 
 class UserController extends BaseController
 {
@@ -148,6 +152,86 @@ class UserController extends BaseController
 
         // redirect to the main page
         return redirect()->route('main.index');
+    }
+
+
+    // =============================================================
+
+
+    // Show email require page for password reset
+    public function linkPage()
+    {
+        return view('client.user.password.request');
+    }
+
+
+    // =============================================================
+
+
+    // Send email fucntion
+    public function sendLink(UserEmailRequest $userEmailRequest)
+    {
+        // validate email data
+        $emailData = $userEmailRequest->validated();
+
+        // send link through service
+        $this->userService->sendLink($emailData['email']);
+
+        // return back to the email require page with message
+        return back()->with('message', 'Password reset link has been sent to your email.');
+    }
+
+
+    // =============================================================
+
+
+    // Reset page function
+    public function resetPage(string $token, string $email)
+    {
+        // collect data for reset page
+        $variables = [
+            'token' => $token,
+            'email' => $email
+        ];
+
+        // show reset page
+        return view('client.user.password.reset', $variables);
+    }
+
+
+    // =============================================================
+
+
+    // Reset password function
+    public function reset(UserPasswordResetRequest $userPasswordResetRequest)
+    {
+        // validate user data
+        $userData = $userPasswordResetRequest->validated();
+
+        // create DTO to show user password reset data
+        $userDTO = new UserPasswordResetDTO(
+            email: $userData['email'],
+            token: $userData['token'],
+            password: $userData['password'],
+        );
+
+        // find user for checking it's token
+        $user = User::where('email', $userDTO->email)->first();
+
+        // check token
+        if ($userDTO->token !== $user->password_reset_token){
+            return back()->withErrors(['token' => 'something wrong, try again']);
+
+            // check password match
+        } else if ($userDTO->password !== $userData['password_confirmation']) {
+            return back()->withErrors(['password' => 'passwords don\'t match']);
+        }
+
+        // reset password through service
+        $this->userService->reset($userDTO);
+
+        // retirect to the login page
+        return redirect()->route('user.login');
     }
 
 
