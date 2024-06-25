@@ -207,4 +207,5 @@ Route::group(['prefix' => 'admin', 'middlware' => 'admin'], function () {
 // Order create error to no items
 // comments all blade
 
-// updating // the same email
+// updating // the same email   
+// ajax

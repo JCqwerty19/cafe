@@ -7,36 +7,35 @@ All deliveries
 @section('content')
 <div class="container mt-5">
     <h1 class="mb-4">All deliveries</h1>
-    <table class="table table-striped table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Address</th>
-                <th>Order price</th>
-                <th>Delivery price</th>
-                <th>Total price</th>
-                <th>Deliver</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($orders as $order)
-            <tr>
-                <td>{{ $order->id }}</td>
-                <td>{{ $order->obtaining }}</td>
-                <td><span id="order-price"></span></td>
-                <td>$<span id="additional-price">{{ $order->additional_price }}</span></td>
-                <td>$<span id="total-price">{{ $order->total_price }}</span></td>
-                <td>
-                    <form action="{{ route('delivery.deliver', $order) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-primary">Deliver</button>
-                    </form>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
 
-    @include('client.includes.order_scripts')
+    @foreach($orders as $order)
+    <div class="card mb-3">
+
+        <div class="card-header">
+            <strong>Order number: #{{ $order->id }}</strong><br>
+
+            <strong>Customer name: </strong>{{ $order->user->username }}
+
+            <p><strong>Customer phone: </strong>{{ $order->user->phone }}</p><br>
+
+            <strong>
+                <h6>Order price: $<span class="order-price"></span></h6>
+            </strong>
+
+            <strong>
+                <h6 >Service price: $<span class="additional-price">{{ $order->additional_price }}</span></h6>
+            </strong><br>
+
+            <strong>
+                <h3>Totla price: $<span class="total-price">{{ $order->total_price }}</span></h3>
+            </strong><br>
+
+            <form action="{{ route('delivery.deliver', $order) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-primary">Deliver</button>
+            </form>
+        </div>
+    </div>
+    @endforeach
 </div>
 @endsection

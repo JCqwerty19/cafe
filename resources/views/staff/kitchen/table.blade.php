@@ -19,13 +19,13 @@ Kitchen
                 <p><strong>Customer phone: </strong>{{ $order->user->phone }}</p>
                 <br>
                 <strong>
-                     <h6>Order price: $<span id="order-price"></span></h6>
+                     <h6>Order price: $<span class="order-price"></span></h6>
                 </strong>
                 <strong>
-                     <h6 >Service price: $<span id="additional-price">{{ $order->additional_price }}</span></h6>
+                     <h6 >Service price: $<span class="additional-price">{{ $order->additional_price }}</span></h6>
                 </strong><br>
                 <strong>
-                    <h3>Totla price: $<span id="total-price">{{ $order->total_price }}</span></h3>
+                    <h3>Totla price: $<span class="total-price">{{ $order->total_price }}</span></h3>
                 </strong>
             </div>
 
@@ -57,8 +57,6 @@ Kitchen
                 </table>   
             </div>
         </div>
-
-        @include('client.includes.order_scripts')
         
         @endforeach
 
