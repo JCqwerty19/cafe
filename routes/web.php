@@ -122,7 +122,7 @@ Route::group(['prefix' => 'delivery', 'middleware' => 'courier'], function () {
 
 
 // Routes for kitchen
-Route::group(['prefix' => 'kitchen'], function () {
+Route::group(['prefix' => 'kitchen', 'middleware' => 'admin'], function () {
 
     // Route for kitchen orders tabel
     Route::get('/table', 'Staff\KitchenController@table')->name('kitchen.table');
@@ -135,7 +135,7 @@ Route::group(['prefix' => 'kitchen'], function () {
 
 
 // Routes for hall
-Route::group(['prefix' => 'hall'], function () {
+Route::group(['prefix' => 'hall', 'middleware' => 'admin'], function () {
 
     // Show hall tables routes
     Route::get('/index', 'Staff\HallController@index')->name('hall.index');
@@ -148,7 +148,7 @@ Route::group(['prefix' => 'hall'], function () {
 
 
 // Routes for pickup
-Route::group(['prefix' => 'pickup'], function () {
+Route::group(['prefix' => 'pickup', 'middleware' => 'admin'], function () {
 
     // Pickup order list route
     Route::get('/table', 'Staff\PickupController@table')->name('pickup.table');
@@ -157,16 +157,10 @@ Route::group(['prefix' => 'pickup'], function () {
 
 // =============================================================================================
 
-
-// Routes for guest admin
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('/login', 'Admin/AdminController@login')->name('admin.login');
-});
-
 // Routes for authorized admin
-Route::group(['prefix' => 'admin', 'middlware' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
-    Route::get('/', 'Admin\AdminController@dashboard')->name('admin.dashboard');
+    Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('admin.dashboard');
 
     // Routes for manage posts
     Route::group(['prefix' => 'post'], function () {
@@ -186,7 +180,7 @@ Route::group(['prefix' => 'admin', 'middlware' => 'admin'], function () {
     });
 
     // Routes for manage products
-    Route::group(['prefix' => 'product'], function () {
+    Route::group(['prefix' => 'product', ], function () {
         Route::get('/index', 'Admin\AdminController@products')->name('product.index');
 
         // Create post
@@ -202,7 +196,7 @@ Route::group(['prefix' => 'admin', 'middlware' => 'admin'], function () {
     });
 
     // Couriers list route
-    Route::get('/courier/index', 'Admin\AdminController@couriers')->name('courier.index');
+    Route::get('/courier/index', 'Admin\AdminController@couriers')->name('courier.table');
 
     // Users list route
     Route::get('/users/index', 'Admin\AdminController@users')->name('user.index');    

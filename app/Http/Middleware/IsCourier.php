@@ -18,7 +18,7 @@ class IsCourier
     public function handle(Request $request, Closure $next)
     {
 
-        if (!Auth::guard('courier')->check()) {
+        if (!Auth::guard('courier')->check() && Auth::user()->status !== 'admin') {
             return redirect()->route('courier.login');
         }
 

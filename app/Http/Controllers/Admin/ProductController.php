@@ -47,7 +47,7 @@ class ProductController extends BaseController
         $this->productService->make($productCreateDTO);
 
         // retirect to the products table
-        return redirect()->route('products.index');
+        return redirect()->route('product.index');
     }
 
 
@@ -89,7 +89,7 @@ class ProductController extends BaseController
         $this->productService->renew($productUpdateDTO);
 
         // retirect to the products table
-        return redirect()->route('products.index');
+        return redirect()->route('product.index');
     }
 
 
@@ -103,6 +103,6 @@ class ProductController extends BaseController
         $this->productService->delete($product->id);
 
         // retirect to the products table
-        return redirect()->route('products.index');
+        return redirect()->route('product.index');
     }
 }

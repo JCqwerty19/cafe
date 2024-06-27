@@ -155,7 +155,7 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
 
     //
 
-    public static function putImage(string|object|null $image, ?string $current): string
+    public static function putImage(string|object|null $image, string $current = null): string
     {
         if (is_string($image)) {
             return $image;

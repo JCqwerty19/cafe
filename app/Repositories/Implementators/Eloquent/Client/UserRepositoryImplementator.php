@@ -80,7 +80,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         $hashedPassword = static::hashPassword($userUpdateDTO->password);
 
         // Collect new user data
-        $userData = static::collectUserUpdateParams($userUpdateDTO, $hashedPassword);
+        $userData = static::collectUserUpdateParams($userUpdateDTO, $hashedPassword, $user->status);
 
         // Update user data
         static::updateUser($userData, $user);
@@ -207,6 +207,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface
             'phone' => $userCreateDTO->phone,
             'address' => $userCreateDTO->address,
             'password' => $hashedPassword,
+            'status' => 'client',
         ];
     }
 
@@ -240,7 +241,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface
 
 
     // Collect new user data in array
-    public static function collectUserUpdateParams(UserUpdateDTO $userUpdateDTO, $hashedPassword): array
+    public static function collectUserUpdateParams(UserUpdateDTO $userUpdateDTO, string $hashedPassword, string $status): array
     {
         return [
             'username' => $userUpdateDTO->username,
@@ -248,6 +249,7 @@ class UserRepositoryImplementator implements UserRepositoryInterface
             'phone' => $userUpdateDTO->phone,
             'address' => $userUpdateDTO->address,
             'password' => $hashedPassword,
+            'status' => $status,
         ];
     }
 

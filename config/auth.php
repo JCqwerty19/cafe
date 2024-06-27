@@ -45,6 +45,11 @@ return [
             'driver' => 'session',
             'provider' => 'couriers',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     /*
@@ -73,6 +78,11 @@ return [
         'couriers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Staff\Courier::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin\Admin::class,
         ],
 
         // 'users' => [
@@ -106,6 +116,13 @@ return [
 
         'couriers' => [
             'provider' => 'couriers',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'admins' => [
+            'provider' => 'admins',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

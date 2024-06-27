@@ -16,10 +16,10 @@ Admin Dashboard
                 <a href="{{ route('pickup.table') }}" class="list-group-item list-group-item-action">Pickup</a>
                 <a href="{{ route('delivery.table') }}" class="list-group-item list-group-item-action">Delivery</a>
                 <a href="{{ route('hall.table') }}" class="list-group-item list-group-item-action">Hall</a>
-                <a href="{{ route('courier.index') }}" class="list-group-item list-group-item-action">Couriers</a>
+                <a href="{{ route('courier.table') }}" class="list-group-item list-group-item-action">Couriers</a>
                 <a href="{{ route('user.index') }}" class="list-group-item list-group-item-action">Users</a>
             </div>
-        </div>
+        </div>  
 
         <div class="col-md-6">
             <h3>Actions</h3>

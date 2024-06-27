@@ -48,6 +48,9 @@
 					<li><a href="{{ route('order.create') }}" class="btn btn-warning rounded-pill px-3">Order</a></li>
 					<li><a href="{{ route('user.orders') }}" class="btn btn-warning rounded-pill px-3">My orders</a></li>
 					<li><a href="{{ route('user.update') }}" class="btn btn-warning rounded-pill px-3">Settings</a></li>
+					@can('view', Auth::user())
+					<li><a href="{{ route('admin.dashboard') }}" class="btn btn-dark rounded-pill px-3">Admin</a></li>
+					@endcan
 					<li>
 						<form action="{{ route('user.logout') }}" method="POST">
 							@csrf

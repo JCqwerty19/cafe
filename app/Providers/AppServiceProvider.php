@@ -8,6 +8,9 @@ use Illuminate\Support\ServiceProvider;
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Client\OrderRepositoryImplementator;
 
+use App\Repositories\Interfaces\Admin\AdminRepositoryInterface;
+use App\Repositories\Implementators\Eloquent\Admin\AdminRepositoryImplementator;
+
 // import post repository connection
 use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Admin\PostRepositoryImplementator;
@@ -50,6 +53,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->bind(OrderRepositoryInterface::class, OrderRepositoryImplementator::class);
+        $this->app->bind(AdminRepositoryInterface::class, AdminRepositoryImplementator::class);
         $this->app->bind(PostRepositoryInterface::class, PostRepositoryImplementator::class);
         $this->app->bind(ProductRepositoryInterface::class, ProductRepositoryImplementator::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepositoryImplementator::class);
