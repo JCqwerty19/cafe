@@ -27,6 +27,7 @@ class PostService
     {
         // Create DTO to show params for creating post
         $postCreateDTO = new PostCreateDTO(
+            image: $postCreateDTO->image,
             title: $postCreateDTO->title,
             content: $postCreateDTO->content,
         );
@@ -45,6 +46,7 @@ class PostService
         // Create DTO to show params for renew post
         $postUpdateDTO = new PostUpdateDTO(
             post_id: $postUpdateDTO->post_id,
+            image: $postUpdateDTO->image,
             title: $postUpdateDTO->title,
             content: $postUpdateDTO->content,
         );

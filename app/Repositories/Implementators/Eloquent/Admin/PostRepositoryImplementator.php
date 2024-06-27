@@ -5,6 +5,8 @@ namespace App\Repositories\Implementators\Eloquent\Admin;
 // Import interfaces
 use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
 
+use Illuminate\Support\Facades\Storage;
+
 // Import models
 use App\Models\Admin\Post;
 
@@ -17,6 +19,9 @@ class PostRepositoryImplementator implements PostRepositoryInterface
     // post make function
     public function make(PostCreateDTO $postCreateDTO): void
     {
+        // Recognize image type (if file, then put into storage)
+        $postCreateDTO->image = static::putImage($postCreateDTO->image);
+
         // collect post params from DTO to array
         $postData = static::collectPostParams($postCreateDTO);
 
@@ -33,6 +38,9 @@ class PostRepositoryImplementator implements PostRepositoryInterface
     {
         // find updating post
         $post = static::findPost($postUpdateDTO->post_id);
+
+        // Recognize image type (if file, then put into storage)
+        $postUpdateDTO->image = static::putImage($postUpdateDTO->image, $post->image);
 
         // collect new post's params
         $postNewData = static::collectPostNewParams($postUpdateDTO);
@@ -72,6 +80,7 @@ class PostRepositoryImplementator implements PostRepositoryInterface
     {
         // collect creating post params in array
         $postData = [
+            'image' => $postCreateDTO->image,
             'title' => $postCreateDTO->title,
             'content' => $postCreateDTO->content,
         ];
@@ -95,6 +104,7 @@ class PostRepositoryImplementator implements PostRepositoryInterface
     {
         // collect data in array from DTO
         $postData = [
+            'image' => $postUpdateDTO->image,
             'title' => $postUpdateDTO->title,
             'content' => $postUpdateDTO->content,
         ];
@@ -127,5 +137,20 @@ class PostRepositoryImplementator implements PostRepositoryInterface
     public static function findPost(int $post_id): Post
     {
         return Post::find($post_id);
+    }
+
+    //
+
+    public static function putImage(string|object $image = null, string $current = null): string
+    {
+        if (is_string($image)) {
+            return $image;
+
+        } else if (!$image) {
+            return $current;
+        }
+
+        $image = Storage::putFile('public/admin/images/products', $image);
+        return str_replace('public', 'storage', $image);
     }
 }

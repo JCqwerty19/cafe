@@ -1,4 +1,4 @@
-@extends('client.layouts.admin')
+@extends('admin.layouts.main')
 
 @section('title')
 Update post
@@ -13,16 +13,26 @@ Update post
                    <h3>Update product</h3>
                </div>
                <div class="card-body">
-                   <form action="{{ route('product.renew', $product) }}" method="POST">
+                   <form action="{{ route('product.renew', $product) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('patch')
-                        <div class="form-group">
-                           <label for="image">Image</label>
-                           <input type="text" class="form-control" name="image" id="image" placeholder="Put link to image" value="{{ $product->image }}">
+                       <div class="form-group">
+                            <label for="image">Image</label><br>
+                            <img src="{{ asset($product->image) }}" alt="{{ $product->name }}"><br><br>
+                            <select id="image-source" onchange="toggleImageInput()">
+                                <option value="file">Upload File</option><br>
+                                <option value="url">Image URL</option>
+                            </select>
+                            <div id="file-input" style="display: none;">
+                                <input type="file" id="image-file">
+                            </div>
+                            <div id="url-input" style="display: none;">
+                                <input type="url" id="image-url">
+                            </div>
                            @error('image')
                            <p class="text-danger">{{ $message }}</p>
                            @enderror
-                       </div>
+                        </div>
                        <div class="form-group">
                            <label for="title">Product name</label>
                            <input type="text" class="form-control" name="title" id="title" placeholder="Product title" value="{{ $product->title }}">

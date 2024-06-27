@@ -7,6 +7,7 @@ class PostUpdateDTO
     // post update DTO construction
     public function __construct(
         public int $post_id,
+        public string|object|null $image,
         public string $title,
         public string $content,
     ) {

@@ -36,12 +36,16 @@ class PostController extends BaseController
 
         // create DTO to show params for making post
         $postCreateDTO = new PostCreateDTO(
+            image: $postData['image'],
             title: $postData['title'],
             content: $postData['content'],
         );
 
         // make post through service
         $this->postService->make($postCreateDTO);
+
+        // retirect to the posts table
+        return redirect()->route('post.index');
     }
 
 
@@ -53,7 +57,7 @@ class PostController extends BaseController
     {
         // Objects for the post page
         $variables = [
-            'post' => Post::find($post->id),
+            'post' => $post,
             'posts' => Post::all(),
         ];
 
@@ -90,12 +94,16 @@ class PostController extends BaseController
         // Create DTO to show params for update post
         $postUpdateDTO = new PostUpdateDTO(
             post_id: $post->id,
+            image: $postData['image'],
             title: $postData['title'],
             content: $postData['content'],
         );
 
         // Update post through service
         $this->postService->renew($postUpdateDTO);
+
+        // retirect to the posts table
+        return redirect()->route('post.index');
     }
 
 
@@ -107,5 +115,8 @@ class PostController extends BaseController
     {
         // Delete post through service
         $this->postService->delete($post->id);
+
+        // retirect to the posts table
+        return redirect()->route('post.index');
     }
 }

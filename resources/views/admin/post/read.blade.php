@@ -9,6 +9,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
+                <img src="{{ asset($post->image) }}" alt=""><br>
                 <div class="card-header text-center">
                     <h3 id="post-title">{{ $post->title }}</h3>
                 </div>

@@ -6,7 +6,7 @@ class ProductCreateDTO
 {
     // product create DTO construction
     public function __construct(
-        public string $image,
+        public string|object $image,
         public string $title,
         public string $content,
         public int $price,

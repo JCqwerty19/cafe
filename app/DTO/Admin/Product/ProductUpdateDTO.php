@@ -7,7 +7,7 @@ class ProductUpdateDTO
     // product update DTO construction
     public function __construct(
         public int $product_id,
-        public string $image,
+        public string|object|null $image,
         public string $title,
         public string $content,
         public int $price,

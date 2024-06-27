@@ -5,6 +5,10 @@ namespace App\Repositories\Implementators\Eloquent\Admin;
 // Import interfaces
 use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
 
+
+use Illuminate\Support\Facades\Storage;
+
+
 // Import models
 use App\Models\Admin\Product;
 
@@ -17,6 +21,9 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
     // product make
     public function make(ProductCreateDTO $productCreateDTO): void
     {
+        // Recognize image type (if file, then put into storage)
+        $productCreateDTO->image = static::putImage($productCreateDTO->image);
+
         // collect product data
         $productData = static::collectProductParams($productCreateDTO);
 
@@ -33,6 +40,9 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
     {
         // find updating product
         $product = static::findProduct($productUpdateDTO->product_id);
+
+        // Recognize image type (if file, then put into storage)
+        $productUpdateDTO->image = static::putImage($productUpdateDTO->image, $product->image);
 
         // collect new product data
         $productNewData = static::collectProductNewParams($productUpdateDTO);
@@ -141,6 +151,21 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
     public static function findProduct(int $product_id): Product
     {
         return Product::find($product_id);
+    }
+
+    //
+
+    public static function putImage(string|object|null $image, ?string $current): string
+    {
+        if (is_string($image)) {
+            return $image;
+
+        } else if (!$image) {
+            return $current;
+        }
+
+        $image = Storage::putFile('public/admin/images/products', $image);
+        return str_replace('public', 'storage', $image);
     }
     
 }
