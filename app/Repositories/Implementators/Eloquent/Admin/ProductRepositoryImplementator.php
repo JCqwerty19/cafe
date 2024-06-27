@@ -14,42 +14,42 @@ class ProductRepositoryImplementator implements ProductRepository
     public function make(ProductCreateDTO $productCreateDTO): void
     {
         // Recognize image type (if file, then put into storage)
-        $productCreateDTO->image = static::putImage($productCreateDTO->image);
+        $productCreateDTO->image = $this->putImage($productCreateDTO->image);
 
         // collect product data
-        $productData = static::collectProductParams($productCreateDTO);
+        $productData = $this->collectProductParams($productCreateDTO);
 
         // create product
-        static::createProduct($productData);
+        $this->createProduct($productData);
     }
 
     // product renew
     public function renew(ProductUpdateDTO $productUpdateDTO): void
     {
         // find updating product
-        $product = static::findProduct($productUpdateDTO->product_id);
+        $product = $this->findProduct($productUpdateDTO->product_id);
 
         // Recognize image type (if file, then put into storage)
-        $productUpdateDTO->image = static::putImage($productUpdateDTO->image, $product->image);
+        $productUpdateDTO->image = $this->putImage($productUpdateDTO->image, $product->image);
 
         // collect new product data
-        $productNewData = static::collectProductNewParams($productUpdateDTO);
+        $productNewData = $this->collectProductNewParams($productUpdateDTO);
 
         // renew product
-        static::renewProduct($product, $productNewData);
+        $this->renewProduct($product, $productNewData);
     }
 
     // product delete
     public function delete(int $product_id): void
     {
         // find deleting product
-        $product = static::findProduct($product_id);
+        $product = $this->findProduct($product_id);
 
         // delete product
-        static::productDelete($product);
+        $this->productDelete($product);
     }
 
-    public static function collectProductParams(ProductCreateDTO $productCreateDTO): array
+    private function collectProductParams(ProductCreateDTO $productCreateDTO): array
     {
         // collect data from DTO to array
         $productData = [
@@ -64,13 +64,13 @@ class ProductRepositoryImplementator implements ProductRepository
     }
 
     // create product
-    public static function createProduct(array $productData): void
+    private function createProduct(array $productData): void
     {
         Product::firstOrCreate($productData);
     }
 
     // collect product params
-    public static function collectProductNewParams(ProductUpdateDTO $productUpdateDTO): array
+    private function collectProductNewParams(ProductUpdateDTO $productUpdateDTO): array
     {
         // collect data from DTO to array
         $productNewData = [
@@ -85,25 +85,25 @@ class ProductRepositoryImplementator implements ProductRepository
     }
 
     // renew product
-    public static function renewProduct(Product $product, array $productNewData): void
+    private function renewProduct(Product $product, array $productNewData): void
     {
         $product->update($productNewData);
     }
 
     // product delete
-    public static function productDelete(Product $product)
+    private function productDelete(Product $product)
     {
         $product->delete();
     }
     
     // find product
-    public static function findProduct(int $product_id): Product
+    private function findProduct(int $product_id): Product
     {
         return Product::find($product_id);
     }
 
     // put image function
-    public static function putImage(string|object|null $image, string $current = null): string
+    private function putImage(string|object|null $image, string $current = null): string
     {
         if (is_string($image)) {
             return $image;

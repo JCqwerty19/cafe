@@ -16,12 +16,12 @@ class OrderRepositoryImplementator implements OrderRepository
     public function make(OrderCreateDTO $orderDTO): Order
     {
         // Collect data for order
-        $order = static::collectOrderParams($orderDTO, 'Preparing');
+        $order = $this->collectOrderParams($orderDTO, 'Preparing');
 
-        static::putUserData($orderDTO);
+        $this->putUserData($orderDTO);
 
         // Create and return order
-        return static::createOrder($order);
+        return $this->createOrder($order);
     }
 
     // Put order items function
@@ -34,10 +34,10 @@ class OrderRepositoryImplementator implements OrderRepository
         foreach($items as $item) {
 
             // Collecting item params
-            $orderItem = static::collectItemParams($orderItemsDTO, $item);
+            $orderItem = $this->collectItemParams($orderItemsDTO, $item);
 
             // Create item
-            static::createItem($orderItem);
+            $this->createItem($orderItem);
         }
     }
 
@@ -45,29 +45,29 @@ class OrderRepositoryImplementator implements OrderRepository
     public function distirbute(int $order_id): void
     {
         // find distributing order
-        $order = static::findOrder($order_id);
+        $order = $this->findOrder($order_id);
 
         // distribute order
-        static::orderDistirbute($order);
+        $this->orderDistirbute($order);
     }
 
     // delete order
     public function delete(int $order_id): bool
     {
         // find deleting order
-        $order = static::findOrder($order_id);
+        $order = $this->findOrder($order_id);
 
         // delete order
-        return static::deleteOrder($order);
+        return $this->deleteOrder($order);
     }
 
     // Collect order params
-    public static function collectOrderParams(OrderCreateDTO $orderDTO, string $status): array
+    private function collectOrderParams(OrderCreateDTO $orderDTO, string $status): array
     {
         // Collect order params
         $order = [
             'user_id' => $orderDTO->user_id,
-            'obtaining' => static::obtainingMethod($orderDTO),
+            'obtaining' => $this->obtainingMethod($orderDTO),
             'total_price' => $orderDTO->total_price,
             'additional_price' => $orderDTO->additional_price,
             'status' => $status,
@@ -78,7 +78,7 @@ class OrderRepositoryImplementator implements OrderRepository
     }
 
     // choice obtaining method
-    public static function obtainingMethod(OrderCreateDTO $orderDTO): string
+    private function obtainingMethod(OrderCreateDTO $orderDTO): string
     {
         // if it's delivery then out address
         if ($orderDTO->obtaining === 'delivery') {
@@ -94,7 +94,7 @@ class OrderRepositoryImplementator implements OrderRepository
     }
 
     // renew user number and address
-    public static function putUserData(OrderCreateDTO $orderDTO): void
+    private function putUserData(OrderCreateDTO $orderDTO): void
     {
         // find user
         $user = User::find($orderDTO->user_id);
@@ -108,13 +108,13 @@ class OrderRepositoryImplementator implements OrderRepository
     }
 
     // Create order
-    public static function createOrder(array $order): Order
+    private function createOrder(array $order): Order
     {
         return Order::create($order);
     }
 
     // Collect item params
-    public static function collectItemParams(OrderItemsDTO $orderItemsDTO, array $item): array
+    private function collectItemParams(OrderItemsDTO $orderItemsDTO, array $item): array
     {
         // Gain product form DB by id
         $product = Product::find($item['product_id']);
@@ -132,13 +132,13 @@ class OrderRepositoryImplementator implements OrderRepository
     }
 
     // Create item
-    public static function createItem(array $orderItem): void
+    private function createItem(array $orderItem): void
     {
         OrderItems::create($orderItem);
     }
     
     // distirbute order by obtaining method
-    public static function orderDistirbute(Order $order): void
+    private function orderDistirbute(Order $order): void
     {
         if ($order->obtaining === 'hall') {
             $order->status = 'Ready';
@@ -155,7 +155,7 @@ class OrderRepositoryImplementator implements OrderRepository
     }
 
     // delete order if it's just preparing
-    public static function deleteOrder(Order $order): bool
+    private function deleteOrder(Order $order): bool
     {
         // checking status 
         if ($order->status === 'Preparing') {
@@ -168,7 +168,7 @@ class OrderRepositoryImplementator implements OrderRepository
     }
 
     // find order
-    public static function findOrder(int $order_id): Order
+    private function findOrder(int $order_id): Order
     {
         return Order::find($order_id);
     }

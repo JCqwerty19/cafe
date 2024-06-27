@@ -21,24 +21,24 @@ class CourierRepositoryImplementator implements CourierRepository
     public function make(CourierCreateDTO $courierCreateDTO): bool
     {
         // Check existanse couriers
-        if (!static::checkCouriers($courierCreateDTO->email)) {
+        if (!$this->checkCouriers($courierCreateDTO->email)) {
             return false;
         }
 
         // Check trashed couriers
-        static::checkTash($courierCreateDTO->email);
+        $this->checkTash($courierCreateDTO->email);
 
         // Hash password
-        $hashedPassword = static::hashPassword($courierCreateDTO->password);
+        $hashedPassword = $this->hashPassword($courierCreateDTO->password);
 
         // Collect courier data
-        $courierData = static::collectCourierParams($courierCreateDTO, $hashedPassword);
+        $courierData = $this->collectCourierParams($courierCreateDTO, $hashedPassword);
 
         // Make courier account
-        $courier = static::createCourier($courierData);
+        $courier = $this->createCourier($courierData);
 
         // Login courier
-        static::courierLogin($courier);
+        $this->courierLogin($courier);
 
         // return true if courier successfully registrated
         return true;
@@ -48,80 +48,80 @@ class CourierRepositoryImplementator implements CourierRepository
     public function signin(CourierLoginDTO $courierLoginDTO): bool
     {
         // Collect courier data
-        $courierLoginData = static::collectCourierLoginParams($courierLoginDTO);
+        $courierLoginData = $this->collectCourierLoginParams($courierLoginDTO);
 
         // Sigin in courier
-        return static::courierLogin($courierLoginData);
+        return $this->courierLogin($courierLoginData);
     }
 
     // Renew courier info function
     public function renew(CourierUpdateDTO $courierUpdateDTO): void
     {
         // Find courier
-        $courier = static::findCourier($courierUpdateDTO->courier_id);
+        $courier = $this->findCourier($courierUpdateDTO->courier_id);
 
         // Hash new password
-        $hashedPassword = static::hashPassword($courierUpdateDTO->password);
+        $hashedPassword = $this->hashPassword($courierUpdateDTO->password);
 
         // Collect new courier data
-        $courierData = static::collectCourierUpdateParams($courierUpdateDTO, $hashedPassword);
+        $courierData = $this->collectCourierUpdateParams($courierUpdateDTO, $hashedPassword);
 
         // Update courier data
-        static::updateCourier($courierData, $courier);
+        $this->updateCourier($courierData, $courier);
     }
 
     // Send link for password reset fucntion
     public function sendLink(string $email): void
     {
         // find user
-        $courier = static::findCourier($email);
+        $courier = $this->findCourier($email);
 
         // generate passowrd reset token
-        $token = static::generatePasswordToken($courier);
+        $token = $this->generatePasswordToken($courier);
 
         // create url
-        $url = static::createUrl($token, $courier->email);
+        $url = $this->createUrl($token, $courier->email);
 
         // create stdObject
-        $object = static::createStdObject($courier->email, $token, $url);
+        $object = $this->createStdObject($courier->email, $token, $url);
 
         // send link
-        static::mailLink($object);
+        $this->mailLink($object);
     }
 
     // Password reset function
     public function reset(CourierPasswordResetDTO $courierDTO): void
     {
-        $courier = static::findCourier($courierDTO->email);
+        $courier = $this->findCourier($courierDTO->email);
 
-        static::deleteToken($courier);
+        $this->deleteToken($courier);
 
-        $password = static::hashPassword($courierDTO->password);
+        $password = $this->hashPassword($courierDTO->password);
 
-        static::resetPassword($courier, $password);
+        $this->resetPassword($courier, $password);
     }
 
     // Logout function
     public function logout(): void
     {
-        static::logoutCourier();
+        $this->logoutCourier();
     }
 
     // Courier delete function
     public function delete(int $courier_id): void
     {
         // Find courier
-        $courier = static::findCourier($courier_id);
+        $courier = $this->findCourier($courier_id);
 
         // Delete deliveries
-        static::deleteDeliveries($courier);
+        $this->deleteDeliveries($courier);
 
         // Delete courier
-        static::deleteCourier($courier);
+        $this->deleteCourier($courier);
     }
 
     // check couriers to it's existanse
-    public static function checkCouriers(string $email): bool
+    private function checkCouriers(string $email): bool
     {
         if (Courier::where('email', $email)->first()) {
             return false;
@@ -131,7 +131,7 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // if courier already registrated and trashed force delete it
-    public static function checkTash(string $email): void
+    private function checkTash(string $email): void
     {
         // find trashed couriers with given email
         $courier = Courier::onlyTrashed()->where('email', $email)->first();
@@ -143,7 +143,7 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Collect courier create params
-    public static function collectCourierParams(CourierCreateDTO $courierCreateDTO, string $hashedPassword): array
+    private function collectCourierParams(CourierCreateDTO $courierCreateDTO, string $hashedPassword): array
     {
         // Collect courier data in array
         $courierData = [
@@ -158,13 +158,13 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Create or return new or alredy created courier (checking email)
-    public static function createCourier(array $courierData): Courier
+    private function createCourier(array $courierData): Courier
     {
         return Courier::firstOrCreate(['email' => $courierData['email']], $courierData);
     }
 
     // Collect courier data for login
-    public static function collectCourierLoginParams(CourierLoginDTO $courierLoginDTO): array
+    private function collectCourierLoginParams(CourierLoginDTO $courierLoginDTO): array
     {
         // Collect courier data in array
         $courierLoginData = [
@@ -177,7 +177,7 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Login function
-    public static function courierLogin($courier): ?bool
+    private function courierLogin($courier): ?bool
     {
         // if courier already exists
         if (is_array($courier)) {
@@ -189,7 +189,7 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Collect new courier data
-    public static function collectCourierUpdateParams(CourierUpdateDTO $courierUpdateDTO, $hashedPassword): array
+    private function collectCourierUpdateParams(CourierUpdateDTO $courierUpdateDTO, $hashedPassword): array
     {
         // Collect params in array
         $courierData = [
@@ -204,13 +204,13 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Update courier data
-    public static function updateCourier(array $courierData, $courier): void
+    private function updateCourier(array $courierData, $courier): void
     {
         $courier->update($courierData);
     }
 
     // generate password reset token function
-    public static function generatePasswordToken(Courier $courier): string
+    private function generatePasswordToken(Courier $courier): string
     {
         // generate token
         $token = Str::random(60);
@@ -224,20 +224,20 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // delete token function
-    public static function deleteToken(Courier $courier): void
+    private function deleteToken(Courier $courier): void
     {
         $courier->password_reset_token = null;
         $courier->save();
     }
 
     // create url function
-    public static function createUrl(string $token, string $email): string
+    private function createUrl(string $token, string $email): string
     {
         return url('/courier/password/reset/' . $token . '/' . $email);
     }
 
     // create and return std object for mailer
-    public static function createStdObject(string $email, string $token, string $url): object
+    private function createStdObject(string $email, string $token, string $url): object
     {
         return (object) [
             'email' => $email,
@@ -247,26 +247,26 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // reset password
-    public static function resetPassword(Courier $courier, string $password): void
+    private function resetPassword(Courier $courier, string $password): void
     {
         $courier->password = $password;
         $courier->save();
     }
 
     // send link
-    public static function mailLink(object $object): void
+    private function mailLink(object $object): void
     {
         Mail::to($object->email)->send(new CourierPasswordReset($object));
     }
 
     // Logout courier function
-    public static function logoutCourier(): void
+    private function logoutCourier(): void
     {
         Auth::guard('courier')->logout();
     }
 
     // delete courier deliveries
-    public static function deleteDeliveries(Courier $courier): void
+    private function deleteDeliveries(Courier $courier): void
     {
         // get all courier deliveries
         $deliveries = $courier->deliveries;
@@ -286,13 +286,13 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Delete courier account function
-    public static function deleteCourier(Courier $courier): void
+    private function deleteCourier(Courier $courier): void
     {
         $courier->delete();
     }
 
     // Find and return courier
-    public static function findcourier(int|string $courierData): Courier
+    private function findcourier(int|string $courierData): Courier
     {
         // if input data id then find by id
         if (is_int($courierData)) {
@@ -304,7 +304,7 @@ class CourierRepositoryImplementator implements CourierRepository
     }
 
     // Hash password
-    public static function hashPassword(?string $password): string
+    private function hashPassword(?string $password): string
     {
         // if courier while creating or updating wrote new password hash it
         if ($password) {

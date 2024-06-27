@@ -15,30 +15,30 @@ class DeliveryRepositoryImplementator implements DeliveryRepository
         $courier_id = Auth::guard('courier')->user()->id;
 
         // find current order
-        $order = static::findOrder($order_id);
+        $order = $this->findOrder($order_id);
 
         // change order status
-        static::changeStatus($order);
+        $this->changeStatus($order);
 
         // create new delivery in current courier list
-        static::deliverOrder($courier_id, $order_id);
+        $this->deliverOrder($courier_id, $order_id);
     }
     
     // find order
-    public function findOrder(int $order_id): Order
+    private function findOrder(int $order_id): Order
     {
         return Order::find($order_id);
     }
 
     // change order status
-    public function changeStatus(Order $order): void
+    private function changeStatus(Order $order): void
     {
         $order->status = 'Courier will deliver it soon';
         $order->save();
     }
 
     // create delivery in courier's list
-    public static function deliverOrder(int $courier_id, int $order_id)
+    private function deliverOrder(int $courier_id, int $order_id)
     {
         // collect data
         $data = [
