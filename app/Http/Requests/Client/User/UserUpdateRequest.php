@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Client\User;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\UniqueEmail;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'username' => 'required|string',
-            'email' => 'required|email',
+            'email' => ['required', 'email', new UniqueEmail()],
             'phone' => '',
             'address' => '',
             'password' => '',

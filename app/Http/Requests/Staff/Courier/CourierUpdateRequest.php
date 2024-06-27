@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Staff\Courier;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Rules\UniqueCourierEmail;
 
 class CourierUpdateRequest extends FormRequest
 {
@@ -25,7 +26,7 @@ class CourierUpdateRequest extends FormRequest
     {
         return [
             'couriername' => 'required|string',
-            'email' => 'required|email',
+            'email' => ['required', 'email', new UniqueCourierEmail()],
             'phone' => 'required',
             'password' => '',
         ];
