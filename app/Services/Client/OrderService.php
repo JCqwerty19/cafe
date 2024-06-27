@@ -2,7 +2,7 @@
 
 namespace App\Services\Client;
 
-use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
+use App\Repositories\Interfaces\Client\OrderRepository;
 use App\Models\Client\Order;
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
@@ -11,9 +11,9 @@ class OrderService
 {
     // Construction order service
     public function __construct(
-        public OrderRepositoryInterface $orderRepositoryInterface,
+        public OrderRepository $orderRepository,
     ) {
-        $this->orderRepositoryInterface = $orderRepositoryInterface;
+        $this->orderRepository = $orderRepository;
     }
 
     // Order make function
@@ -30,7 +30,7 @@ class OrderService
         );
 
         // Make order in repository and return
-        return $this->orderRepositoryInterface->make($orderDTO);
+        return $this->orderRepository->make($orderDTO);
     }
 
     // Put order items function
@@ -43,19 +43,19 @@ class OrderService
         );
 
         // Put order items in repository
-        $this->orderRepositoryInterface->putOrderItems($orderItemsDTO);
+        $this->orderRepository->putOrderItems($orderItemsDTO);
     }
 
     // Duistirbute orders function
     public function distirbute(int $order_id): void
     {
         // Distirbute order in repository
-        $this->orderRepositoryInterface->distirbute($order_id);
+        $this->orderRepository->distirbute($order_id);
     }
 
     // Delete order fucntion
     public function delete(int $order_id): bool
     {
-        return $this->orderRepositoryInterface->delete($order_id);
+        return $this->orderRepository->delete($order_id);
     }
 }

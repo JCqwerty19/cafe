@@ -7,7 +7,7 @@ use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
 use App\DTO\Staff\Courier\CourierPasswordResetDTO;
 
-interface CourierRepositoryInterface
+interface CourierRepository
 {
     // Courier make function
     public function make(CourierCreateDTO $courierCreateDTO): bool;

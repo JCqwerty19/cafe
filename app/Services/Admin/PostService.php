@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
+use App\Repositories\Interfaces\Admin\PostRepository;
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
@@ -10,9 +10,9 @@ class PostService
 {
     // Construction order service
     public function __construct(
-        public PostRepositoryInterface $postRepositoryInterface,
+        public PostRepository $postRepository,
     ) {
-        $this->postRepositoryInterface = $postRepositoryInterface;
+        $this->postRepository = $postRepository;
     }
 
     // Post make fucntion
@@ -26,7 +26,7 @@ class PostService
         );
 
         // Make post in repository
-        $this->postRepositoryInterface->make($postCreateDTO);
+        $this->postRepository->make($postCreateDTO);
     }
 
     // Post renew fucntion 
@@ -41,12 +41,12 @@ class PostService
         );
 
         // Renew post in repository
-        $this->postRepositoryInterface->renew($postUpdateDTO);
+        $this->postRepository->renew($postUpdateDTO);
     }
 
     // Post delete fucntion
     public function delete(int $post_id): void
     {
-        $this->postRepositoryInterface->delete($post_id);
+        $this->postRepository->delete($post_id);
     }
 }

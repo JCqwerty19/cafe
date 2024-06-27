@@ -6,7 +6,7 @@ use App\Models\Client\Order;
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
 
-interface OrderRepositoryInterface
+interface OrderRepository
 {
     // Order make function
     public function make(OrderCreateDTO $orderDTO): Order;

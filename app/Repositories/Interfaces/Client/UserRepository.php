@@ -7,7 +7,7 @@ use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
 use App\DTO\Client\User\UserPasswordResetDTO;
 
-interface UserRepositoryInterface
+interface UserRepository
 {
     // Make function
     public function make(UserCreateDTO $userCreateDTO): bool;

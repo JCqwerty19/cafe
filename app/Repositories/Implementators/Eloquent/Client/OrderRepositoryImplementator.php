@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
-use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
+use App\Repositories\Interfaces\Client\OrderRepository;
 use App\Models\Admin\Product;
 use App\Models\Client\Order;
 use App\Models\Client\User;
@@ -10,7 +10,7 @@ use App\Models\Client\OrderItems;
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
 
-class OrderRepositoryImplementator implements OrderRepositoryInterface
+class OrderRepositoryImplementator implements OrderRepository
 {
     // Order make function
     public function make(OrderCreateDTO $orderDTO): Order

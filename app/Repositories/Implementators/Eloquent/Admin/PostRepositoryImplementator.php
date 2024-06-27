@@ -2,13 +2,13 @@
 
 namespace App\Repositories\Implementators\Eloquent\Admin;
 
-use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
+use App\Repositories\Interfaces\Admin\PostRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Admin\Post;
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
-class PostRepositoryImplementator implements PostRepositoryInterface
+class PostRepositoryImplementator implements PostRepository
 {
     // post make function
     public function make(PostCreateDTO $postCreateDTO): void

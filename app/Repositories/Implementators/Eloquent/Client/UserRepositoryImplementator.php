@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
-use App\Repositories\Interfaces\Client\UserRepositoryInterface;
+use App\Repositories\Interfaces\Client\UserRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -14,7 +14,7 @@ use App\DTO\Client\User\UserUpdateDTO;
 use App\DTO\Client\User\UserPasswordResetDTO;
 use App\Mail\Client\User\UserPasswordReset;
 
-class UserRepositoryImplementator implements UserRepositoryInterface
+class UserRepositoryImplementator implements UserRepository
 {
     // User make function
     public function make(UserCreateDTO $userCreateDTO): bool

@@ -5,7 +5,7 @@ namespace App\Repositories\Interfaces\Admin;
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
-interface PostRepositoryInterface
+interface PostRepository
 {
     // Post make function
     public function make(PostCreateDTO $postCreateDTO): void;

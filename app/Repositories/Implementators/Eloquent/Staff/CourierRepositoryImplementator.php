@@ -2,7 +2,7 @@
 
 namespace App\Repositories\Implementators\Eloquent\Staff;
 
-use App\Repositories\Interfaces\Staff\CourierRepositoryInterface;
+use App\Repositories\Interfaces\Staff\CourierRepository;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -15,7 +15,7 @@ use App\DTO\Staff\Courier\CourierPasswordResetDTO;
 use App\Mail\Staff\Courier\CourierPasswordReset;
 
 
-class CourierRepositoryImplementator implements CourierRepositoryInterface
+class CourierRepositoryImplementator implements CourierRepository
 {
     // Courier make function
     public function make(CourierCreateDTO $courierCreateDTO): bool

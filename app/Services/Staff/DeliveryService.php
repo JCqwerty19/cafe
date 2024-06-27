@@ -2,19 +2,19 @@
 
 namespace App\Services\Staff;
 
-use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
+use App\Repositories\Interfaces\Staff\DeliveryRepository;
 
 class DeliveryService
 {
     public function __construct(
-        public DeliveryRepositoryInterface $deliveryRepositoryInterface
+        public DeliveryRepository $deliveryRepository
     ) {
-        $this->deliveryRepositoryInterface = $deliveryRepositoryInterface;
+        $this->deliveryRepository = $deliveryRepository;
     }
 
     // deliver order to courier delivery list
     public function deliver(int $order_id): void
     {
-        $this->deliveryRepositoryInterface->deliver($order_id);
+        $this->deliveryRepository->deliver($order_id);
     }
 }

@@ -2,13 +2,13 @@
 
 namespace App\Repositories\Implementators\Eloquent\Admin;
 
-use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
+use App\Repositories\Interfaces\Admin\ProductRepository;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Admin\Product;
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
-class ProductRepositoryImplementator implements ProductRepositoryInterface
+class ProductRepositoryImplementator implements ProductRepository
 {
     // product make
     public function make(ProductCreateDTO $productCreateDTO): void

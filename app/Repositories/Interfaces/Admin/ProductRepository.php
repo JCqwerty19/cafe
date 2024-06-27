@@ -5,7 +5,7 @@ namespace App\Repositories\Interfaces\Admin;
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
-interface ProductRepositoryInterface
+interface ProductRepository
 {
 
     // Product make function

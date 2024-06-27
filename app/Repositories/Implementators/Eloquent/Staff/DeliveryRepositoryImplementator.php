@@ -2,12 +2,12 @@
 
 namespace App\Repositories\Implementators\Eloquent\Staff;
 
-use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
+use App\Repositories\Interfaces\Staff\DeliveryRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Client\Order;
 use App\Models\Staff\Deliveries;
 
-class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
+class DeliveryRepositoryImplementator implements DeliveryRepository
 {
     public function deliver(int $order_id): void
     {

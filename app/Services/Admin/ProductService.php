@@ -2,7 +2,7 @@
 
 namespace App\Services\Admin;
 
-use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
+use App\Repositories\Interfaces\Admin\ProductRepository;
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
@@ -10,9 +10,9 @@ class ProductService
 {
     // Construction order service
     public function __construct(
-        public ProductRepositoryInterface $productRepositoryInterface,
+        public ProductRepository $productRepository,
     ) {
-        $this->productRepositoryInterface = $productRepositoryInterface;
+        $this->productRepository = $productRepository;
     }
 
     // Product make fucntion
@@ -27,7 +27,7 @@ class ProductService
         );
 
         // Make product in repository
-        $this->productRepositoryInterface->make($productCreateDTO);
+        $this->productRepository->make($productCreateDTO);
     }
 
     // Product renew fucntion 
@@ -43,12 +43,12 @@ class ProductService
         );
 
         // Renew product in repository
-        $this->productRepositoryInterface->renew($productUpdateDTO);
+        $this->productRepository->renew($productUpdateDTO);
     }
 
     // Product delete fucntion
     public function delete(int $product_id): void
     {
-        $this->productRepositoryInterface->delete($product_id);
+        $this->productRepository->delete($product_id);
     }
 }
