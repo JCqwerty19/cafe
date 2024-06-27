@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Interfaces\Admin;
 
-// Import DTO
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 

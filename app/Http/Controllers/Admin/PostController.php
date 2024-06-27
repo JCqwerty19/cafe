@@ -4,15 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Http\Request;
-
-// import models
 use App\Models\Admin\Post;
-
-// import requests
 use App\Http\Requests\Admin\Post\PostCreateRequest;
 use App\Http\Requests\Admin\Post\PostUpdateRequest;
-
-// import DTO
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
@@ -23,10 +17,6 @@ class PostController extends BaseController
     {
         return view('admin.post.create');
     }
-
-
-    // =============================================================
-
 
     // make post
     public function make(PostCreateRequest $postCreateRequest)
@@ -48,10 +38,6 @@ class PostController extends BaseController
         return redirect()->route('post.index');
     }
 
-
-    // =============================================================
-
-
     // Read post
     public function read(Post $post)
     {
@@ -65,10 +51,6 @@ class PostController extends BaseController
         return view('admin.post.read', $variables);
     }
 
-
-    // =============================================================
-
-
     // Update post
     public function update(Post $post)
     {
@@ -80,10 +62,6 @@ class PostController extends BaseController
         // Show post update page
         return view('admin.post.update', $variables);
     }
-
-
-    // =============================================================
-    
 
     // Post renew function
     public function renew(PostUpdateRequest $postUpdateRequest, Post $post)
@@ -105,10 +83,6 @@ class PostController extends BaseController
         // retirect to the posts table
         return redirect()->route('post.index');
     }
-
-
-    // =============================================================
-
 
     // Delete post
     public function delete(Post $post)

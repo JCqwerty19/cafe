@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Interfaces\Admin;
 
-// Import DTO
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 

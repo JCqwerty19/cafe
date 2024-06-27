@@ -4,15 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Admin\BaseController;
 use Illuminate\Http\Request;
-
-// Import models
 use App\Models\Admin\Product;
-
-// Import requests
 use App\Http\Requests\Admin\Product\ProductCreateRequest;
 use App\Http\Requests\Admin\Product\ProductUpdateRequest;
-
-// Import DTO
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
@@ -24,10 +18,6 @@ class ProductController extends BaseController
         // Show create product page
         return view('admin.product.create');
     }
-
-
-    // =============================================================
-
 
     // Make product
     public function make(ProductCreateRequest $productCreateRequest)
@@ -50,10 +40,6 @@ class ProductController extends BaseController
         return redirect()->route('product.index');
     }
 
-
-    // =============================================================
-
-
     // Update product
     public function update(Product $product)
     {
@@ -65,10 +51,6 @@ class ProductController extends BaseController
         // Show product update page
         return view('admin.product.update', $variables);
     }
-
-
-    // =============================================================
-
 
     // Product renew function
     public function renew(ProductUpdateRequest $productUpdateRequest, Product $product)
@@ -91,10 +73,6 @@ class ProductController extends BaseController
         // retirect to the products table
         return redirect()->route('product.index');
     }
-
-
-    // =============================================================
-    
 
     // Delete product
     public function delete(Product $product)

@@ -2,10 +2,7 @@
 
 namespace App\Services\Admin;
 
-// Import repository interface
 use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
-
-// Import DTO
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
@@ -18,10 +15,6 @@ class ProductService
         $this->productRepositoryInterface = $productRepositoryInterface;
     }
 
-
-    // =============================================================
-
-    
     // Product make fucntion
     public function make(ProductCreateDTO $productCreateDTO): void
     {
@@ -36,10 +29,6 @@ class ProductService
         // Make product in repository
         $this->productRepositoryInterface->make($productCreateDTO);
     }
-
-
-    // =============================================================
-
 
     // Product renew fucntion 
     public function renew(ProductUpdateDTO $productUpdateDTO): void
@@ -56,10 +45,6 @@ class ProductService
         // Renew product in repository
         $this->productRepositoryInterface->renew($productUpdateDTO);
     }
-
-
-    // =============================================================
-
 
     // Product delete fucntion
     public function delete(int $product_id): void

@@ -2,10 +2,7 @@
 
 namespace App\Repositories\Interfaces\Client;
 
-// Import Models
 use App\Models\Client\Order;
-
-// Import DTO
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
 

@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Interfaces\Staff;
 
-// Import DTO
 use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;

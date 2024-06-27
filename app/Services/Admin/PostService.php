@@ -2,10 +2,7 @@
 
 namespace App\Services\Admin;
 
-// Import repository interface
 use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
-
-// Import DTO
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
@@ -18,10 +15,6 @@ class PostService
         $this->postRepositoryInterface = $postRepositoryInterface;
     }
 
-
-    // =============================================================
-
-    
     // Post make fucntion
     public function make(PostCreateDTO $postCreateDTO): void
     {
@@ -35,10 +28,6 @@ class PostService
         // Make post in repository
         $this->postRepositoryInterface->make($postCreateDTO);
     }
-
-
-    // =============================================================
-
 
     // Post renew fucntion 
     public function renew(PostUpdateDTO $postUpdateDTO): void
@@ -54,10 +43,6 @@ class PostService
         // Renew post in repository
         $this->postRepositoryInterface->renew($postUpdateDTO);
     }
-
-
-    // =============================================================
-
 
     // Post delete fucntion
     public function delete(int $post_id): void

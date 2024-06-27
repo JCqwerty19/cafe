@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
-// import services
 use App\Services\Admin\PostService;
 use App\Services\Admin\ProductService;
 

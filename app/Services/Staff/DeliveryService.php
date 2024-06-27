@@ -2,7 +2,6 @@
 
 namespace App\Services\Staff;
 
-// Import repository
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
 
 class DeliveryService
@@ -12,10 +11,6 @@ class DeliveryService
     ) {
         $this->deliveryRepositoryInterface = $deliveryRepositoryInterface;
     }
-
-
-    // =============================================================
-
 
     // deliver order to courier delivery list
     public function deliver(int $order_id): void

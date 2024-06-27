@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Staff\Delivery;
 
 use App\Http\Controllers\Staff\BaseController;
 use Illuminate\Http\Request;
-
-// Import facades
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-// Import models
 use App\Models\Client\Order;
 use App\Models\Staff\Deliveries;
 
@@ -27,10 +23,6 @@ class DeliveryController extends BaseController
         return view('staff.delivery.table', $variables);
     }
 
-
-    // =============================================================
-
-
     // Deliver function
     public function deliver(Order $order)
     {
@@ -40,10 +32,6 @@ class DeliveryController extends BaseController
         // Show my delivery list page
         return redirect()->route('delivery.list');
     }
-
-
-    // =============================================================
-
 
     // Show deliver list page function
     public function list()

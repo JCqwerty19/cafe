@@ -2,7 +2,6 @@
 
 namespace App\Repositories\Interfaces\Client;
 
-// Import DTO
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;

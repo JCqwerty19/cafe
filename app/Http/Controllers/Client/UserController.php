@@ -4,23 +4,15 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
-
-// Import facades
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-
-// Import models
 use App\Models\Client\Order;
 use App\Models\Client\User;
-
-// Import requests
 use App\Http\Requests\Client\User\UserRegisterRequest;
 use App\Http\Requests\Client\User\UserLoginRequest;
 use App\Http\Requests\Client\User\UserUpdateRequest;
 use App\Http\Requests\Client\User\UserEmailRequest;
 use App\Http\Requests\Client\User\UserPasswordResetRequest;
-
-// Import DTO
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
@@ -33,10 +25,6 @@ class UserController extends BaseController
     {
         return view('client.user.register');
     }
-
-
-    // =============================================================
-
 
     // Make an account for user
     public function make(UserRegisterRequest $userRegusterRequest)
@@ -65,10 +53,6 @@ class UserController extends BaseController
         // Redirect to the main page
         return redirect()->route('main.index');
     }
-
-
-    // =============================================================
-
 
     // Login User
     public function login()
@@ -111,10 +95,6 @@ class UserController extends BaseController
         return redirect()->route('main.index');
     }
 
-
-    // =============================================================
-
-
     // User update
     public function update()
     {
@@ -126,10 +106,6 @@ class UserController extends BaseController
         // Show settings page
         return view('client.user.update', $variables);
     }
-
-
-    // =============================================================
-
 
     // Renew user
     public function renew(UserUpdateRequest $userUpdateRequest)
@@ -154,19 +130,11 @@ class UserController extends BaseController
         return redirect()->route('main.index');
     }
 
-
-    // =============================================================
-
-
     // Show email require page for password reset
     public function linkPage()
     {
         return view('client.user.password.request');
     }
-
-
-    // =============================================================
-
 
     // Send email fucntion
     public function sendLink(UserEmailRequest $userEmailRequest)
@@ -181,10 +149,6 @@ class UserController extends BaseController
         return back()->with('message', 'Password reset link has been sent to your email.');
     }
 
-
-    // =============================================================
-
-
     // Reset page function
     public function resetPage(string $token, string $email)
     {
@@ -197,10 +161,6 @@ class UserController extends BaseController
         // show reset page
         return view('client.user.password.reset', $variables);
     }
-
-
-    // =============================================================
-
 
     // Reset password function
     public function reset(UserPasswordResetRequest $userPasswordResetRequest)
@@ -234,10 +194,6 @@ class UserController extends BaseController
         return redirect()->route('user.login');
     }
 
-
-    // =============================================================
-
-
     // Logout user
     public function logout(User $user)
     {
@@ -247,10 +203,6 @@ class UserController extends BaseController
         // Redirect to the main page
         return redirect()->route('main.index');
     }
-
-
-    // =============================================================
-
 
     // Delete an account
     public function delete(User $user)
@@ -266,10 +218,6 @@ class UserController extends BaseController
         // Redirect to the main page
         return redirect()->route('main.index');
     }
-
-
-    // =============================================================
-    
 
     // Show user orders function
     public function orders()

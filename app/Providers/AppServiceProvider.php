@@ -4,30 +4,18 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-// import order repository connection
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Client\OrderRepositoryImplementator;
-
 use App\Repositories\Interfaces\Admin\AdminRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Admin\AdminRepositoryImplementator;
-
-// import post repository connection
 use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Admin\PostRepositoryImplementator;
-
-// import product repository connection
 use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Admin\ProductRepositoryImplementator;
-
-// import user repository connection
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Client\UserRepositoryImplementator;
-
-// import courier repository connection
 use App\Repositories\Interfaces\Staff\CourierRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Staff\CourierRepositoryImplementator;
-
-// import delivery repository connection
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
 use App\Repositories\Implementators\Eloquent\Staff\DeliveryRepositoryImplementator;
 

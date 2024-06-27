@@ -2,25 +2,16 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
-// Import intefaces
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
-
-// Import facades and supports
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-
-// Import models
 use App\Models\Client\User;
-
-// Import DTO
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
 use App\DTO\Client\User\UserPasswordResetDTO;
-
-// Import mailers
 use App\Mail\Client\User\UserPasswordReset;
 
 class UserRepositoryImplementator implements UserRepositoryInterface
@@ -52,10 +43,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         return true;
     }
 
-
-    // =============================================================
-
-
     // Sigin function
     public function signin(UserLoginDTO $userLoginDTO): bool
     {
@@ -65,10 +52,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         // Sigin in user and return it's result
         return static::userLogin($userLoginData); 
     }
-
-
-    // =============================================================
-
 
     // User update function
     public function renew(UserUpdateDTO $userUpdateDTO): void
@@ -85,10 +68,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         // Update user data
         static::updateUser($userData, $user);
     }
-
-
-    // =============================================================
-
 
     // Send link for password reset fucntion
     public function sendLink(string $email): void
@@ -109,9 +88,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         static::mailLink($object);
     }
 
-
-    // =============================================================
-
     // Password reset function
     public function reset(UserPasswordResetDTO $userDTO): void
     {
@@ -124,19 +100,11 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         static::resetPassword($user, $password);
     }
 
-    
-    // =============================================================
-
-
     // Logout function
     public function logout(): void
     {
         static::logoutUser();
     }
-
-    
-    // =============================================================
-
 
     // User delete function
     public function delete(int $user_id): bool
@@ -154,18 +122,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         return true;
     }
 
-
-
-    // =============================================================
-    // STATIC FUNCTIONS
-    // =============================================================
-
-
-
-    // USER MAKE STATIC FUNCTIONS
-    // =============================================================
-
-
     // check user for existanse
     public static function checkUsers(string $email): bool
     {
@@ -178,10 +134,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         return true;
     }
 
-
-    // =============================================================
-
-
     // check trashed users
     public static function checkTash(string $email): void
     {
@@ -193,10 +145,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
             $user->forceDelete();
         }
     }
-
-
-    // =============================================================
-
 
     // Collect user create params in array
     public static function collectUserParams(UserCreateDTO $userCreateDTO, string $hashedPassword): array
@@ -211,20 +159,11 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         ];
     }
 
-
-    // =============================================================
-
-
     // Create or return new or alredy created user (checking email)
     public static function createUser(array $userData): User
     {
         return User::firstOrCreate(['email' => $userData['email']], $userData);
     }
-
-
-    // USER SIGNIN STATIC FUNCTIONS
-    // =============================================================
-
 
     // Collect user data for login in array
     public static function collectUserLoginParams(UserLoginDTO $userLoginDTO): array
@@ -234,11 +173,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
             'password' => $userLoginDTO->password,
         ];
     }
-
-
-    // USER UPDATE STATIC FUNCTIONS
-    // =============================================================
-
 
     // Collect new user data in array
     public static function collectUserUpdateParams(UserUpdateDTO $userUpdateDTO, string $hashedPassword, string $status): array
@@ -253,20 +187,11 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         ];
     }
 
-
-    // =============================================================
-
-
     // Update user data
     public static function updateUser(array $userData, $user): void
     {
         $user->update($userData);
     }
-
-
-    // USER RESET PASSWORD STATIC FUNCTIONS
-    // =============================================================
-
 
     // generate password reset token function
     public static function generatePasswordToken(User $user): string
@@ -282,10 +207,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         return $token;
     }
 
-
-    // =============================================================
-
-
     // delete token function
     public static function deleteToken(User $user): void
     {
@@ -293,19 +214,11 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         $user->save();
     }
 
-
-    // =============================================================
-
-
     // create url function
     public static function createUrl(string $token, string $email): string
     {
         return url('user/password/reset/' . $token . '/' . $email);
     }
-
-
-    // =============================================================
-
 
     // create and return std object for mailer
     public static function createStdObject(string $email, string $token, string $url): object
@@ -317,10 +230,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         ];
     }
 
-
-    // =============================================================
-
-
     // reset password
     public static function resetPassword(User $user, string $password): void
     {
@@ -328,31 +237,17 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         $user->save();
     }
 
-
-    // =============================================================
-
-
     // send link
     public static function mailLink(object $object): void
     {
         Mail::to($object->email)->send(new UserPasswordReset($object));
     }
 
-
-    // USER LOGOUT STATIC FUNCTIONS
-    // =============================================================
-    
-
     // Logout user function
     public static function logoutUser(): void
     {
         Auth::logout();
     }
-
-
-    // USER DELETE STATIC FUNCTIONS
-    // =============================================================
-
 
     // check user to it's order existanse
     public static function checkOrders(User $user): bool
@@ -366,20 +261,11 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         return true;
     }
 
-
-    // =============================================================
-
-
     // Delete user account function
     public static function deleteUser(User $user): void
     {
         $user->delete();
     }
-
-
-    // GENERAL STATIC FUNCTIONS
-    // =============================================================
-
 
     // Find and return user
     public static function findUser(int|string $userData): User
@@ -393,10 +279,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         return User::where('email', $userData)->first();   
     }
 
-
-    // =============================================================
-
-
     // Login function
     public static function userLogin($user): ?bool
     {
@@ -408,10 +290,6 @@ class UserRepositoryImplementator implements UserRepositoryInterface
         // if it's new user
         return Auth::login($user);
     }
-
-    
-    // =============================================================
-
 
     // Hash password
     public static function hashPassword(?string $password): string

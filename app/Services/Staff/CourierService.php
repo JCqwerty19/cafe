@@ -2,10 +2,7 @@
 
 namespace App\Services\Staff;
 
-// Import repository
 use App\Repositories\Interfaces\Staff\CourierRepositoryInterface;
-
-// Import DTO
 use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
@@ -19,10 +16,6 @@ class CourierService
     ) {
         $this->courierRepositoryInterface = $courierRepositoryInterface;
     }
-
-
-    // =============================================================
-
 
     // create courier
     public function make(CourierCreateDTO $courierCreateDTO): bool
@@ -39,10 +32,6 @@ class CourierService
         return $this->courierRepositoryInterface->make($courierCreateDTO);
     }
 
-
-    // =============================================================
-
-
     // sigin function 
     public function singin(CourierLoginDTO $courierLoginDTO): bool
     {
@@ -55,10 +44,6 @@ class CourierService
         // login courier in repository
         return $this->courierRepositoryInterface->signin($courierLoginDTO);
     }
-
-
-    // =============================================================
-
 
     // renew courier function
     public function renew(CourierUpdateDTO $courierUpdateDTO): void
@@ -76,19 +61,11 @@ class CourierService
         $this->courierRepositoryInterface->renew($courierUpdateDTO);
     }
 
-
-    // =============================================================
-
-
     // Send link for password reset through repository
     public function sendLink(string $email): void
     {
         $this->courierRepositoryInterface->sendLink($email);
     }
-
-
-    // =============================================================
-
 
     // Password reset function
     public function reset(CourierPasswordResetDTO $courierPasswordResetDTO): void
@@ -104,19 +81,11 @@ class CourierService
         $this->courierRepositoryInterface->reset($courierDTO);
     }
 
-
-    // =============================================================
-
-
     // Logout courier
     public function logout(): void
     {
         $this->courierRepositoryInterface->logout();
     }
-
-
-    // =============================================================
-
 
     // Delete an account
     public function delete(int $courier_id): void

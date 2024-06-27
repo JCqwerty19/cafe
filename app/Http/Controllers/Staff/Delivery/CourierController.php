@@ -4,22 +4,14 @@ namespace App\Http\Controllers\Staff\Delivery;
 
 use App\Http\Controllers\Staff\BaseController;
 use Illuminate\Http\Request;
-
-// Import facades
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
-// Import models
 use App\Models\Staff\Courier;
-
-// Import requests
 use App\Http\Requests\Staff\Courier\CourierRegisterRequest;
 use App\Http\Requests\Staff\Courier\CourierLoginRequest;
 use App\Http\Requests\Staff\Courier\CourierUpdateRequest;
 use App\Http\Requests\Staff\Courier\CourierEmailRequest;
 use App\Http\Requests\Staff\Courier\CourierPasswordResetRequest;
-
-// Import DTO
 use App\DTO\Staff\Courier\CourierCreateDTO;
 use App\DTO\Staff\Courier\CourierLoginDTO;
 use App\DTO\Staff\Courier\CourierUpdateDTO;
@@ -32,10 +24,6 @@ class CourierController extends BaseController
     {
         return view('staff.delivery.courier.register');
     }
-
-
-    // =============================================================
-
 
     // Make an account for courier
     public function make(CourierRegisterRequest $courierRegusterRequest)
@@ -63,20 +51,12 @@ class CourierController extends BaseController
         return redirect()->route('delivery.table');
     }
 
-
-    // =============================================================
-
-
     // Login courier
     public function login()
     {
         // Show login page
         return view('staff.delivery.courier.login');
     }
-
-
-    // =============================================================
-
 
     // Sign in courier
     public function signin(CourierLoginRequest $courierLoginRequest)
@@ -112,10 +92,6 @@ class CourierController extends BaseController
         return redirect()->route('delivery.table');
     }
 
-
-    // =============================================================
-
-
     // courier update
     public function update()
     {
@@ -126,10 +102,6 @@ class CourierController extends BaseController
         // Show settings page
         return view('staff.delivery.courier.update', $variables);
     }
-
-
-    // =============================================================
-
 
     // Renew courier
     public function renew(CourierUpdateRequest $courierUpdateRequest)
@@ -153,19 +125,11 @@ class CourierController extends BaseController
         return redirect()->route('delivery.table');
     }
 
-
-    // =============================================================
-
-
     // Show email require page for password reset
     public function linkPage()
     {
         return view('staff.delivery.courier.password.request');
     }
-
-
-    // =============================================================
-
 
     // Send email fucntion
     public function sendLink(CourierEmailRequest $courierEmailRequest)
@@ -180,10 +144,6 @@ class CourierController extends BaseController
         return back()->with('message', 'Password reset link has been sent to your email.');
     }
 
-
-    // =============================================================
-
-
     // Reset page function
     public function resetPage(string $token, string $email)
     {
@@ -196,10 +156,6 @@ class CourierController extends BaseController
         // show reset page
         return view('staff.delivery.courier.password.reset', $variables);
     }
-
-
-    // =============================================================
-
 
     // Reset password function
     public function reset(CourierPasswordResetRequest $courierPasswordResetRequest)
@@ -233,10 +189,6 @@ class CourierController extends BaseController
         return redirect()->route('courier.login');
     }
 
-
-    // =============================================================
-
-
     // Logout courier
     public function logout()
     {
@@ -246,10 +198,6 @@ class CourierController extends BaseController
         // Redirect to the courier login page
         return redirect()->route('courier.login');
     }
-
-
-    // =============================================================
-    
 
     // Delete an account
     public function delete(Courier $courier)

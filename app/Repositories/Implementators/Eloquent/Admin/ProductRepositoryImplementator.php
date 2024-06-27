@@ -2,17 +2,9 @@
 
 namespace App\Repositories\Implementators\Eloquent\Admin;
 
-// Import interfaces
 use App\Repositories\Interfaces\Admin\ProductRepositoryInterface;
-
-
 use Illuminate\Support\Facades\Storage;
-
-
-// Import models
 use App\Models\Admin\Product;
-
-// Import DTO
 use App\DTO\Admin\Product\ProductCreateDTO;
 use App\DTO\Admin\Product\ProductUpdateDTO;
 
@@ -31,10 +23,6 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         static::createProduct($productData);
     }
 
-
-    // =============================================================
-
-
     // product renew
     public function renew(ProductUpdateDTO $productUpdateDTO): void
     {
@@ -51,10 +39,6 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         static::renewProduct($product, $productNewData);
     }
 
-
-    // =============================================================
-
-
     // product delete
     public function delete(int $product_id): void
     {
@@ -64,18 +48,6 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         // delete product
         static::productDelete($product);
     }
-
-
-
-    // =============================================================
-    // STATIC FUNCTIONS
-    // =============================================================
-
-
-
-    // PRODUCT MAKE STATIC FUNCTIONS
-    // =============================================================
-
 
     public static function collectProductParams(ProductCreateDTO $productCreateDTO): array
     {
@@ -91,20 +63,11 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         return $productData;
     }
 
-    
-    // =============================================================
-
-
     // create product
     public static function createProduct(array $productData): void
     {
         Product::firstOrCreate($productData);
     }
-
-
-    // PRODUCT RENEW STATIC FUNCTIONS
-    // =============================================================
-
 
     // collect product params
     public static function collectProductNewParams(ProductUpdateDTO $productUpdateDTO): array
@@ -121,20 +84,11 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         return $productNewData;
     }
 
-
-    // =============================================================
-
-
     // renew product
     public static function renewProduct(Product $product, array $productNewData): void
     {
         $product->update($productNewData);
     }
-
-
-    // PRODUCT DELETE STATIC FUNCTIONS
-    // =============================================================
-
 
     // product delete
     public static function productDelete(Product $product)
@@ -142,19 +96,13 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         $product->delete();
     }
     
-
-    // GENERAL STATIC FUNCTIONS
-    // =============================================================
-
-    
     // find product
     public static function findProduct(int $product_id): Product
     {
         return Product::find($product_id);
     }
 
-    //
-
+    // put image function
     public static function putImage(string|object|null $image, string $current = null): string
     {
         if (is_string($image)) {
@@ -167,5 +115,4 @@ class ProductRepositoryImplementator implements ProductRepositoryInterface
         $image = Storage::putFile('public/admin/images/products', $image);
         return str_replace('public', 'storage', $image);
     }
-    
 }

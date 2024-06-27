@@ -4,16 +4,10 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Client\BaseController;
 use Illuminate\Http\Request;
-
-// Import models
 use App\Models\Admin\Product;
 use App\Models\Client\Order;
 use App\Models\Client\User;
-
-// Import requests
 use App\Http\Requests\Client\Order\OrderCreateRequest;
-
-// Import DTO
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
 
@@ -31,10 +25,6 @@ class OrderController extends BaseController
         // Show create order page
         return view('client.main.order', $variables);
     }
-
-
-    // =============================================================
-
 
     // Make order
     public function make(OrderCreateRequest $orderRequest)
@@ -68,10 +58,6 @@ class OrderController extends BaseController
         return redirect()->route('user.orders');
     }
 
-
-    // =============================================================
-
-
     // Distribute order
     public function distirbute(Order $order)
     {
@@ -81,10 +67,6 @@ class OrderController extends BaseController
         // return to the kitchen table page
         return redirect()->route('kitchen.table');
     }
-
-
-    // =============================================================
-    
 
     // Delete order
     public function delete(Order $order)

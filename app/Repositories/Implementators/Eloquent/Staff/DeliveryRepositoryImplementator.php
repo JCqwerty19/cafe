@@ -2,13 +2,8 @@
 
 namespace App\Repositories\Implementators\Eloquent\Staff;
 
-// Import interfaces
 use App\Repositories\Interfaces\Staff\DeliveryRepositoryInterface;
-
-// Import facades
 use Illuminate\Support\Facades\Auth;
-
-// Import models
 use App\Models\Client\Order;
 use App\Models\Staff\Deliveries;
 
@@ -28,18 +23,6 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
         // create new delivery in current courier list
         static::deliverOrder($courier_id, $order_id);
     }
-
-
-
-    // =============================================================
-    // STATIC FUNCTIONS
-    // =============================================================
-
-
-
-    // ORDER DELIVER STATIC FUNCTIONS
-    // =============================================================
-    
     
     // find order
     public function findOrder(int $order_id): Order
@@ -47,20 +30,12 @@ class DeliveryRepositoryImplementator implements DeliveryRepositoryInterface
         return Order::find($order_id);
     }
 
-
-    // =============================================================
-
-
     // change order status
     public function changeStatus(Order $order): void
     {
         $order->status = 'Courier will deliver it soon';
         $order->save();
     }
-
-
-    // =============================================================
-
 
     // create delivery in courier's list
     public static function deliverOrder(int $courier_id, int $order_id)

@@ -2,10 +2,7 @@
 
 namespace App\Services\Client;
 
-// Import repository interface
 use App\Repositories\Interfaces\Client\UserRepositoryInterface;
-
-// Import DTO
 use App\DTO\Client\User\UserCreateDTO;
 use App\DTO\Client\User\UserLoginDTO;
 use App\DTO\Client\User\UserUpdateDTO;
@@ -19,10 +16,6 @@ class UserService
     ) {
         $this->userRepositoryInterface = $userRepositoryInterface;
     }
-
-
-    // =============================================================
-
     
     // User make function
     public function make(UserCreateDTO $userCreateDTO): bool
@@ -40,10 +33,6 @@ class UserService
         return $this->userRepositoryInterface->make($userCreateDTO);
     }
 
-
-    // =============================================================
-
-
     // Signin function
     public function signin(UserLoginDTO $userLoginDTO): bool
     {
@@ -56,10 +45,6 @@ class UserService
         // Login user in repository
         return $this->userRepositoryInterface->signin($userLoginDTO);
     }
-
-
-    // =============================================================
-
 
     // Renew function
     public function renew(UserUpdateDTO $userUpdateDTO): void
@@ -78,19 +63,11 @@ class UserService
         $this->userRepositoryInterface->renew($userUpdateDTO);
     }
 
-
-    // =============================================================
-
-
     // Send link for password reset through repository
     public function sendLink(string $email): void
     {
         $this->userRepositoryInterface->sendLink($email);
     }
-
-
-    // =============================================================
-
 
     // Password reset function
     public function reset(UserPasswordResetDTO $userPasswordResetDTO): void
@@ -106,19 +83,11 @@ class UserService
         $this->userRepositoryInterface->reset($userDTO);
     }
 
-
-    // =============================================================
-
-
     // Logout function
     public function logout(): void
     {
         $this->userRepositoryInterface->logout();
     }
-
-
-    // =============================================================
-    
 
     // Delete fucntion
     public function delete(int $user_id): void

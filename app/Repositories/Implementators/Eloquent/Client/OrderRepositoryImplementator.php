@@ -2,16 +2,11 @@
 
 namespace App\Repositories\Implementators\Eloquent\Client;
 
-// Import parent
 use App\Repositories\Interfaces\Client\OrderRepositoryInterface;
-
-// Import models
 use App\Models\Admin\Product;
 use App\Models\Client\Order;
 use App\Models\Client\User;
 use App\Models\Client\OrderItems;
-
-// Import DTO
 use App\DTO\Client\Order\OrderCreateDTO;
 use App\DTO\Client\Order\OrderItemsDTO;
 
@@ -28,10 +23,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         // Create and return order
         return static::createOrder($order);
     }
-
-
-    // =============================================================
-
 
     // Put order items function
     public function putOrderItems(OrderItemsDTO $orderItemsDTO): void
@@ -50,10 +41,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         }
     }
 
-
-    // =============================================================
-
-
     // distirbute order
     public function distirbute(int $order_id): void
     {
@@ -64,10 +51,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         static::orderDistirbute($order);
     }
 
-
-    // =============================================================
-
-
     // delete order
     public function delete(int $order_id): bool
     {
@@ -77,18 +60,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         // delete order
         return static::deleteOrder($order);
     }
-
-
-
-    // =============================================================
-    // STATIC FUNCTIONS
-    // =============================================================
-
-
-
-    // ORDER MAKE STATIC FUNCTIONS
-    // =============================================================
-
 
     // Collect order params
     public static function collectOrderParams(OrderCreateDTO $orderDTO, string $status): array
@@ -106,10 +77,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         return $order;
     }
 
-
-    // =============================================================
-
-
     // choice obtaining method
     public static function obtainingMethod(OrderCreateDTO $orderDTO): string
     {
@@ -126,10 +93,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         return $orderDTO->obtaining;
     }
 
-
-    // =============================================================
-
-
     // renew user number and address
     public static function putUserData(OrderCreateDTO $orderDTO): void
     {
@@ -144,20 +107,11 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         $user->save();
     }
 
-
-    // =============================================================
-
-
     // Create order
     public static function createOrder(array $order): Order
     {
         return Order::create($order);
     }
-
-
-    // PUT ORDER ITEMS STATIC FUNCTIONS
-    // =============================================================
-
 
     // Collect item params
     public static function collectItemParams(OrderItemsDTO $orderItemsDTO, array $item): array
@@ -177,20 +131,11 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         return $orderItem;
     }
 
-
-    // =============================================================
-
-
     // Create item
     public static function createItem(array $orderItem): void
     {
         OrderItems::create($orderItem);
     }
-
-    
-    // ORDER DISTIRBUTE STATIC FUNCTIONS
-    // =============================================================
-
     
     // distirbute order by obtaining method
     public static function orderDistirbute(Order $order): void
@@ -209,11 +154,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         }
     }
 
-
-    // ORDER DELETE STATIC FUNCTIONS
-    // =============================================================
-
-
     // delete order if it's just preparing
     public static function deleteOrder(Order $order): bool
     {
@@ -226,11 +166,6 @@ class OrderRepositoryImplementator implements OrderRepositoryInterface
         // return false if order already prepared
         return false;
     }
-
-
-    // GENERAL ORDER STATIC FUNCTIONS
-    // =============================================================
-
 
     // find order
     public static function findOrder(int $order_id): Order

@@ -2,15 +2,9 @@
 
 namespace App\Repositories\Implementators\Eloquent\Admin;
 
-// Import interfaces
 use App\Repositories\Interfaces\Admin\PostRepositoryInterface;
-
 use Illuminate\Support\Facades\Storage;
-
-// Import models
 use App\Models\Admin\Post;
-
-// Import DTO
 use App\DTO\Admin\Post\PostCreateDTO;
 use App\DTO\Admin\Post\PostUpdateDTO;
 
@@ -29,10 +23,6 @@ class PostRepositoryImplementator implements PostRepositoryInterface
         static::createPost($postData);
     }
 
-
-    // =============================================================
-
-
     // post renew function
     public function renew(PostUpdateDTO $postUpdateDTO): void
     {
@@ -49,10 +39,6 @@ class PostRepositoryImplementator implements PostRepositoryInterface
         static::renewPost($post, $postNewData);
     }
 
-    
-    // =============================================================
-
-
     // delete post
     public function delete(int $post_id): void
     {
@@ -62,18 +48,6 @@ class PostRepositoryImplementator implements PostRepositoryInterface
         // delete post
         static::postDelete($post);
     }
-
-    
-
-    // =============================================================
-    // STATIC FUNCTIONS
-    // =============================================================
-
-    
-
-    // POST MAKE STATIC FUNCTIONS
-    // =============================================================
-
 
     // collect creating post params
     public static function collectPostParams(PostCreateDTO $postCreateDTO): array
@@ -95,10 +69,6 @@ class PostRepositoryImplementator implements PostRepositoryInterface
         Post::firstOrCreate($postData);
     }
 
-
-    // POST RENEW STATIC FUNCTIONS
-    // =============================================================
-
     // collect post new params
     public static function collectPostNewParams(PostUpdateDTO $postUpdateDTO): array
     {
@@ -119,27 +89,17 @@ class PostRepositoryImplementator implements PostRepositoryInterface
         $post->update($postNewData);
     }
 
-    // POST DELETE STATIC FUNCTIONS
-    // ===================================================
-
-
     // post delete
     public static function postDelete(Post $post)
     {
         $post->delete();
     }
 
-    // GENERAL STATIC FUNCTIONS
-    // ===================================================
-    
-
     // find post
     public static function findPost(int $post_id): Post
     {
         return Post::find($post_id);
     }
-
-    //
 
     public static function putImage(string|object $image = null, string $current = null): string
     {
