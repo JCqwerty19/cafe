@@ -97,6 +97,10 @@ Cafe
 
 				<h6 id="additionalPriceType">Additional Price: $<span id="additionalPriceInt">0</span><input type="text" id="additionalPriceInput" name="additional_price" class="invisible" value=""></h6>
 
+				@error('items')
+				<p class="text-danger">{{ $message }}</p>
+				@enderror
+
 				<!-- Total price -->
 				<h2>Total price: $<span id="total-price">0</span></h2>
 				<input type="text" name="total_price" class="invisible" id="total_price_input" value=""><br>

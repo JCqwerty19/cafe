@@ -32,6 +32,22 @@ class OrderController extends BaseController
         // Validate order request data
         $orderData = $orderRequest->validated();
 
+        // Check items existanse
+        if (!isset($orderData['items'])) {
+            return back()->withErrors(['items' => 'You haven\'t choose any product']);
+
+        // check items if they are exists but any quantity 0
+        } else if (isset($orderData['items'])) {
+            $x = 0;
+            foreach ($orderData['items'] as $item) {
+                $x += $item['quantity'];
+            }
+
+            if ($x === 0) {
+                return back()->withErrors(['items' => 'You haven\'t choose any product']);
+            }
+        }
+
         // Create DTO to show params for making order
         $orderCreateDTO = new OrderCreateDTO(
             user_id: auth()->user()->id,
@@ -47,8 +63,8 @@ class OrderController extends BaseController
 
         // Create DTO to show params for putting order items
         $orderItemsDTO = new OrderItemsDTO(
-            order_id: $order->id,
-            items: $orderData['items'],
+        order_id: $order->id,
+        items: $orderData['items'],
         );
 
         // Put order items through service

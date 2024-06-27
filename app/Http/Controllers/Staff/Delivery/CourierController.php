@@ -205,7 +205,12 @@ class CourierController extends BaseController
         // Delete an account through service
         $this->courierService->delete($courier->id);
 
+        // Redirect back if it's admin
+        if (Auth::check() && Auth::user()->status === 'admin') {
+            return back();
+        }
+
         // Redirect to the courier register page
-        return back();
+        return redirect()->route('courier.index');
     }
 }

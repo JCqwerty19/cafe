@@ -18,9 +18,6 @@ Route::get('/', 'Client\MainController@index')->name('main.index');
 Route::get('/post/{post}', 'Admin\PostController@read')->name('post.read');
 Route::get('/courier', 'Client\MainController@courier')->name('courier.index');
 
-
-// =============================================================================================
-
 // Routes for guest clients
 Route::group(['prefix' => 'user', 'middleware' => 'guest'], function () {
 
@@ -66,10 +63,6 @@ Route::group(['prefix' => 'orders', 'middleware' => 'auth'], function () {
     // Order delete route
     Route::delete('/delete/{order}', 'Client\OrderController@delete')->name('order.delete');
 });
-
-
-// =============================================================================================
-
 
 // Routes for guest couriers
 Route::group(['prefix' => 'courier', 'middleware' => 'guest'], function () {
@@ -118,9 +111,6 @@ Route::group(['prefix' => 'delivery', 'middleware' => 'courier'], function () {
 });
 
 
-// =============================================================================================
-
-
 // Routes for kitchen
 Route::group(['prefix' => 'kitchen', 'middleware' => 'admin'], function () {
 
@@ -130,9 +120,6 @@ Route::group(['prefix' => 'kitchen', 'middleware' => 'admin'], function () {
     // Disterbute order after kitchen route
     Route::post('/distirbute/{order}', 'Client\OrderController@distirbute')->name('order.distribute');
 });
-
-// =============================================================================================
-
 
 // Routes for hall
 Route::group(['prefix' => 'hall', 'middleware' => 'admin'], function () {
@@ -144,9 +131,6 @@ Route::group(['prefix' => 'hall', 'middleware' => 'admin'], function () {
 });
 
 
-// =============================================================================================
-
-
 // Routes for pickup
 Route::group(['prefix' => 'pickup', 'middleware' => 'admin'], function () {
 
@@ -154,10 +138,7 @@ Route::group(['prefix' => 'pickup', 'middleware' => 'admin'], function () {
     Route::get('/table', 'Staff\PickupController@table')->name('pickup.table');
 });
 
-
-// =============================================================================================
-
-// Routes for authorized admin
+// Routes for admin
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 
     Route::get('/dashboard', 'Admin\AdminController@dashboard')->name('admin.dashboard');
@@ -201,20 +182,3 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     // Users list route
     Route::get('/users/index', 'Admin\AdminController@users')->name('user.index');    
 });
-
-// =============================================================================================
-
-// ==========
-// Order price problem
-// Restore password
-// Confirmation email
-// Admin login
-// Deletes
-// Active orders / deliveries
-// Posts manage
-// Products create and image
-// Order create error to no items
-// comments all blade
-
-// updating // the same email   
-// ajax

@@ -215,6 +215,11 @@ class UserController extends BaseController
             return back()->withErrors(['delete' => 'Account can\'t be deleted while there are open orders']);
         }
 
+        // Redirect back if it's admin
+        if (Auth::check() && Auth::user()->status === 'admin') {
+            return back();
+        }
+
         // Redirect to the main page
         return redirect()->route('main.index');
     }
