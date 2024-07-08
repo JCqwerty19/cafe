@@ -2,6 +2,16 @@
 
 Laravel Pet Project is a comprehensive web application designed for managing deliveries and administration, tailored specifically for a coffee shop.
 
+## Technologies and packages
+- **PHP**
+- **Laravel**
+- **JavaScript**
+- **MySQL**
+- **Blade**
+- **Postman**
+- **Git**
+- **laravel/ui**
+
 ## Features
 
 ### MAIN
